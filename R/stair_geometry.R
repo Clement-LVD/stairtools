@@ -4,10 +4,12 @@
 #'
 #' @param rise Object of class "stair_rise".
 #' @param run Object of class "stair_run".
-#' @param first_step_is_floor Logical.
-#' @param last_step_is_landing Logical.
+#' @param first_step_is_floor `logical` - Whether the first level represents
+#'   a floor step.
+#' @param last_step_is_landing `logical` - Whether the arrival level is
+#'   represented as a landing.
 #'
-#' @return Object of class "stair_geometry".
+#' @return Return object of class "stair_geometry".
 #'
 #' @export
 stair_geometry <- function(
@@ -17,12 +19,21 @@ stair_geometry <- function(
     last_step_is_landing = FALSE
 ) {
   
+  if (length(first_step_is_floor) != 1 || !is.logical(first_step_is_floor)){
+  stop("first_step_is_floor must be logical",   call. = FALSE)}
+
+if (length(last_step_is_landing) != 1 ||  !is.logical(last_step_is_landing)){
+  stop("last_step_is_landing must be logical",   call. = FALSE)}
   
-  if(!inherits(rise,"stair_rise"))
-    stop("rise must be a stair_rise object")
-  
-  if(!inherits(run,"stair_run"))
-    stop("run must be a stair_run object")
+  if(!inherits(rise,"stair_rise")) stop("rise must be a stair_rise object",   call. = FALSE)
+# a found_solution var' from stair_rise() is FALSE when the stair is not a valid stair
+if (!isTRUE(rise$found_solution)) stop("rise object does not contain a valid solution",   call. = FALSE)
+
+if(!inherits(run,"stair_run")) stop("run must be a stair_run object",   call. = FALSE)
+
+if (run$n_treads < 1) stop("run must contain at least one tread",   call. = FALSE)
+
+if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the same number of rises",   call. = FALSE)
   
   
   x <- 0
@@ -49,13 +60,13 @@ stair_geometry <- function(
   
   
   #
-  # Construction du profil réel
+  # Construct a plan
   #
   
   for(i in seq_len(run$n_treads)) {
     
     
-    # montée
+    # rising
     y <- y + rise$rise
     
     profile <- rbind(
@@ -67,7 +78,7 @@ stair_geometry <- function(
     )
     
     
-    # marche
+    # walking
     x <- x + run$going
     
     profile <- rbind(
@@ -94,10 +105,7 @@ stair_geometry <- function(
   
   
   #
-  # Arrivée
-  #
-  
-  # dernière hauteur
+  # Last step 
   if(y < rise$height) {
     
     y <- rise$height
@@ -175,13 +183,14 @@ stair_geometry <- function(
 #' levels showing floor and arrival levels.
 #'
 #' @param x Object of class "stair_geometry".
-#' @param show_dimensions Logical. Display dimensions.
-#' @param show_references Logical. Display reference levels.
-#' @param ...
+#' @param show_dimensions `logical` - Display cumulative dimensions.
+#' @param show_references `logical` - Display reference levels.
+#' @param ... Additional graphical parameters passed to [plot()].
 #'
 #' @return No return value. Produces a base R plot.
 #'
-#' @export
+#' @export 
+#' @method plot stair_geometry
 plot.stair_geometry <- function(
     x,
     show_dimensions = TRUE,
@@ -189,8 +198,10 @@ plot.stair_geometry <- function(
     ...
 ) {
   
+  profile <- x$profile  
   
-  profile <- x$profile
+  if (!nrow(profile)) stop("cannot plot an empty stair geometry")
+
   steps <- x$steps
   
   x_max <- max(profile$x)
@@ -370,9 +381,13 @@ plot.stair_geometry <- function(
       x$height,
       " mm height"
     )
-  )
+  ) 
+  
+  invisible(x)
 }
 
+#' @export
+#' @method print stair_geometry
 print.stair_geometry <- function(x, ...) {
   
   
@@ -415,5 +430,6 @@ print.stair_geometry <- function(x, ...) {
   
   
   print(x$steps)
-  
+
+  invisible(x)
 }

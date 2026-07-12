@@ -7,17 +7,27 @@
 stair_rise(height, target_rise = 160, min_rise = 160, max_rise = 200)
 }
 \arguments{
-\item{height}{Total height in mm.}
+\item{height}{\code{numeric} - Total height in mm.}
 
-\item{target_rise}{Target rise height.}
+\item{target_rise}{\code{numeric} - Target rise height in mm.}
 
-\item{min_rise}{Minimum allowed rise.}
+\item{min_rise}{\code{numeric} - Minimum allowed rise height in mm.}
 
-\item{max_rise}{Maximum allowed rise.}
+\item{max_rise}{\code{numeric} - Maximum allowed rise height in mm.}
 }
 \value{
-Object of class "stair_rise".
+Return an object of class "stair_rise".
 }
 \description{
-Finds the best number of rises for a given height.
+Determines the number of rises that gives the closest match
+to the target rise while respecting minimum and maximum limits.
+}
+\examples{
+stair_rise(3000)
+
+stair_rise(
+  height = 1000,
+  min_rise = 160,
+  max_rise = 250
+)
 }

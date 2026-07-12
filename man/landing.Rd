@@ -7,7 +7,7 @@
 landing(depth = 0, type = c("none", "start", "end", "intermediate"))
 }
 \arguments{
-\item{depth}{\code{numeric} -* Horizontal depth of the landing in mm.}
+\item{depth}{\code{numeric} - Horizontal depth of the landing in mm.}
 
 \item{type}{\code{character} - Landing position:
 "none", "start", "end", "intermediate".}

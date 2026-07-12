@@ -7,16 +7,16 @@
 stair_horizontal_run(n_rises, going, start = landing(), end = landing())
 }
 \arguments{
-\item{n_rises}{Number of vertical rises.}
+\item{n_rises}{\code{numeric} - Number of vertical rises.}
 
-\item{going}{Tread depth.}
+\item{going}{\code{numeric} - Tread depth in mm.}
 
-\item{start}{Start landing object.}
+\item{start}{A \code{landing} object representing the starting landing.}
 
-\item{end}{End landing object.}
+\item{end}{A \code{landing} object representing the ending landing.}
 }
 \value{
-Object of class "stair_run".
+An object of class "stair_run".
 }
 \description{
 Calculates tread count, flight length and total horizontal occupation.

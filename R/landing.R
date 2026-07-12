@@ -4,7 +4,7 @@
 #' vertical rise. It can be located at the beginning, end or between
 #' stair flights.
 #'
-#' @param depth `numeric` -* Horizontal depth of the landing in mm.
+#' @param depth `numeric` - Horizontal depth of the landing in mm.
 #' @param type `character` - Landing position:
 #'   "none", "start", "end", "intermediate".
 #'
@@ -20,13 +20,13 @@ landing <- function(
       "intermediate"
     )
 ) {
+  check_numeric(depth, "depth")
+
   
-  type <- match.arg(type)
+  if (depth < 0) stop("depth must be positive")
   
-  if (depth < 0)
-    stop("depth must be positive")
-  
-  
+    type <- match.arg(type)
+
   structure(
     list(
       type = type,

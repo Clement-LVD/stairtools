@@ -16,12 +16,14 @@ stair_geometry(
 
 \item{run}{Object of class "stair_run".}
 
-\item{first_step_is_floor}{Logical.}
+\item{first_step_is_floor}{\code{logical} - Whether the first level represents
+a floor step.}
 
-\item{last_step_is_landing}{Logical.}
+\item{last_step_is_landing}{\code{logical} - Whether the arrival level is
+represented as a landing.}
 }
 \value{
-Object of class "stair_geometry".
+Return object of class "stair_geometry".
 }
 \description{
 Creates the walkable geometry of a stair flight.
