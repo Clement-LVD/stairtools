@@ -1,66 +1,74 @@
 #' Create stair geometric model
 #'
-#' Converts stair rise and run calculations into a construction geometry.
+#' Creates the construction geometry of the stair flight.
 #'
 #' @param rise Object of class "stair_rise".
 #' @param run Object of class "stair_run".
+#' @param first_step_is_floor Logical.
+#' @param last_step_is_landing Logical.
 #'
 #' @return Object of class "stair_geometry".
 #'
 #' @export
-stair_geometry <- function(rise, run) {
+stair_geometry <- function(
+    rise,
+    run,
+    first_step_is_floor = FALSE,
+    last_step_is_landing = FALSE
+) {
+  
+  
+  if(!inherits(rise,"stair_rise"))
+    stop("rise must be a stair_rise object")
+  
+  if(!inherits(run,"stair_run"))
+    stop("run must be a stair_run object")
+  
   
   x <- 0
   y <- 0
+  
   
   profile <- data.frame(
     x = x,
     y = y
   )
   
+  
   steps <- data.frame(
-    step = 0,
+    level = 0,
     x = x,
-    height = y
+    height = y,
+    depth = 0,
+    type = ifelse(
+      first_step_is_floor,
+      "floor_step",
+      "floor"
+    )
   )
   
   
-  # Four walking surfaces
+  # Construction of the flight
+  
   for(i in seq_len(run$n_treads)) {
     
-    # tread
+    
+    # horizontal tread
     x <- x + run$going
+    
     
     profile <- rbind(
       profile,
-      data.frame(x=x, y=y)
+      data.frame(
+        x=x,
+        y=y
+      )
     )
     
     
     # riser
     y <- y + rise$rise
     
-    profile <- rbind(
-      profile,
-      data.frame(x=x, y=y)
-    )
-    
-    
-    steps <- rbind(
-      steps,
-      data.frame(
-        step=i,
-        x=x,
-        height=y
-      )
-    )
-  }
-  
-  
-  # Final rise to upper floor
-  if(y < rise$height) {
-    
-    y <- y + rise$rise
     
     profile <- rbind(
       profile,
@@ -74,29 +82,116 @@ stair_geometry <- function(rise, run) {
     steps <- rbind(
       steps,
       data.frame(
-        step=run$n_rises,
-        x=x,
-        height=y
+        level = i,
+        x = x,
+        height = y,
+        depth = run$going,
+        type = "tread"
       )
     )
+    
+  }
+  
+  
+  # Arrival level
+  if(y < rise$height) {
+    
+    
+    y <- rise$height
+    
+    
+    profile <- rbind(
+      profile,
+      data.frame(
+        x=x,
+        y=y
+      )
+    )
+    
+    
+    if(last_step_is_landing && run$end$depth > 0) {
+      
+      steps <- rbind(
+        steps,
+        data.frame(
+          level = rise$n_rises,
+          x = x,
+          height = y,
+          depth = ifelse(
+            last_step_is_landing,
+            run$going,
+            0
+          ),
+          type = ifelse(
+            last_step_is_landing,
+            "landing",
+            "arrival"
+          )
+        )
+      )
+      
+    } else {
+      
+      
+      steps <- rbind(
+        steps,
+        data.frame(
+          level=rise$n_rises,
+          x=x,
+          height=y,
+          depth=0,
+          type="arrival"
+        )
+      )
+    }
+    
   }
   
   
   structure(
     list(
+      
       profile = profile,
+      
       steps = steps,
+      
+      
       height = rise$height,
+      
       n_rises = rise$n_rises,
+      
       rise = rise$rise,
+      
       going = run$going,
+      
+      
       flight_run = run$flight_run,
-      units = "mm"
+      
+      overall_run = run$overall_run,
+      
+      
+      blondel = 2 * rise$rise + run$going
+      
+      
+     , first_step_is_floor =
+        first_step_is_floor,
+      
+      
+      last_step_is_landing =
+        last_step_is_landing,
+      
+      
+      start = run$start,
+      
+      end = run$end,
+      
+      
+      units="mm"
+      
     ),
     class="stair_geometry"
   )
 }
-
 
 #' Plot stair geometry with cumulative dimensions
 #'
@@ -248,10 +343,11 @@ plot.stair_geometry <- function(
   )
   
 }
-
 print.stair_geometry <- function(x, ...) {
   
+  
   cat("Stair geometry\n\n")
+  
   
   cat(
     "Height :",
@@ -259,15 +355,31 @@ print.stair_geometry <- function(x, ...) {
     "mm\n"
   )
   
+  
   cat(
     "Number of rises :",
     x$n_rises,
     "\n"
   )
   
+  
   cat(
     "Rise :",
     x$rise,
+    "mm\n"
+  )
+  
+  
+  cat(
+    "Going :",
+    x$going,
+    "mm\n"
+  )
+  
+  
+  cat(
+    "Blondel :",
+    round(x$blondel,1),
     "mm\n\n"
   )
   

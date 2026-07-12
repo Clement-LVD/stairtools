@@ -23,14 +23,12 @@ stair_rise <- function(
   
   
   # Candidate numbers of rises
-  candidates <- data.frame(
-    n_rises =
-      seq(
-        ceiling(height / max_rise),
-        floor(height / min_rise)
-      )
-  )
+  n_min <- ceiling(height / max_rise)
+  n_max <- floor(height / min_rise)
   
+  if(n_min > n_max){ message("No valid rise solution") ; return(NA)}
+  
+  candidates <- data.frame(  n_rises = seq(n_min, n_max)  )
   
   # Calculate exact rise height
   candidates$rise <-
@@ -62,13 +60,15 @@ stair_rise <- function(
       order(candidates$score),
     ]
   
-  
   structure(
     list(
       height = height,
       n_rises = candidates$n_rises[1],
       rise = candidates$rise[1],
       candidates = candidates,
+      target_rise = target_rise,
+      min_rise = min_rise,
+      max_rise = max_rise,
       units = "mm"
     ),
     class = "stair_rise"
