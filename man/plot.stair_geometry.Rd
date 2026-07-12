@@ -9,11 +9,11 @@
 \arguments{
 \item{x}{Object of class "stair_geometry".}
 
-\item{show_dimensions}{Logical. Display dimensions.}
+\item{show_dimensions}{\code{logical} - Display cumulative dimensions.}
 
-\item{show_references}{Logical. Display reference levels.}
+\item{show_references}{\code{logical} - Display reference levels.}
 
-\item{...}{}
+\item{...}{Additional graphical parameters passed to \code{\link[=plot]{plot()}}.}
 }
 \value{
 No return value. Produces a base R plot.
