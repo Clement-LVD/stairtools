@@ -1,4 +1,4 @@
-# Internal helper to validate numeric scalar inputs
+#' Internal helper to validate numeric scalar inputs
 check_numeric <- function(x, name) {
   if (
     length(x) != 1 ||

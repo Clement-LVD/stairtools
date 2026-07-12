@@ -41,3 +41,6 @@ Object of class "stair_solution".
 \description{
 Calculates a stair geometry fitted to available horizontal space.
 }
+\examples{
+s <- stair_compute(height = 850, max_run = 1030)
+}
