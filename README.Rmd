@@ -50,7 +50,7 @@ remotes::install_github("clement-LVD/stairtools")
 
 ``` 
 
-```{r examples}
+```{r examples, eval = TRUE, echo = TRUE}
 
 library(stairtools)
 
