@@ -171,6 +171,12 @@ stair_solve <- function(
   # Return complete calculation object
   # ------------------------------------------------------------
   
+  geometry <- stair_geometry(
+    rise = rise,
+    run = build$run
+  )
+  
+  
   result <- list(
     
     height = height,
@@ -181,8 +187,9 @@ stair_solve <- function(
     
     optimal = optimal,
     
-    build = build
+    build = build,
     
+    geometry = geometry
   )
   
   
@@ -190,4 +197,30 @@ stair_solve <- function(
   
   
   result
+}
+
+print.stair_geometry <- function(x, ...) {
+  
+  cat("Stair geometry\n\n")
+  
+  cat(
+    "Height :",
+    x$height,
+    "mm\n"
+  )
+  
+  cat(
+    "Rises :",
+    x$n_rises,
+    "\n"
+  )
+  
+  cat(
+    "Rise :",
+    x$rise,
+    "mm\n\n"
+  )
+  
+  
+  print(x$steps)
 }

@@ -74,3 +74,22 @@ stair_rise <- function(
     class = "stair_rise"
   )
 }
+
+print.stair_rise <- function(x, ...) {
+  
+  cat("Stair rise calculation\n\n")
+  
+  cat("Height :", x$height, "mm\n")
+  
+  cat(
+    "Number of rises :",
+    x$n_rises,
+    "\n"
+  )
+  
+  cat(
+    "Rise :",
+    round(x$rise, 1),
+    "mm\n"
+  )
+}

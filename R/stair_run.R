@@ -52,3 +52,25 @@ stair_run <- function(
     class = "stair_run"
   )
 }
+
+print.stair_run <- function(x, ...) {
+  
+  cat("Stair run calculation\n\n")
+  
+  cat("Number of rises :", x$n_rises, "\n")
+  cat("Number of treads :", x$n_treads, "\n")
+  
+  cat("Going :", x$going, "mm\n")
+  
+  cat(
+    "Stair flight run :",
+    x$flight_run,
+    "mm\n"
+  )
+  
+  cat(
+    "Total length :",
+    x$overall_run,
+    "mm\n"
+  )
+}
