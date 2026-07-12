@@ -1,0 +1,26 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# stairtools
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of stairtools is to compute stairs.
+
+```{r cars, eval = FALSE}
+
+ s <- stair_solve(height = 850,max_run = 1030)
+
+```
+
