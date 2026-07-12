@@ -4,14 +4,25 @@
 \alias{stair_geometry}
 \title{Create stair geometric model}
 \usage{
-stair_geometry(elements)
+stair_geometry(
+  rise,
+  run,
+  first_step_is_floor = FALSE,
+  last_step_is_landing = FALSE
+)
 }
 \arguments{
-\item{elements}{Stair element list.}
+\item{rise}{Object of class "stair_rise".}
+
+\item{run}{Object of class "stair_run".}
+
+\item{first_step_is_floor}{Logical.}
+
+\item{last_step_is_landing}{Logical.}
 }
 \value{
 Object of class "stair_geometry".
 }
 \description{
-Create stair geometric model
+Creates the walkable geometry of a stair flight.
 }

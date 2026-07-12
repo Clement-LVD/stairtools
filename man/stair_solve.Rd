@@ -2,80 +2,25 @@
 % Please edit documentation in R/stair_solve.R
 \name{stair_solve}
 \alias{stair_solve}
-\title{Solve a complete stair design problem}
+\title{Solve complete stair geometry}
 \usage{
 stair_solve(
   height,
   max_run,
-  target_rise = 160,
-  blondel = 630,
-  min_rise = 160,
-  max_rise = 200
+  start = landing(),
+  end = landing(),
+  first_step_is_floor = FALSE,
+  last_step_is_landing = FALSE
 )
 }
 \arguments{
-\item{height}{Numeric. Total vertical height to overcome, in millimetres.}
+\item{height}{Total height to overcome in mm.}
 
-\item{max_run}{Numeric. Maximum available horizontal development,
-in millimetres.}
-
-\item{target_rise}{Numeric. Preferred rise height in millimetres.
-Default is 160 mm.}
-
-\item{blondel}{Numeric. Target Blondel value:
-\eqn{2 \times rise + going}.
-Default is 630 mm.}
-
-\item{min_rise}{Numeric. Minimum allowed rise height.
-Default is 160 mm.}
-
-\item{max_rise}{Numeric. Maximum allowed rise height.
-Default is 200 mm.}
+\item{max_run}{Maximum available horizontal length in mm.}
 }
 \value{
-An object of class \code{"stair_solution"} containing:
-\describe{
-\item{rise}{Vertical calculation object of class
-\code{"stair_rise"}.}
-\item{optimal}{Theoretical stair configuration based on Blondel.}
-\item{build}{Recommended stair configuration fitting the available
-space.}
-\item{candidates}{All valid tested configurations.}
-}
+Object of class "stair_solution".
 }
 \description{
-Finds possible stair configurations from a total height and an available
-horizontal space. The function calculates:
-}
-\details{
-\itemize{
-\item an ideal stair using Blondel's comfort rule;
-\item a buildable stair fitting the available length.
-}
-
-The function works internally in millimetres.
-
-The function first determines possible rise heights. For each solution,
-it calculates:
-
-\deqn{going = Blondel - 2 \times rise}
-
-Then it compares this theoretical solution with the available horizontal
-space.
-
-If the ideal stair is too long, the going is reduced so that the stair
-fits the available space. The resulting Blondel value is returned.
-}
-\examples{
-\dontrun{
-
-stair <- stair_solve(
-  height = 850,
-  max_run = 1030
-)
-
-stair$build
-
-}
-
+Calculates optimal and space-fitted stair solutions.
 }
