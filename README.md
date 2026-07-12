@@ -80,101 +80,90 @@ s <- stair_compute(
   end = landing(depth = 1000)
 )
 
-s
-#> $height
-#> [1] 3000
-#> 
-#> $max_run
-#> [1] 6000
-#> 
-#> $unused_run
-#> [1] 0
-#> 
-#> $start
-#> $type
-#> [1] "none"
-#> 
-#> $depth
-#> [1] 1200
-#> 
-#> $units
-#> [1] "mm"
-#> 
-#> attr(,"class")
-#> [1] "landing"
-#> 
-#> $end
-#> $type
-#> [1] "none"
-#> 
-#> $depth
-#> [1] 1000
-#> 
-#> $units
-#> [1] "mm"
-#> 
-#> attr(,"class")
-#> [1] "landing"
-#> 
-#> $rise
-#> Stair rise calculation
-#> 
-#> Height : 3000 mm
-#> Number of rises : 18 
-#> Rise : 166.7 mm
-#> 
-#> $build
-#> Stair run calculation
-#> 
-#> Number of rises : 18 
-#> Number of treads : 17 
-#> Going : 223.5294 mm
-#> Stair flight run : 3800 mm
-#> Total length : 6000 mm
-#> 
-#> $geometry
-#> Stair geometry
-#> 
-#> Height : 3000 mm
-#> Number of rises : 18 
-#> Rise : 166.6667 mm
-#> Going : 223.5294 mm
-#> Blondel : 556.9 mm
-#> 
-#>    level         x    height    depth    type
-#> 1      0    0.0000    0.0000   0.0000   floor
-#> 2      1  223.5294  166.6667 223.5294   tread
-#> 3      2  447.0588  333.3333 223.5294   tread
-#> 4      3  670.5882  500.0000 223.5294   tread
-#> 5      4  894.1176  666.6667 223.5294   tread
-#> 6      5 1117.6471  833.3333 223.5294   tread
-#> 7      6 1341.1765 1000.0000 223.5294   tread
-#> 8      7 1564.7059 1166.6667 223.5294   tread
-#> 9      8 1788.2353 1333.3333 223.5294   tread
-#> 10     9 2011.7647 1500.0000 223.5294   tread
-#> 11    10 2235.2941 1666.6667 223.5294   tread
-#> 12    11 2458.8235 1833.3333 223.5294   tread
-#> 13    12 2682.3529 2000.0000 223.5294   tread
-#> 14    13 2905.8824 2166.6667 223.5294   tread
-#> 15    14 3129.4118 2333.3333 223.5294   tread
-#> 16    15 3352.9412 2500.0000 223.5294   tread
-#> 17    16 3576.4706 2666.6667 223.5294   tread
-#> 18    17 3800.0000 2833.3333 223.5294   tread
-#> 19    18 3800.0000 3000.0000   0.0000 arrival
-#> 
-#> $constraints
-#> $constraints$blondel_target
-#> [1] 630
-#> 
-#> $constraints$min_going
-#> [1] 150
-#> 
-#> $constraints$max_going
-#> [1] 350
-#> 
-#> 
-#> attr(,"class")
-#> [1] "stair_solution"
+str(s)
+#> List of 9
+#>  $ height     : num 3000
+#>  $ max_run    : num 6000
+#>  $ unused_run : num 0
+#>  $ start      :List of 3
+#>   ..$ type : chr "none"
+#>   ..$ depth: num 1200
+#>   ..$ units: chr "mm"
+#>   ..- attr(*, "class")= chr "landing"
+#>  $ end        :List of 3
+#>   ..$ type : chr "none"
+#>   ..$ depth: num 1000
+#>   ..$ units: chr "mm"
+#>   ..- attr(*, "class")= chr "landing"
+#>  $ rise       :List of 10
+#>   ..$ height        : num 3000
+#>   ..$ n_rises       : int 18
+#>   ..$ rise          : num 167
+#>   ..$ score         : num 6.67
+#>   ..$ candidates    :'data.frame':   4 obs. of  3 variables:
+#>   .. ..$ n_rises: int [1:4] 18 17 16 15
+#>   .. ..$ rise   : num [1:4] 167 176 188 200
+#>   .. ..$ score  : num [1:4] 6.67 16.47 27.5 40
+#>   ..$ target_rise   : num 160
+#>   ..$ min_rise      : num 160
+#>   ..$ max_rise      : num 200
+#>   ..$ units         : chr "mm"
+#>   ..$ found_solution: logi TRUE
+#>   ..- attr(*, "class")= chr "stair_rise"
+#>  $ build      :List of 8
+#>   ..$ n_rises    : int 18
+#>   ..$ n_treads   : num 17
+#>   ..$ going      : num 224
+#>   ..$ flight_run : num 3800
+#>   ..$ overall_run: num 6000
+#>   ..$ start      :List of 3
+#>   .. ..$ type : chr "none"
+#>   .. ..$ depth: num 1200
+#>   .. ..$ units: chr "mm"
+#>   .. ..- attr(*, "class")= chr "landing"
+#>   ..$ end        :List of 3
+#>   .. ..$ type : chr "none"
+#>   .. ..$ depth: num 1000
+#>   .. ..$ units: chr "mm"
+#>   .. ..- attr(*, "class")= chr "landing"
+#>   ..$ units      : chr "mm"
+#>   ..- attr(*, "class")= chr "stair_run"
+#>  $ geometry   :List of 14
+#>   ..$ profile             :'data.frame': 35 obs. of  2 variables:
+#>   .. ..$ x: num [1:35] 0 224 224 447 447 ...
+#>   .. ..$ y: num [1:35] 167 167 333 333 500 ...
+#>   ..$ steps               :'data.frame': 19 obs. of  5 variables:
+#>   .. ..$ level : num [1:19] 0 1 2 3 4 5 6 7 8 9 ...
+#>   .. ..$ x     : num [1:19] 0 224 447 671 894 ...
+#>   .. ..$ height: num [1:19] 0 167 333 500 667 ...
+#>   .. ..$ depth : num [1:19] 0 224 224 224 224 ...
+#>   .. ..$ type  : chr [1:19] "floor" "tread" "tread" "tread" ...
+#>   ..$ height              : num 3000
+#>   ..$ n_rises             : int 18
+#>   ..$ rise                : num 167
+#>   ..$ going               : num 224
+#>   ..$ flight_run          : num 3800
+#>   ..$ overall_run         : num 6000
+#>   ..$ blondel             : num 557
+#>   ..$ first_step_is_floor : logi FALSE
+#>   ..$ last_step_is_landing: logi FALSE
+#>   ..$ start               :List of 3
+#>   .. ..$ type : chr "none"
+#>   .. ..$ depth: num 1200
+#>   .. ..$ units: chr "mm"
+#>   .. ..- attr(*, "class")= chr "landing"
+#>   ..$ end                 :List of 3
+#>   .. ..$ type : chr "none"
+#>   .. ..$ depth: num 1000
+#>   .. ..$ units: chr "mm"
+#>   .. ..- attr(*, "class")= chr "landing"
+#>   ..$ units               : chr "mm"
+#>   ..- attr(*, "class")= chr "stair_geometry"
+#>  $ constraints:List of 3
+#>   ..$ blondel_target: num 630
+#>   ..$ min_going     : num 150
+#>   ..$ max_going     : num 350
+#>  - attr(*, "class")= chr "stair_solution"
 ```
 
 ## Constraints
@@ -189,102 +178,7 @@ s <- stair_compute(
   start = landing(depth = 1200),
   end = landing(depth = 1000)
 )
-
-s 
-#> $height
-#> [1] 3000
-#> 
-#> $max_run
-#> [1] 6000
-#> 
-#> $unused_run
-#> [1] 0
-#> 
-#> $start
-#> $type
-#> [1] "none"
-#> 
-#> $depth
-#> [1] 1200
-#> 
-#> $units
-#> [1] "mm"
-#> 
-#> attr(,"class")
-#> [1] "landing"
-#> 
-#> $end
-#> $type
-#> [1] "none"
-#> 
-#> $depth
-#> [1] 1000
-#> 
-#> $units
-#> [1] "mm"
-#> 
-#> attr(,"class")
-#> [1] "landing"
-#> 
-#> $rise
-#> Stair rise calculation
-#> 
-#> Height : 3000 mm
-#> Number of rises : 18 
-#> Rise : 166.7 mm
-#> 
-#> $build
-#> Stair run calculation
-#> 
-#> Number of rises : 18 
-#> Number of treads : 17 
-#> Going : 223.5294 mm
-#> Stair flight run : 3800 mm
-#> Total length : 6000 mm
-#> 
-#> $geometry
-#> Stair geometry
-#> 
-#> Height : 3000 mm
-#> Number of rises : 18 
-#> Rise : 166.6667 mm
-#> Going : 223.5294 mm
-#> Blondel : 556.9 mm
-#> 
-#>    level         x    height    depth    type
-#> 1      0    0.0000    0.0000   0.0000   floor
-#> 2      1  223.5294  166.6667 223.5294   tread
-#> 3      2  447.0588  333.3333 223.5294   tread
-#> 4      3  670.5882  500.0000 223.5294   tread
-#> 5      4  894.1176  666.6667 223.5294   tread
-#> 6      5 1117.6471  833.3333 223.5294   tread
-#> 7      6 1341.1765 1000.0000 223.5294   tread
-#> 8      7 1564.7059 1166.6667 223.5294   tread
-#> 9      8 1788.2353 1333.3333 223.5294   tread
-#> 10     9 2011.7647 1500.0000 223.5294   tread
-#> 11    10 2235.2941 1666.6667 223.5294   tread
-#> 12    11 2458.8235 1833.3333 223.5294   tread
-#> 13    12 2682.3529 2000.0000 223.5294   tread
-#> 14    13 2905.8824 2166.6667 223.5294   tread
-#> 15    14 3129.4118 2333.3333 223.5294   tread
-#> 16    15 3352.9412 2500.0000 223.5294   tread
-#> 17    16 3576.4706 2666.6667 223.5294   tread
-#> 18    17 3800.0000 2833.3333 223.5294   tread
-#> 19    18 3800.0000 3000.0000   0.0000 arrival
-#> 
-#> $constraints
-#> $constraints$blondel_target
-#> [1] 630
-#> 
-#> $constraints$min_going
-#> [1] 150
-#> 
-#> $constraints$max_going
-#> [1] 350
-#> 
-#> 
-#> attr(,"class")
-#> [1] "stair_solution"
+ 
 ```
 
 Where:

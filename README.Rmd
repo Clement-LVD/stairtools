@@ -84,7 +84,7 @@ s <- stair_compute(
   end = landing(depth = 1000)
 )
 
-s
+str(s)
 
 ```
 
@@ -100,8 +100,7 @@ s <- stair_compute(
   start = landing(depth = 1200),
   end = landing(depth = 1000)
 )
-
-s 
+ 
 
 ```
 
