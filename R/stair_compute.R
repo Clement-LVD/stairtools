@@ -9,9 +9,10 @@
 #' @param first_step_is_floor `logical` - Whether the first level represents a floor.
 #' @param last_step_is_landing `logical` - Whether the arrival level is a landing.
 #' @param blondel_target `numeric` - Target Blondel value in mm.
-#' @param min_going `numeric` - Minimum acceptable tread depth in mm.
-#' @param max_going `numeric` - Maximum acceptable tread depth in mm.
-#'
+#' @param min_going `numeric` - Minimum acceptable tread depth (horizontal depth of one tread) in mm. Default is 150 mm.
+#' @param max_going `numeric` - Maximum acceptable tread depth (horizontal depth of one tread) in mm. Default is 350 mm.
+#' @examples
+#' s <- stair_compute(height = 850, max_run = 1030)
 #' @return Object of class "stair_solution".
 #'
 #' @export
@@ -23,7 +24,7 @@ stair_compute <- function(
     first_step_is_floor = FALSE,
     last_step_is_landing = FALSE,
     blondel_target = 630,
-    min_going = 0,
+    min_going = 150,
     max_going = 350
 ){
 
@@ -36,11 +37,12 @@ stair_compute <- function(
   if(max_run <= 0)
     stop("max_run must be positive", call. = FALSE)
 
-  if(min_going < 0)
-    stop("min_going must be positive", call. = FALSE)
+  if(min_going < 0) stop("min_going must be non-negative", call. = FALSE)
 
   if(max_going <= min_going)
-    stop("max_going must be greater than min_going", call. = FALSE)
+    stop("max_going must be greater than min_going, i.e. 630 mm is the best solution", call. = FALSE)
+  
+  if(blondel_target <= 0) stop("blondel_target must be positive", call. = FALSE)
 
   if(!inherits(start, "landing"))
     stop("start must be a landing", call. = FALSE)
@@ -84,6 +86,7 @@ stair_compute <- function(
   # Blondel theoretical going
   going <- blondel_target - 2 * rise$rise
 
+  if(going <= 0) stop("computed going is not positive", call. = FALSE)
 
   # Maximum possible going with available space
   max_available_going <-
@@ -94,18 +97,10 @@ stair_compute <- function(
   # 1. Blondel value
   # 2. Available space limitation
   # 3. Maximum acceptable going
-  going <- min(
-    going,
-    max_available_going,
-    max_going
-  )
+  going <- min(  going, max_available_going, max_going  )
 
 
-  if(going < min_going)
-    stop(
-      "available run is insufficient",
-      call. = FALSE
-    )
+  if(going < min_going) stop( "available run is insufficient", call. = FALSE  )
 
 
   run <- stair_horizontal_run(
@@ -126,21 +121,21 @@ stair_compute <- function(
 
   structure(
     list(
-      height = height,
-      max_run = max_run,
-      unused_run = max_run - run$overall_run,
+      height = height 
+      , max_run = max_run 
+      , unused_run = max(0, max_run - run$overall_run)
 
-      start = start,
-      end = end,
+      , start = start 
+      , end = end 
 
-      rise = rise,
-      build = run,
-      geometry = geometry,
+      , rise = rise  
+      , build = run 
+      , geometry = geometry 
 
-      constraints = list(
-        blondel_target = blondel_target,
-        min_going = min_going,
-        max_going = max_going
+      , constraints = list(
+        blondel_target = blondel_target 
+        , min_going = min_going
+        , max_going = max_going
       )
     ),
     class = "stair_solution"

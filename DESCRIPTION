@@ -2,8 +2,8 @@ Package: stairtools
 Title: Compute Stairs
 Version: 0.0.9000
 Authors@R: 
-    person("Clément", "Laverdet", , "first.last@example.com", role = c("aut", "cre"))
-Description: Compute stairs and get measures and materials estimation.
+    person("Clément", "Laverdet", , "clementlvd@gmail.com", role = c("aut", "cre"))
+Description: Compute stairs and get measures.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

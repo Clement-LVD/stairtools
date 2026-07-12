@@ -188,7 +188,7 @@ if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the sa
 #' @param ... Additional graphical parameters passed to [plot()].
 #'
 #' @return No return value. Produces a base R plot.
-#'
+#' @importFrom graphics abline grid lines points segments text title
 #' @export 
 #' @method plot stair_geometry
 plot.stair_geometry <- function(

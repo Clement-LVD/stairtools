@@ -12,7 +12,7 @@ stair_compute(
   first_step_is_floor = FALSE,
   last_step_is_landing = FALSE,
   blondel_target = 630,
-  min_going = 0,
+  min_going = 150,
   max_going = 350
 )
 }
@@ -31,9 +31,9 @@ stair_compute(
 
 \item{blondel_target}{\code{numeric} - Target Blondel value in mm.}
 
-\item{min_going}{\code{numeric} - Minimum acceptable tread depth in mm.}
+\item{min_going}{\code{numeric} - Minimum acceptable tread depth (horizontal depth of one tread) in mm. Default is 150 mm.}
 
-\item{max_going}{\code{numeric} - Maximum acceptable tread depth in mm.}
+\item{max_going}{\code{numeric} - Maximum acceptable tread depth (horizontal depth of one tread) in mm. Default is 350 mm.}
 }
 \value{
 Object of class "stair_solution".
