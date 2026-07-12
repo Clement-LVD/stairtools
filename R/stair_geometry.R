@@ -1,6 +1,6 @@
 #' Create stair geometric model
 #'
-#' Creates the construction geometry of the stair flight.
+#' Creates the walkable geometry of a stair flight.
 #'
 #' @param rise Object of class "stair_rise".
 #' @param run Object of class "stair_run".
@@ -30,15 +30,15 @@ stair_geometry <- function(
   
   
   profile <- data.frame(
-    x = x,
-    y = y
+    x = numeric(),
+    y = numeric()
   )
   
   
   steps <- data.frame(
     level = 0,
-    x = x,
-    height = y,
+    x = 0,
+    height = 0,
     depth = 0,
     type = ifelse(
       first_step_is_floor,
@@ -48,33 +48,33 @@ stair_geometry <- function(
   )
   
   
-  # Construction of the flight
+  #
+  # Construction du profil réel
+  #
   
   for(i in seq_len(run$n_treads)) {
     
     
-    # horizontal tread
-    x <- x + run$going
-    
+    # montée
+    y <- y + rise$rise
     
     profile <- rbind(
       profile,
       data.frame(
-        x=x,
-        y=y
+        x = x,
+        y = y
       )
     )
     
     
-    # riser
-    y <- y + rise$rise
-    
+    # marche
+    x <- x + run$going
     
     profile <- rbind(
       profile,
       data.frame(
-        x=x,
-        y=y
+        x = x,
+        y = y
       )
     )
     
@@ -93,59 +93,44 @@ stair_geometry <- function(
   }
   
   
-  # Arrival level
+  #
+  # Arrivée
+  #
+  
+  # dernière hauteur
   if(y < rise$height) {
     
-    
     y <- rise$height
-    
     
     profile <- rbind(
       profile,
       data.frame(
-        x=x,
-        y=y
+        x = x,
+        y = y
       )
     )
     
-    
-    if(last_step_is_landing && run$end$depth > 0) {
-      
-      steps <- rbind(
-        steps,
-        data.frame(
-          level = rise$n_rises,
-          x = x,
-          height = y,
-          depth = ifelse(
-            last_step_is_landing,
-            run$going,
-            0
-          ),
-          type = ifelse(
-            last_step_is_landing,
-            "landing",
-            "arrival"
-          )
-        )
-      )
-      
-    } else {
-      
-      
-      steps <- rbind(
-        steps,
-        data.frame(
-          level=rise$n_rises,
-          x=x,
-          height=y,
-          depth=0,
-          type="arrival"
-        )
-      )
-    }
-    
   }
+  
+  
+  steps <- rbind(
+    steps,
+    data.frame(
+      level = rise$n_rises,
+      x = x,
+      height = rise$height,
+      depth = ifelse(
+        last_step_is_landing,
+        run$end$depth,
+        0
+      ),
+      type = ifelse(
+        last_step_is_landing,
+        "landing",
+        "arrival"
+      )
+    )
+  )
   
   
   structure(
@@ -155,7 +140,6 @@ stair_geometry <- function(
       
       steps = steps,
       
-      
       height = rise$height,
       
       n_rises = rise$n_rises,
@@ -164,43 +148,35 @@ stair_geometry <- function(
       
       going = run$going,
       
-      
       flight_run = run$flight_run,
       
       overall_run = run$overall_run,
       
+      blondel = 2 * rise$rise + run$going,
       
-      blondel = 2 * rise$rise + run$going
+      first_step_is_floor = first_step_is_floor,
       
-      
-     , first_step_is_floor =
-        first_step_is_floor,
-      
-      
-      last_step_is_landing =
-        last_step_is_landing,
-      
+      last_step_is_landing = last_step_is_landing,
       
       start = run$start,
       
       end = run$end,
       
-      
-      units="mm"
+      units = "mm"
       
     ),
     class="stair_geometry"
   )
 }
 
-#' Plot stair geometry with cumulative dimensions
+#' Plot stair geometry with construction references
 #'
-#' Draws a stair profile and displays cumulative horizontal and vertical
-#' dimensions from the starting reference point.
+#' Draws the stair profile with cumulative dimensions and reference
+#' levels showing floor and arrival levels.
 #'
-#' @param x Object of class \code{"stair_geometry"}.
-#' @param show_dimensions Logical. Display cumulative dimensions.
-#'   Default is TRUE.
+#' @param x Object of class "stair_geometry".
+#' @param show_dimensions Logical. Display dimensions.
+#' @param show_references Logical. Display reference levels.
 #' @param ...
 #'
 #' @return No return value. Produces a base R plot.
@@ -209,6 +185,7 @@ stair_geometry <- function(
 plot.stair_geometry <- function(
     x,
     show_dimensions = TRUE,
+    show_references = TRUE,
     ...
 ) {
   
@@ -216,19 +193,18 @@ plot.stair_geometry <- function(
   profile <- x$profile
   steps <- x$steps
   
-  
   x_max <- max(profile$x)
   y_max <- max(profile$y)
   
   
-  # Add space for dimensions
+  # Margins for dimensions
   plot(
     profile$x,
     profile$y,
     type = "n",
     asp = 1,
-    xlim = c(-250, x_max + 350),
-    ylim = c(-250, y_max + 150),
+    xlim = c(-350, x_max + 450),
+    ylim = c(-250, y_max + 250),
     xlab = "Horizontal distance (mm)",
     ylab = "Elevation (mm)",
     ...
@@ -238,7 +214,62 @@ plot.stair_geometry <- function(
   grid()
   
   
-  # Stair profile
+  # Reference levels
+  if(show_references) {
+    
+    
+    # Starting floor reference
+    abline(
+      h = 0,
+      lty = 2
+    )
+    
+    
+    text(
+      x = -250,
+      y = 0,
+      labels = "Departure",
+      adj = 0
+    )
+    
+    
+    # Arrival finished level
+    abline(
+      h = x$height,
+      lty = 2
+    )
+    
+    
+    text(
+      x = -250,
+      y = x$height,
+      labels = "Arrival",
+      adj = 0
+    )
+    
+    
+    # Theoretical vertical limits
+    segments(
+      0,
+      0,
+      0,
+      x$rise,
+      lty = 2
+    )
+    
+    
+    segments(
+      x$flight_run,
+      y_max - x$rise,
+      x$flight_run,
+      y_max,
+      lty = 2
+    )
+    
+  }
+  
+  
+  # Real stair profile
   lines(
     profile$x,
     profile$y,
@@ -257,9 +288,11 @@ plot.stair_geometry <- function(
   if(show_dimensions) {
     
     
-    ## Vertical cumulative dimensions
+    #
+    # Vertical cumulative dimensions
+    #
     
-    dim_x <- x_max + 150
+    dim_x <- x_max + 180
     
     
     segments(
@@ -272,17 +305,15 @@ plot.stair_geometry <- function(
     
     for(i in seq_len(nrow(steps))) {
       
-      
       segments(
-        dim_x - 20,
+        dim_x - 25,
         steps$height[i],
-        dim_x + 20,
+        dim_x + 25,
         steps$height[i]
       )
       
-      
       text(
-        dim_x + 40,
+        dim_x + 50,
         steps$height[i],
         paste0(
           round(steps$height[i],1),
@@ -294,7 +325,9 @@ plot.stair_geometry <- function(
     }
     
     
-    ## Horizontal cumulative dimensions
+    #
+    # Horizontal cumulative dimensions
+    #
     
     dim_y <- -120
     
@@ -309,14 +342,12 @@ plot.stair_geometry <- function(
     
     for(i in seq_len(nrow(steps))) {
       
-      
       segments(
         steps$x[i],
         dim_y - 20,
         steps$x[i],
         dim_y + 20
       )
-      
       
       text(
         steps$x[i],
@@ -330,7 +361,6 @@ plot.stair_geometry <- function(
       
     }
     
-    
   }
   
   
@@ -341,8 +371,8 @@ plot.stair_geometry <- function(
       " mm height"
     )
   )
-  
 }
+
 print.stair_geometry <- function(x, ...) {
   
   
