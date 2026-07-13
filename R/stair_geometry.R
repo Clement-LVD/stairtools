@@ -4,71 +4,80 @@
 #'
 #' @param rise Object of class "stair_rise".
 #' @param run Object of class "stair_run".
-#' @param first_step_is_floor `logical` - Whether the first level represents
-#'   a floor step.
 #' @param last_step_is_landing `logical` - Whether the arrival level is
-#'   represented as a landing.
+#' represented as a landing.
 #'
-#' @return Return object of class "stair_geometry".
+#' @return Object of class "stair_geometry".
 #'
 #' @export
 stair_geometry <- function(
     rise,
     run,
-    first_step_is_floor = FALSE,
     last_step_is_landing = FALSE
 ) {
-  
-  if (length(first_step_is_floor) != 1 || !is.logical(first_step_is_floor)){
-  stop("first_step_is_floor must be logical",   call. = FALSE)}
 
-if (length(last_step_is_landing) != 1 ||  !is.logical(last_step_is_landing)){
-  stop("last_step_is_landing must be logical",   call. = FALSE)}
-  
-  if(!inherits(rise,"stair_rise")) stop("rise must be a stair_rise object",   call. = FALSE)
-# a found_solution var' from stair_rise() is FALSE when the stair is not a valid stair
-if (!isTRUE(rise$found_solution)) stop("rise object does not contain a valid solution",   call. = FALSE)
+  if(length(last_step_is_landing) != 1 ||
+     !is.logical(last_step_is_landing)) {
+    stop(
+      "last_step_is_landing must be logical",
+      call. = FALSE
+    )
+  }
 
-if(!inherits(run,"stair_run")) stop("run must be a stair_run object",   call. = FALSE)
+  if(!inherits(rise, "stair_rise"))
+    stop(
+      "rise must be a stair_rise object",
+      call. = FALSE
+    )
 
-if (run$n_treads < 1) stop("run must contain at least one tread",   call. = FALSE)
+  if(!isTRUE(rise$found_solution))
+    stop(
+      "rise object does not contain a valid solution",
+      call. = FALSE
+    )
 
-if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the same number of rises",   call. = FALSE)
-  
-  
+  if(!inherits(run, "stair_run"))
+    stop(
+      "run must be a stair_run object",
+      call. = FALSE
+    )
+
+  if(run$n_treads < 1)
+    stop(
+      "run must contain at least one tread",
+      call. = FALSE
+    )
+
+  if(rise$n_rises != run$n_rises)
+    stop(
+      "rise and run objects must describe the same number of rises",
+      call. = FALSE
+    )
+
+
   x <- 0
   y <- 0
-  
-  
+
+
   profile <- data.frame(
     x = numeric(),
     y = numeric()
   )
-  
-  
+
+
   steps <- data.frame(
     level = 0,
     x = 0,
     height = 0,
     depth = 0,
-    type = ifelse(
-      first_step_is_floor,
-      "floor_step",
-      "floor"
-    )
+    type = "floor"
   )
-  
-  
-  #
-  # Construct a plan
-  #
-  
+
+
   for(i in seq_len(run$n_treads)) {
-    
-    
-    # rising
+
     y <- y + rise$rise
-    
+
     profile <- rbind(
       profile,
       data.frame(
@@ -76,11 +85,9 @@ if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the sa
         y = y
       )
     )
-    
-    
-    # walking
+
     x <- x + run$going
-    
+
     profile <- rbind(
       profile,
       data.frame(
@@ -88,8 +95,7 @@ if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the sa
         y = y
       )
     )
-    
-    
+
     steps <- rbind(
       steps,
       data.frame(
@@ -100,16 +106,13 @@ if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the sa
         type = "tread"
       )
     )
-    
   }
-  
-  
-  #
-  # Last step 
+
+
   if(y < rise$height) {
-    
+
     y <- rise$height
-    
+
     profile <- rbind(
       profile,
       data.frame(
@@ -117,10 +120,25 @@ if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the sa
         y = y
       )
     )
-    
   }
-  
-  
+
+
+  # Add arrival landing only when requested
+  if(last_step_is_landing && run$end$depth > 0) {
+
+    x <- x + run$end$depth
+
+    profile <- rbind(
+      profile,
+      data.frame(
+        x = x,
+        y = rise$height
+      )
+    )
+
+  }
+
+
   steps <- rbind(
     steps,
     data.frame(
@@ -139,45 +157,39 @@ if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the sa
       )
     )
   )
-  
-  
+
+
   structure(
     list(
-      
-      profile = profile,
-      
-      steps = steps,
-      
-      height = rise$height,
-      
-      n_rises = rise$n_rises,
-      
-      rise = rise$rise,
-      
-      going = run$going,
-      
-      flight_run = run$flight_run,
-      
-      overall_run = run$overall_run,
-      
-      blondel = 2 * rise$rise + run$going,
-      
-      first_step_is_floor = first_step_is_floor,
-      
-      last_step_is_landing = last_step_is_landing,
-      
-      start = run$start,
-      
-      end = run$end,
-      
-      units = "mm"
-      
+
+      profile = profile 
+
+      , steps = steps 
+
+      , height = rise$height 
+
+      , n_rises = rise$n_rises 
+
+      , rise = rise$rise 
+
+      , going = run$going 
+
+      , flight_run = run$flight_run 
+
+      , overall_run = x
+
+      , blondel = 2 * rise$rise + run$going 
+
+      , end = run$end 
+
+      , units = "mm"
+
     ),
-    class="stair_geometry"
+    class = "stair_geometry"
   )
 }
 
-#' Plot stair geometry with construction references
+ #' Plot stair geometry with construction references
 #'
 #' Draws the stair profile with cumulative dimensions and reference
 #' levels showing floor and arrival levels.
@@ -188,27 +200,28 @@ if (rise$n_rises != run$n_rises) stop("rise and run objects must describe the sa
 #' @param ... Additional graphical parameters passed to [plot()].
 #'
 #' @return No return value. Produces a base R plot.
+#'
 #' @importFrom graphics abline grid lines points segments text title
-#' @export 
-#' @method plot stair_geometry
+#'
+#' @export
+#' @method plot stair_geometry 
 plot.stair_geometry <- function(
     x,
     show_dimensions = TRUE,
     show_references = TRUE,
     ...
 ) {
-  
-  profile <- x$profile  
-  
-  if (!nrow(profile)) stop("cannot plot an empty stair geometry")
+
+  profile <- x$profile
+
+  if (!nrow(profile))
+    stop("cannot plot an empty stair geometry")
 
   steps <- x$steps
-  
+
   x_max <- max(profile$x)
   y_max <- max(profile$y)
-  
-  
-  # Margins for dimensions
+
   plot(
     profile$x,
     profile$y,
@@ -220,46 +233,32 @@ plot.stair_geometry <- function(
     ylab = "Elevation (mm)",
     ...
   )
-  
-  
+
   grid()
-  
-  
-  # Reference levels
+
   if(show_references) {
-    
-    
-    # Starting floor reference
-    abline(
-      h = 0,
-      lty = 2
-    )
-    
-    
+
+    abline(h = 0, lty = 2)
+
     text(
       x = -250,
       y = 0,
       labels = "Departure",
       adj = 0
     )
-    
-    
-    # Arrival finished level
+
     abline(
       h = x$height,
       lty = 2
     )
-    
-    
+
     text(
       x = -250,
       y = x$height,
       labels = "Arrival",
       adj = 0
     )
-    
-    
-    # Theoretical vertical limits
+
     segments(
       0,
       0,
@@ -267,8 +266,7 @@ plot.stair_geometry <- function(
       x$rise,
       lty = 2
     )
-    
-    
+
     segments(
       x$flight_run,
       y_max - x$rise,
@@ -276,160 +274,90 @@ plot.stair_geometry <- function(
       y_max,
       lty = 2
     )
-    
   }
-  
-  
-  # Real stair profile
+
   lines(
     profile$x,
     profile$y,
     type = "s",
     lwd = 2
   )
-  
-  
+
   points(
     profile$x,
     profile$y,
     pch = 16
   )
-  
-  
+
   if(show_dimensions) {
-    
-    
-    #
-    # Vertical cumulative dimensions
-    #
-    
+
     dim_x <- x_max + 180
-    
-    
+
     segments(
       dim_x,
       0,
       dim_x,
       y_max
     )
-    
-    
+
     for(i in seq_len(nrow(steps))) {
-      
+
       segments(
         dim_x - 25,
         steps$height[i],
         dim_x + 25,
         steps$height[i]
       )
-      
+
       text(
         dim_x + 50,
         steps$height[i],
         paste0(
-          round(steps$height[i],1),
+          round(steps$height[i], 1),
           " mm"
         ),
         adj = 0
       )
-      
     }
-    
-    
-    #
-    # Horizontal cumulative dimensions
-    #
-    
+
+
     dim_y <- -120
-    
-    
+
     segments(
       0,
       dim_y,
       x_max,
       dim_y
     )
-    
-    
+
     for(i in seq_len(nrow(steps))) {
-      
+
       segments(
         steps$x[i],
         dim_y - 20,
         steps$x[i],
         dim_y + 20
       )
-      
+
       text(
         steps$x[i],
         dim_y - 50,
         paste0(
-          round(steps$x[i],1),
+          round(steps$x[i], 1),
           " mm"
         ),
         cex = 0.8
       )
-      
     }
-    
   }
-  
-  
+
   title(
     main = paste0(
       "Stair geometry - ",
       x$height,
       " mm height"
     )
-  ) 
-  
-  invisible(x)
-}
-
-#' @export
-#' @method print stair_geometry
-print.stair_geometry <- function(x, ...) {
-  
-  
-  cat("Stair geometry\n\n")
-  
-  
-  cat(
-    "Height :",
-    x$height,
-    "mm\n"
   )
-  
-  
-  cat(
-    "Number of rises :",
-    x$n_rises,
-    "\n"
-  )
-  
-  
-  cat(
-    "Rise :",
-    x$rise,
-    "mm\n"
-  )
-  
-  
-  cat(
-    "Going :",
-    x$going,
-    "mm\n"
-  )
-  
-  
-  cat(
-    "Blondel :",
-    round(x$blondel,1),
-    "mm\n\n"
-  )
-  
-  
-  print(x$steps)
 
   invisible(x)
 }

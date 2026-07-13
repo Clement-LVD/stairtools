@@ -6,6 +6,11 @@
 \usage{
 check_numeric(x, name)
 }
+\arguments{
+\item{x}{Value to test}
+
+\item{name}{Name of the value, in order to have a dedicated message}
+}
 \description{
 Internal helper to validate numeric scalar inputs
 }

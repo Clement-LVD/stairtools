@@ -67,19 +67,99 @@ test_that("stair_compute rejects insufficient space", {
 
 })
 
-
-test_that("stair_compute accepts landings", {
+ test_that("stair_compute accepts arrival landing", {
 
   result <- stair_compute(
     height = 1000,
     max_run = 3000,
-    start = landing(depth = 500),
-    end = landing(depth = 500)
+    last_step_is_landing = TRUE,
+    end_depth = 500
   )
 
   expect_equal(
-    result$start$depth,
+    result$end$depth,
     500
+  )
+
+})
+
+# last step :
+test_that("landing flag affects geometry labels", {
+
+  s <- stair_compute(
+    height = 840,
+    max_run = 2000,
+    last_step_is_landing = TRUE
+  )
+
+  expect_equal(
+    s$geometry$steps$type[1],
+    "floor"
+  )
+
+  expect_equal(
+    tail(s$geometry$steps$type, 1),
+    "landing"
+  )
+
+})
+
+test_that("arrival landing increases horizontal geometry", {
+
+  s_no_landing <- stair_compute(
+    height = 840,
+    max_run = 2000,
+    last_step_is_landing = FALSE
+  )
+
+ s_landing <- stair_compute(
+  height = 840,
+  max_run = 2000,
+  last_step_is_landing = TRUE,
+  end_depth = 500
+)
+
+  expect_gt(
+    max(s_landing$geometry$steps$x),
+    max(s_no_landing$geometry$steps$x)
+  )
+
+})
+
+test_that("arrival landing consumes available run", {
+
+  s1 <- stair_compute(
+    height = 840,
+    max_run = 2000
+  )
+
+  s2 <- stair_compute(
+    height = 840,
+    max_run = 2000,
+    last_step_is_landing = TRUE
+  )
+
+  s3 <- stair_compute(
+    height = 840,
+    max_run = 2000,
+    last_step_is_landing = TRUE,
+    end_depth = 1000
+  )
+
+
+  expect_equal(
+    s1$geometry$overall_run,
+    1176
+  )
+
+  expect_equal(
+    s2$geometry$overall_run,
+    1470
+  )
+
+  expect_equal(
+    s3$geometry$overall_run,
+    2000
   )
 
 })

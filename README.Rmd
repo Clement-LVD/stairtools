@@ -39,6 +39,7 @@ $$
 where $r$ is the riser height, $g$ is the tread depth (going), and $B$ is the target Blondel value.
 
 
+
 ## Installation
 
 Install the development version from GitHub:
@@ -75,36 +76,7 @@ The plot displays:
 - cumulative vertical dimensions.
 
 
-```{r examples2}
-
-s <- stair_compute(
-  height = 3000,
-  max_run = 6000,
-  start = landing(depth = 1200),
-  end = landing(depth = 1000)
-)
-
-str(s)
-
-```
-
-## Constraints
-
-The computation accepts optional limits:
-
-```{r examples3} 
-
-s <- stair_compute(
-  height = 3000,
-  max_run = 6000,
-  start = landing(depth = 1200),
-  end = landing(depth = 1000)
-)
- 
-
-```
-
-Where:
+Main parameters:
 
 - blondel_target controls the preferred comfort relationship,
 - min_going prevents unrealistic very small treads,
@@ -113,3 +85,26 @@ Where:
 ## Units
 
 All dimensions are expressed in millimetres.
+
+## Optional parameters
+
+Add a landing step with depth similar to the other steps:
+
+```{r examples2, eval = TRUE, echo = TRUE}
+ 
+
+s <- stair_compute(height = 840, max_run = 1040, last_step_is_landing = TRUE)
+
+plot(s$geometry)
+
+```
+
+Add a landing step with a custom depth :
+
+```{r examples-landing-step, eval = TRUE, echo = TRUE}
+ 
+s <- stair_compute(height = 840, max_run = 1040, end_depth = 100, last_step_is_landing = TRUE )
+
+plot(s$geometry)
+
+```

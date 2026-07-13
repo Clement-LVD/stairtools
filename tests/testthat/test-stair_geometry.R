@@ -14,7 +14,6 @@ test_that("stair_geometry returns a stair_geometry object", {
 
 })
 
-
 test_that("stair_geometry contains expected fields", {
 
   rise <- stair_rise(3000)
@@ -38,16 +37,12 @@ test_that("stair_geometry contains expected fields", {
       "flight_run",
       "overall_run",
       "blondel",
-      "first_step_is_floor",
-      "last_step_is_landing",
-      "start",
       "end",
       "units"
     )
   )
 
 })
-
 
 test_that("stair_geometry preserves rise and run dimensions", {
 
@@ -65,7 +60,7 @@ test_that("stair_geometry preserves rise and run dimensions", {
   expect_equal(result$rise, rise$rise)
   expect_equal(result$going, run$going)
   expect_equal(result$flight_run, run$flight_run)
-  expect_equal(result$overall_run, run$overall_run)
+  expect_equal( result$overall_run, run$overall_run )
 
 })
 
@@ -126,30 +121,6 @@ test_that("number of tread steps matches run", {
 
 })
 
-
-test_that("first step option changes floor type", {
-
-  rise <- stair_rise(3000)
-
-  run <- stair_horizontal_run(
-    n_rises = rise$n_rises,
-    going = 250
-  )
-
-  result <- stair_geometry(
-    rise,
-    run,
-    first_step_is_floor = TRUE
-  )
-
-  expect_equal(
-    result$steps$type[1],
-    "floor_step"
-  )
-
-})
-
-
 test_that("last landing option changes arrival type", {
 
   rise <- stair_rise(3000)
@@ -176,6 +147,11 @@ test_that("last landing option changes arrival type", {
     1200
   )
 
+  expect_equal(
+    result$overall_run,
+    run$flight_run + 1200
+  )
+
 })
 
 
@@ -187,16 +163,7 @@ test_that("invalid logical options give error", {
     n_rises = rise$n_rises,
     going = 250
   )
-
-  expect_error(
-    stair_geometry(
-      rise,
-      run,
-      first_step_is_floor = 1
-    ),
-    "first_step_is_floor must be logical"
-  )
-
+ 
   expect_error(
     stair_geometry(
       rise,
@@ -303,5 +270,69 @@ test_that("plot method works", {
   )
 
   dev.off()
+
+})
+
+# without landing : no last step added
+test_that("without landing option no arrival landing is added", {
+
+  rise <- stair_rise(3000)
+
+  run <- stair_horizontal_run(
+    n_rises = rise$n_rises,
+    going = 250,
+    end = landing(depth = 1200, type = "end")
+  )
+
+  result <- stair_geometry(
+    rise,
+    run,
+    last_step_is_landing = FALSE
+  )
+
+  expect_equal(
+    tail(result$steps$type, 1),
+    "arrival"
+  )
+
+  expect_equal(
+    result$overall_run,
+    run$flight_run
+  )
+
+})
+
+test_that("landing depth increases overall geometry", {
+
+  rise <- stair_rise(3000)
+
+  run_no_end <- stair_horizontal_run(
+    n_rises = rise$n_rises,
+    going = 250
+  )
+
+  run_end <- stair_horizontal_run(
+    n_rises = rise$n_rises,
+    going = 250,
+    end = landing(depth = 1000)
+  )
+
+
+  g1 <- stair_geometry(
+    rise,
+    run_no_end
+  )
+
+  g2 <- stair_geometry(
+    rise,
+    run_end,
+    last_step_is_landing = TRUE
+  )
+
+
+  expect_gt(
+    g2$overall_run,
+    g1$overall_run
+  )
 
 })

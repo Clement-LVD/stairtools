@@ -7,9 +7,7 @@
 stair_compute(
   height,
   max_run,
-  start = landing(),
-  end = landing(),
-  first_step_is_floor = FALSE,
+  end_depth = NULL,
   last_step_is_landing = FALSE,
   blondel_target = 630,
   min_going = 150,
@@ -21,11 +19,7 @@ stair_compute(
 
 \item{max_run}{\code{numeric} - Maximum available horizontal length in mm.}
 
-\item{start}{A \code{landing} object representing the starting landing.}
-
-\item{end}{A \code{landing} object representing the ending landing.}
-
-\item{first_step_is_floor}{\code{logical} - Whether the first level represents a floor.}
+\item{end_depth}{\code{numeric} The desired horizontal length for the ending landing in mm.}
 
 \item{last_step_is_landing}{\code{logical} - Whether the arrival level is a landing.}
 

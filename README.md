@@ -71,117 +71,7 @@ The plot displays:
 - cumulative horizontal dimensions,
 - cumulative vertical dimensions.
 
-``` r
-
-s <- stair_compute(
-  height = 3000,
-  max_run = 6000,
-  start = landing(depth = 1200),
-  end = landing(depth = 1000)
-)
-
-str(s)
-#> List of 9
-#>  $ height     : num 3000
-#>  $ max_run    : num 6000
-#>  $ unused_run : num 0
-#>  $ start      :List of 3
-#>   ..$ type : chr "none"
-#>   ..$ depth: num 1200
-#>   ..$ units: chr "mm"
-#>   ..- attr(*, "class")= chr "landing"
-#>  $ end        :List of 3
-#>   ..$ type : chr "none"
-#>   ..$ depth: num 1000
-#>   ..$ units: chr "mm"
-#>   ..- attr(*, "class")= chr "landing"
-#>  $ rise       :List of 10
-#>   ..$ height        : num 3000
-#>   ..$ n_rises       : int 18
-#>   ..$ rise          : num 167
-#>   ..$ score         : num 6.67
-#>   ..$ candidates    :'data.frame':   4 obs. of  3 variables:
-#>   .. ..$ n_rises: int [1:4] 18 17 16 15
-#>   .. ..$ rise   : num [1:4] 167 176 188 200
-#>   .. ..$ score  : num [1:4] 6.67 16.47 27.5 40
-#>   ..$ target_rise   : num 160
-#>   ..$ min_rise      : num 160
-#>   ..$ max_rise      : num 200
-#>   ..$ units         : chr "mm"
-#>   ..$ found_solution: logi TRUE
-#>   ..- attr(*, "class")= chr "stair_rise"
-#>  $ build      :List of 8
-#>   ..$ n_rises    : int 18
-#>   ..$ n_treads   : num 17
-#>   ..$ going      : num 224
-#>   ..$ flight_run : num 3800
-#>   ..$ overall_run: num 6000
-#>   ..$ start      :List of 3
-#>   .. ..$ type : chr "none"
-#>   .. ..$ depth: num 1200
-#>   .. ..$ units: chr "mm"
-#>   .. ..- attr(*, "class")= chr "landing"
-#>   ..$ end        :List of 3
-#>   .. ..$ type : chr "none"
-#>   .. ..$ depth: num 1000
-#>   .. ..$ units: chr "mm"
-#>   .. ..- attr(*, "class")= chr "landing"
-#>   ..$ units      : chr "mm"
-#>   ..- attr(*, "class")= chr "stair_run"
-#>  $ geometry   :List of 14
-#>   ..$ profile             :'data.frame': 35 obs. of  2 variables:
-#>   .. ..$ x: num [1:35] 0 224 224 447 447 ...
-#>   .. ..$ y: num [1:35] 167 167 333 333 500 ...
-#>   ..$ steps               :'data.frame': 19 obs. of  5 variables:
-#>   .. ..$ level : num [1:19] 0 1 2 3 4 5 6 7 8 9 ...
-#>   .. ..$ x     : num [1:19] 0 224 447 671 894 ...
-#>   .. ..$ height: num [1:19] 0 167 333 500 667 ...
-#>   .. ..$ depth : num [1:19] 0 224 224 224 224 ...
-#>   .. ..$ type  : chr [1:19] "floor" "tread" "tread" "tread" ...
-#>   ..$ height              : num 3000
-#>   ..$ n_rises             : int 18
-#>   ..$ rise                : num 167
-#>   ..$ going               : num 224
-#>   ..$ flight_run          : num 3800
-#>   ..$ overall_run         : num 6000
-#>   ..$ blondel             : num 557
-#>   ..$ first_step_is_floor : logi FALSE
-#>   ..$ last_step_is_landing: logi FALSE
-#>   ..$ start               :List of 3
-#>   .. ..$ type : chr "none"
-#>   .. ..$ depth: num 1200
-#>   .. ..$ units: chr "mm"
-#>   .. ..- attr(*, "class")= chr "landing"
-#>   ..$ end                 :List of 3
-#>   .. ..$ type : chr "none"
-#>   .. ..$ depth: num 1000
-#>   .. ..$ units: chr "mm"
-#>   .. ..- attr(*, "class")= chr "landing"
-#>   ..$ units               : chr "mm"
-#>   ..- attr(*, "class")= chr "stair_geometry"
-#>  $ constraints:List of 3
-#>   ..$ blondel_target: num 630
-#>   ..$ min_going     : num 150
-#>   ..$ max_going     : num 350
-#>  - attr(*, "class")= chr "stair_solution"
-```
-
-## Constraints
-
-The computation accepts optional limits:
-
-``` r
-
-s <- stair_compute(
-  height = 3000,
-  max_run = 6000,
-  start = landing(depth = 1200),
-  end = landing(depth = 1000)
-)
- 
-```
-
-Where:
+Main parameters:
 
 - blondel_target controls the preferred comfort relationship,
 - min_going prevents unrealistic very small treads,
@@ -190,3 +80,28 @@ Where:
 ## Units
 
 All dimensions are expressed in millimetres.
+
+## Optional parameters
+
+Add a landing step with depth similar to the other steps:
+
+``` r
+ 
+
+s <- stair_compute(height = 840, max_run = 1040, last_step_is_landing = TRUE)
+
+plot(s$geometry)
+```
+
+![](README_files/figure-gfm/examples2-1.png)<!-- -->
+
+Add a landing step with a custom depth :
+
+``` r
+ 
+s <- stair_compute(height = 840, max_run = 1040, end_depth = 100, last_step_is_landing = TRUE )
+
+plot(s$geometry)
+```
+
+![](README_files/figure-gfm/examples-landing-step-1.png)<!-- -->
