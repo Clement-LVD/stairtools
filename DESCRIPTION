@@ -1,8 +1,8 @@
 Package: stairtools
 Title: Compute Stairs
-Version: 0.1
+Version: 0.2
 Authors@R: 
-    person("Clément", "Laverdet", , "clementlvd@gmail.com", role = c("aut", "cre"))
+    person("Clément", "Laverdet", , "clementlvd@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4466-3394"))
 Description: Compute stairs and get measures.
 License: GPL (>= 3)
 Encoding: UTF-8
