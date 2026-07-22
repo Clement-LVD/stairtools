@@ -30,45 +30,34 @@ calculer_toutes_solutions(
 Une liste :
 \itemize{
 \item \code{candidats_nombre_marches} : data.frame des nombres de
-marches valides (issu de \code{\link{nombre_marches_optimal}})
-\item \code{par_candidat} : liste nommée (une entrée par nombre de
-marches), chacune avec \code{n_marches}, \code{hauteur_marche},
-\code{ecart_hauteur_ideale}, \code{giron_standard}, \code{scenarios}
-(5 scénarios de giron) et \code{geometries} (géométrie complète par
-scénario, utilisable avec \code{\link{plot_escalier}})
-\item \code{resume} : data.frame long, une ligne par combinaison
-(nombre de marches × scénario), avec \code{ecart_hauteur_ideale},
-\code{ecart_blondel}, \code{distance_utilisee},
-\code{depasse_espace}, \code{palier_impossible} — pour comparer et
-choisir après coup.
+marches valides (issu de \code{\link{optimal_nsteps}})
+\item \code{solutions} : LA table (une ligne par nombre de marches ×
+scénario), avec \code{ecart_hauteur_ideale}, \code{ecart_blondel},
+\code{distance_utilisee}, \code{depasse_espace},
+\code{palier_impossible}, et la géométrie complète embarquée dans
+\code{geometrie} (colonne-liste : \code{solutions$geometrie[[i]]}
+est directement utilisable avec \code{plot()}).
 }
 }
 \description{
 Fonction principale du package. Pour chaque nombre de marches valide
-(\code{\link{nombre_marches_optimal}}), génère les 5 scénarios de giron
+(\code{\link{optimal_nsteps}}), génère les 5 scénarios de giron
 (\code{\link{generer_scenarios_giron}}) et leur géométrie complète
-(\code{\link{construire_geometrie}}). Ne sélectionne aucune "meilleure"
-solution : tout est renvoyé pour comparaison ultérieure (voir
-\code{resume}, qui inclut \code{ecart_hauteur_ideale} et
-\code{ecart_blondel} pour classer après coup).
+(\code{\link{construire_geometrie}}), rassemblés dans \strong{une seule
+table} (\code{\link{construire_table_solutions}}) : géométrie comprise, en
+colonne-liste. Ne sélectionne aucune "meilleure" solution elle-même — voir
+\code{\link{meilleure_solution}} pour ça.
 }
 \examples{
-sol <- calculer_toutes_solutions(hauteur_a_franchir = 200, distance_max = 1000)
+sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 150)
 sol$candidats_nombre_marches
-head(sol$resume)
+sol$solutions  # affichage propre (colonne géométrie masquée, cf print.escalier_solutions)
 
-# Tracer une solution précise :
-plot(sol$par_candidat$n10$geometries$sans_palier_blondel )
+# Meilleure solution faisable, géométrie directement accessible :
+meilleure <- meilleure_solution(sol$solutions)
+plot(meilleure$geometrie[[1]])
 
-# Comparer tous les scénarios du meilleur candidat hauteur (première ligne
-# de candidats_nombre_marches) par écart à Blondel :
-meilleur_n <- sol$candidats_nombre_marches$n_marches[1]
-subset(sol$resume, n_marches == meilleur_n)
+# Filtrer/trier à la main, comme un data.frame classique :
+subset(sol$solutions, n_marches == 10 & !depasse_espace)
 
-sol <- calculer_toutes_solutions(hauteur_a_franchir = 200, distance_max = 160)
-valid_solution <- sol$resume[!sol$resume$depasse_espace & !sol$resume$palier_impossible ,  ]
-best_solution <- valid_solution[which.min(valid_solution$ecart_blondel ), ] 
-best_solution
-n_marches_best_solution <- paste0("n", best_solution$n_marches)
-plot(sol$par_candidat[n_marches_best_solution][n_marches_best_solution][best_solution$scenario]geometries$sans_palier_blondel )
 }

@@ -60,8 +60,8 @@ generer_scenarios_giron <- function(n_marches, distance_max, giron_standard) {
     return(list())
   }
 
-  # N'évalue l'écart à Blondel que sur les girons "standard" (montée réelle) ;
-  # le giron de la marche palière est exclu (déjà au niveau du sol fini).
+  # N'évalue l'écart à Blondel que sur les girons "standard"  ;
+  # le giron de la marche palière est exclu (au niveau du sol fini).
   ecart_blondel <- function(girons, type_girons) {
     mean(abs(girons[type_girons == "standard"] - giron_standard))
   }
@@ -77,7 +77,8 @@ generer_scenarios_giron <- function(n_marches, distance_max, giron_standard) {
     type_girons = types_1,
     distance_utilisee = distance_1,
     depasse_espace = distance_1 > distance_max,
-    ecart_blondel = ecart_blondel(girons_1, types_1)
+    ecart_blondel = ecart_blondel(girons_1, types_1),
+    avec_paliere = FALSE
   )
 
   # 2. Sans palière, giron uniforme (hors Blondel, occupe tout l'espace)
@@ -89,7 +90,8 @@ generer_scenarios_giron <- function(n_marches, distance_max, giron_standard) {
     type_girons = types_2,
     distance_utilisee = distance_max,
     depasse_espace = FALSE,
-    ecart_blondel = ecart_blondel(girons_2, types_2)
+    ecart_blondel = ecart_blondel(girons_2, types_2),
+    avec_paliere = FALSE
   )
 
   # 3. Avec palière standard (giron palière = giron standard ; surplus possible)
@@ -101,7 +103,8 @@ generer_scenarios_giron <- function(n_marches, distance_max, giron_standard) {
     type_girons = types_3,
     distance_utilisee = distance_3,
     depasse_espace = distance_3 > distance_max,
-    ecart_blondel = ecart_blondel(girons_3, types_3)
+    ecart_blondel = ecart_blondel(girons_3, types_3),
+    avec_paliere = TRUE
   )
 
   # 4. Avec palière, occupant tout l'espace restant ("giga-palier")
@@ -113,7 +116,8 @@ generer_scenarios_giron <- function(n_marches, distance_max, giron_standard) {
     type_girons = types_4,
     distance_utilisee = distance_1 + max(extension_max, 0),
     palier_impossible = extension_max <= 0,
-    ecart_blondel = ecart_blondel(girons_4, types_4)
+    ecart_blondel = ecart_blondel(girons_4, types_4),
+    avec_paliere = TRUE
   )
 
   # 5. Avec palière, giron uniforme (toutes les marches, y compris la palière)
@@ -125,7 +129,8 @@ generer_scenarios_giron <- function(n_marches, distance_max, giron_standard) {
     type_girons = types_5,
     distance_utilisee = distance_max,
     depasse_espace = FALSE,
-    ecart_blondel = ecart_blondel(girons_5, types_5)
+    ecart_blondel = ecart_blondel(girons_5, types_5),
+    avec_paliere = TRUE
   )
 
   scenarios

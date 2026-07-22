@@ -16,6 +16,81 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-`stairtools` provides tools to compute and visualize straight stair geometries from basic architectural constraints, i.e. total rise to elevate and total length available.
+🪜 `stairtools` is an R package designed to calculate and visualise *staircase* designs, based on basic architectural constraints. Results are sorted according to a step
+height optimization, in order to choose easily the best stair dimensioning.
 
-[under complete reworking : code is now very simple and readable (<3), but there is work to do with the answered return [return is very complicated list-structure, too complex to explore]]
+## Installation
+
+Install the released version from CRAN:
+```{r eval = FALSE}
+install.packages("stairtools")
+```
+
+Or install the latest development version from GitHub:
+
+```{r eval = FALSE}
+# install.packages("remotes")
+remotes::install_github("clement-LVD/stairtools")
+```
+
+## Preamble and usage
+
+**㎝.** All dimensions are expressed in *centimetres*.
+
+**Input.** The user must indicate a total rise to elevate and a total length available. If length is not a constraint on your project, you can specify a very large value.
+
+**Output.** The package calculates all possible – reasonable – staircase configurations and return various solutions, i.e. varying numbers of steps and whether or not there is a landing step. 
+
+> 𓊍 The possible solutions are scored according to Blondel's rule (see below) and the best solution is identified, but you can explore the alternative solutions.
+
+**Blondel's rule.** A stair geometry follows the Blondel - comfort - relationship.
+
+$$
+2r + g = B
+$$
+Where $r$ is the riser height, $g$ is the tread depth (going), and $B$ is the target Blondel value.
+
+> 𓊍  The Blondel ideal value should be 63 cm : it is recommended to prioritise the solution with the smallest deviation from the Blondel target value, i.e. 63 cm. Solutions with a Blondel target value between 60 cm and 64 cm are acceptable.
+
+**Best solution.** Possible solutions are sorted by their deviation from the Blondel target value. 
+
+**Edges cases.** In the - unlikely - event of a situation where several solutions have a similar Blondel value, solutions are sorted by their deviation from the minimum step height, i.e. 16 cm. This is to ensure that the staircase is comfortable for older people, children and dogs. 
+
+## Examples
+
+```{r}
+
+library(stairtools)
+
+sol <- calculer_toutes_solutions(hauteur_a_franchir = 103, distance_max = 133)
+sol$candidats_nombre_marches
+
+possible_solutions <- sol$solutions[sol$solutions$solution_possible == TRUE, ]
+
+print(possible_solutions) 
+
+```
+
+Or simply find the best solution:
+
+```{r}
+
+sol2 <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 150)
+
+best <- meilleure_solution(sol2$solutions)
+
+plot(best$geometrie[[1]])
+
+```
+
+View a drawing with dimensional measurements.
+
+```{r}
+
+sol3 <- calculer_toutes_solutions(hauteur_a_franchir = 80, distance_max = 150)
+
+best <- meilleure_solution(sol3$solutions)
+
+plot(best$geometrie[[1]], cotes = TRUE) 
+
+```

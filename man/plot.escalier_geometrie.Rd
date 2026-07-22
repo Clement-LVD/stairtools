@@ -21,5 +21,6 @@ produirait un pairs-plot illisible). Délègue entièrement à
 \examples{
 geo <- construire_geometrie(5, 17.33, rep(28.33, 4))
 plot(geo)
+plot(geo, cotes = TRUE)
 
 }

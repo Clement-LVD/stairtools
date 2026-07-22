@@ -9,6 +9,8 @@ plot_escalier(
   col_standard = "black",
   col_paliere = "red",
   col_sol = "gray50",
+  cotes = FALSE,
+  cex_cotes = 0.6,
   ...
 )
 }
@@ -21,12 +23,19 @@ plot_escalier(
 
 \item{col_sol}{Couleur des lignes pointillées de sol fini. Défaut "gray50".}
 
+\item{cotes}{Logique. Si \code{TRUE}, ajoute les côtes cumulées (x en bas,
+y à gauche) sur chaque marche — voir \code{\link{plot_escalier_cotes}}
+pour un raccourci. Défaut \code{FALSE}.}
+
+\item{cex_cotes}{Taille du texte des côtes (si \code{cotes = TRUE}). Défaut 0.6.}
+
 \item{...}{Arguments supplémentaires passés à \code{plot()}.}
 }
 \description{
 Trace chaque contremarche (segment vertical) et chaque giron (segment
 horizontal) à partir d'un data.frame de géométrie produit par
-\code{\link{construire_geometrie}} (ou \code{calculer_toutes_solutions(...)$par_candidat[[...]]$geometries[[...]]}).
+\code{\link{construire_geometrie}} (ou d'une ligne de
+\code{calculer_toutes_solutions(...)$solutions$geometrie[[i]]}).
 La marche palière (le cas échéant) est mise en évidence dans une couleur
 différente. Le sol fini de départ (y=0) et d'arrivée (y=hauteur max) sont
 tracés en pointillés pour repère.
@@ -41,9 +50,11 @@ d'appeler \code{plot_escalier()} par son nom.
 geo <- construire_geometrie(5, 17.33, rep(28.33, 4))
 plot_escalier(geo)
 plot(geo)  # identique, grâce à la classe escalier_geometrie
+plot_escalier(geo, cotes = TRUE)  # avec les côtes cumulées
 
 # Sur une solution issue de calculer_toutes_solutions() :
 sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 1000)
-plot_escalier(sol$par_candidat$n10$geometries$avec_palier_max)
+meilleure <- meilleure_solution(sol$solutions)
+plot(meilleure$geometrie[[1]])
 
 }

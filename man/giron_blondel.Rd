@@ -8,7 +8,7 @@ giron_blondel(hauteur_marche, cible = 63)
 }
 \arguments{
 \item{hauteur_marche}{Hauteur de marche (cm), typiquement issue de
-\code{\link{nombre_marches_optimal}}.}
+\code{\link{optimal_nsteps}}.}
 
 \item{cible}{Valeur cible de la relation de Blondel \code{2h + g} (cm). Défaut 63.}
 }
