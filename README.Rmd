@@ -48,6 +48,7 @@ remotes::install_github("clement-LVD/stairtools")
 $$
 2r + g = B
 $$
+
 Where $r$ is the riser height, $g$ is the tread depth (going), and $B$ is the target Blondel value.
 
 > 𓊍  The Blondel ideal value should be 63 cm : it is recommended to prioritise the solution with the smallest deviation from the Blondel target value, i.e. 63 cm. Solutions with a Blondel target value between 60 cm and 64 cm are acceptable.

@@ -47,6 +47,7 @@ steps and whether or not there is a landing step.
 relationship.
 
 $$2r + g = B$$
+
 Where $r$ is the riser height, $g$ is the tread depth (going), and $B$
 is the target Blondel value.
 
