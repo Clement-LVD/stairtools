@@ -71,13 +71,12 @@ that the staircase is comfortable for older people, children and dogs.
 library(stairtools)
 
 sol <- calculer_toutes_solutions(hauteur_a_franchir = 103, distance_max = 133)
-sol$candidats_nombre_marches
-#>   n_marches hauteur_marche ecart_hauteur_ideale
-#> 1         6       17.16667             1.166667
 
-possible_solutions <- sol$solutions[sol$solutions$solution_possible == TRUE, ]
+possible_solutions <- sol[sol$solution_possible == TRUE, ]
 
 print(possible_solutions) 
+#> 
+#>   2 valid solution(s)
 #>   n_marches hauteur_marche ecart_hauteur_ideale giron_standard
 #> 2         6       17.16667             1.166667       28.66667
 #> 5         6       17.16667             1.166667       28.66667
@@ -96,7 +95,7 @@ Or simply find the best solution:
 
 sol2 <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 150)
 
-best <- meilleure_solution(sol2$solutions)
+best <- meilleure_solution(sol2)
 
 plot(best$geometrie[[1]])
 ```
@@ -109,7 +108,7 @@ View a drawing with dimensional measurements.
 
 sol3 <- calculer_toutes_solutions(hauteur_a_franchir = 80, distance_max = 150)
 
-best <- meilleure_solution(sol3$solutions)
+best <- meilleure_solution(sol3)
 
 plot(best$geometrie[[1]], cotes = TRUE) 
 ```

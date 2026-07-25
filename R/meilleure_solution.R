@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' sol <- calculer_toutes_solutions(hauteur_a_franchir = 200, distance_max = 160)
-#' meilleure <- meilleure_solution(sol$solutions)
+#' meilleure <- meilleure_solution(sol)
 #' meilleure[, c("n_marches", "scenario", "ecart_blondel")]
 #' plot(meilleure$geometrie[[1]])
 #'
@@ -24,9 +24,11 @@ meilleure_solution <- function(solutions) {
 
   faisables <- solutions[solutions$solution_possible, ]
 
-  if (nrow(faisables) == 0) {
-    stop("Aucune solution faisable (toutes dépassent l'espace disponible ou sont impossibles). ",
+  if (!any(solutions$solution_possible)) {
+    warning("Aucune solution faisable (toutes dépassent l'espace disponible ou sont inconfortables). ",
          "==> Essayez d'élargir h_min/h_max, d'augmenter distance_max, voire de diminuer ou augmenter la valeur blondel_cible.")
+    
+    return(NULL)
   }
 
   #we have a scoring var' to this point

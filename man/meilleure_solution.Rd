@@ -24,7 +24,7 @@ ni de fouiller de listes imbriquées.
 }
 \examples{
 sol <- calculer_toutes_solutions(hauteur_a_franchir = 200, distance_max = 160)
-meilleure <- meilleure_solution(sol$solutions)
+meilleure <- meilleure_solution(sol)
 meilleure[, c("n_marches", "scenario", "ecart_blondel")]
 plot(meilleure$geometrie[[1]])
 

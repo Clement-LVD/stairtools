@@ -20,7 +20,7 @@ data.frame.
 }
 \examples{
 sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 1000)
-meilleure <- meilleure_solution(sol$solutions)
+meilleure <- meilleure_solution(sol)
 plot_escalier_cotes(meilleure$geometrie[[1]])
 
 }

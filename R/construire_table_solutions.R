@@ -66,8 +66,13 @@ construire_table_solutions <- function(candidats, distance_max, blondel_cible = 
   res$solution_possible <- !res$depasse_espace & (res$avec_paliere == FALSE | (res$avec_paliere == TRUE & !res$palier_impossible))
 
   rownames(res) <- NULL
+
+  res <- structure(res,  "n_valid_solution" = length(which(res$solution_possible) ) ) 
+  
   class(res) <- c("escalier_solutions", class(res))
-  res
+  
+  return(res)
+  
 }
 
 #' Affiche une table de solutions sans la colonne-liste geometrie
@@ -81,7 +86,13 @@ construire_table_solutions <- function(candidats, distance_max, blondel_cible = 
 #'
 #' @export
 print.escalier_solutions <- function(x, ...) {
+
+  n_valid_solutions <- integer(0)
+  n_valid_solutions <- if("solution_possible" %in% names(x)) length(which(x$solution_possible) )
+  if(length(n_valid_solutions) > 0) cat("\n ",n_valid_solutions , "valid solution(s)\n") 
+  
   print.data.frame(x[, setdiff(names(x), "geometrie")], ...)
+  
   cat("(colonne 'geometrie' masquée à l'affichage — accessible via $geometrie[[i]])\n")
   invisible(x)
 }

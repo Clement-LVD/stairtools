@@ -31,13 +31,15 @@
 #'
 #' # Sur une solution issue de calculer_toutes_solutions() :
 #' sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 1000)
-#' meilleure <- meilleure_solution(sol$solutions)
+#' meilleure <- meilleure_solution(sol)
 #' plot(meilleure$geometrie[[1]])
 #'
 #' @export
 plot_escalier <- function(geometrie, col_standard = "black", col_paliere = "red",
                            col_sol = "gray50", cotes = FALSE, cex_cotes = 0.6, ...) {
-
+  
+  if(length(geometrie) == 0) return(graphics::plot.new())
+                            
   x_max <- max(geometrie$x_fin_giron, geometrie$x_contremarche, na.rm = TRUE)
   y_max <- max(geometrie$y_haut, na.rm = TRUE)
   y_min <- min(geometrie$y_bas, na.rm = TRUE)
@@ -114,7 +116,7 @@ plot_escalier <- function(geometrie, col_standard = "black", col_paliere = "red"
 #'
 #' @examples
 #' sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 1000)
-#' meilleure <- meilleure_solution(sol$solutions)
+#' meilleure <- meilleure_solution(sol)
 #' plot_escalier_cotes(meilleure$geometrie[[1]])
 #'
 #' @export

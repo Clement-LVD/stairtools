@@ -54,7 +54,7 @@ plot_escalier(geo, cotes = TRUE)  # avec les côtes cumulées
 
 # Sur une solution issue de calculer_toutes_solutions() :
 sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 1000)
-meilleure <- meilleure_solution(sol$solutions)
+meilleure <- meilleure_solution(sol)
 plot(meilleure$geometrie[[1]])
 
 }

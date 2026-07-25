@@ -10,7 +10,8 @@ calculer_toutes_solutions(
   h_min = 16,
   h_max = 20,
   h_ideale = 16,
-  blondel_cible = 63
+  blondel_cible = 63,
+  show_invalid_solution = FALSE
 )
 }
 \arguments{
@@ -25,19 +26,28 @@ calculer_toutes_solutions(
 \item{h_ideale}{Hauteur de marche idéale (cm). Défaut 16.}
 
 \item{blondel_cible}{Cible de la formule de Blondel \code{2h + g} (cm). Défaut 63.}
+
+\item{show_invalid_solution}{\code{logical} - Show all the solution, even invalid}
 }
 \value{
-Une liste :
+Return a \code{data.frame} (une ligne par nombre de marches ×
+scenario) with :
 \itemize{
-\item \code{candidats_nombre_marches} : data.frame des nombres de
-marches valides (issu de \code{\link{optimal_nsteps}})
-\item \code{solutions} : LA table (une ligne par nombre de marches ×
-scénario), avec \code{ecart_hauteur_ideale}, \code{ecart_blondel},
-\code{distance_utilisee}, \code{depasse_espace},
-\code{palier_impossible}, et la géométrie complète embarquée dans
-\code{geometrie} (colonne-liste : \code{solutions$geometrie[[i]]}
+\item ecart_hauteur_ideale
+\item ecart_blondel
+\item distance_utilisee
+\item depasse_espace
+\item palier_impossible
+\item geometrie - complete geometrie as a \code{list-column} (\code{solutions$geometrie[[i]]}
 est directement utilisable avec \code{plot()}).
 }
+
+Additional attributes give some interesting values :
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{- `candidats_nombre_marches` : `data.frame` des nombres de
+  marches valides (issu de \code{\link{optimal_nsteps}}) 
+- `n_valid_solution` : `integer` - The number of valid solution(s). Equivalent to nrow() of the returned `data.frame` if the parameter `show_invalid_solution` is FALSE (the default)
+}\if{html}{\out{</div>}}
 }
 \description{
 Fonction principale du package. Pour chaque nombre de marches valide
@@ -50,14 +60,15 @@ colonne-liste. Ne sélectionne aucune "meilleure" solution elle-même — voir
 }
 \examples{
 sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 150)
-sol$candidats_nombre_marches
-sol$solutions  # affichage propre (colonne géométrie masquée, cf print.escalier_solutions)
+sol  # affichage propre (colonne géométrie masquée, cf print.escalier_solutions)
 
+# Or get all the solutions, even impossibles
+sol2 <- calculer_toutes_solutions(160, 150, show_invalid_solution = TRUE)
 # Meilleure solution faisable, géométrie directement accessible :
-meilleure <- meilleure_solution(sol$solutions)
+meilleure <- meilleure_solution(sol2)
 plot(meilleure$geometrie[[1]])
 
 # Filtrer/trier à la main, comme un data.frame classique :
-subset(sol$solutions, n_marches == 10 & !depasse_espace)
+subset(sol, n_marches == 10 & !depasse_espace)
 
 }
