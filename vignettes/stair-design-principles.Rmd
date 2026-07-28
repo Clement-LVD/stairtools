@@ -1,0 +1,87 @@
+---
+title: "stair-design-principles"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{stair-design-principles}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Stair design principles
+
+## Historical background
+
+**Historical Approach.** The classical stair-design relationship is commonly expressed as "the Blondel value":
+
+$$
+2R + G \approx L
+$$
+
+where `R` is the rise and `G` is the going. Originally, Blondel introduce^["Blondel probably referred to the French (pre-Revolutionary) royal inch" (Templer, 1992, p. 27).] an ideal value of 64.77 cm (Templer, 1992, p. 27). 
+
+The modern "Blondel's law" introduce the ideal value at 63 cm, with acceptable range of solution between 60 cm to 64 cm. 
+
+**European Norms.** Regarding ISO standards, the European acceptable values are between 58 cm and 66 cm (ISO 14122-3:2016, NF EN ISO 14122-3:2017). Pour les parties communes et ERP, la réglementation indique un minimum de 60 cm. Thus, acceptable values are between 60 cm and 66 cm. 
+
+Le giron doit être compris entre 21 cm and 31 cm (EN ISO 14122-3:2016, Safety of machinery - Permanent means of access to machinery - Part 3: Stairs, stepladders and guard-rails^[French equivalent to EN ISO 14122-3:2016 is NF EN ISO 14122-3:2017.]).
+
+La hauteur maximum de marche est de 21 cm. Le giron minimal de 19 cm.
+
+**French Norms.** Pour le DTU français, il y a 3 classes de confort d'escaliers:
+
+1. Raide 1.32 > H/G > 1
+2. Courant 1 > H/G > 0.78
+3. Confortable H/G < 0.78
+
+Avec H hauteur de marche et G Giron.
+
+**Modern Approach.** Therefore, modern approach have the possibility to enlarge that theoritical value: 
+
+> If we adjust for the pace of people today, depending on leg length and walking speed—say, 28 inches (71 cm) - and express the formula in today’s measures, then it would become: 
+
+$$
+2R + G \approx 71\ cm
+$$
+
+> Templer, John A. The Staircase: Studies of Hazards, Falls, and Safer Design. 2. print. *MIT Press*, 1992. https://doi.org/10.7551/mitpress/6434.001.0001. p. 27
+
+**Experimental Research.**
+
+Experimental research has subsequently investigated stair dimensions
+using several criteria, including energy expenditure, biomechanical
+constraints, perceived difficulty and fall risk. 
+
+> A reasonable compromise would be a stair with risers
+that are not less than 6.3 inches (16 cm) to suit ascent, and risers not more than 7.2 inches (18.3 cm) and goings greater than 9 inches (22.9 cm) to suit descent (Templer, 1992, p. 39).
+
+> • In terms of gait, risers should be 6.3 to 7.2 inches (16-18.3 cm) and goings should not be less than 9 inches (22.9 cm).
+> 
+> • The etiological studies suggest that risers should not exceed 7.5 inches (19.1 cm) and goings should not be less than 9 inches (22.9 cm).
+> 
+> • To accommodate feet adequately, goings should not be less than 11 inches (27.9 cm).
+> 
+> Templer, John A. The Staircase: Studies of Hazards, Falls, and Safer Design. 2. print. *MIT Press*, 1992. https://doi.org/10.7551/mitpress/6434.001.0001. p. 38
+
+
+## Ergonomic research
+
+Theoritical lab' values : 
+cm 
+Rise Goings
+18.3 27.9
+17.8 27.9
+16.5 27.9 29.2 30.5 31.8
+15.2 27.9 29.2 30.5 31.8 33.0 34.3 35.6
+14.0 27.9 29.2 30.5 31.8 33.0
+12.7 27.9 29.2 30.5
+11.7 27.9
+
+p. 39
+

@@ -6,3 +6,4 @@ stairtools.Rproj
 README.html
 /.quarto/
 **/*.quarto_ipynb
+inst/doc

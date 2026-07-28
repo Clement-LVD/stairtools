@@ -1,0 +1,11 @@
+  bibentry(
+bibtype = "Manual",
+  title = "stairtools: Tools for Stair Geometry and Dimensioning",
+  author = person(
+    "Clément",
+    "Laverdet"
+  ),
+  year = 2026,
+  note = "R package version 0.1.0",
+  url = "..."
+)
