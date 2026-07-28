@@ -44,6 +44,8 @@ $$
 60≤2R+G≤64\ cm
 $$
 
+**Anciennes règles Françaises : Escalier hors les normes si giron inférieur à 28 cm. Hauteur maximale de 17 cm.**
+
 **Modern Approach.** Pour les ERP neufs et installations ouvertes au public aménagées, l'arrêté du 20 avril 2017, article 7-1, fixe une hauteur de marche maximale (?) de 16 cm et un giron minimal de 28 cm (https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000034485956). L'arrêté du 24 décembre 2015, article 6 / annexe 6.1, prévoit pour les escaliers des parties communes une hauteur maximale (?) de 17 cm et un giron minimal de 28 cm (https://www.legifrance.gouv.fr/loda/id/JORFTEXT000031692481/).
 
 
