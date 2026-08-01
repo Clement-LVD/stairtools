@@ -3,6 +3,7 @@
 S3method(plot,escalier_geometrie)
 S3method(print,escalier_solutions)
 export(calculer_toutes_solutions)
+export(check_stair_rules)
 export(construire_geometrie)
 export(construire_table_solutions)
 export(generer_scenarios_giron)

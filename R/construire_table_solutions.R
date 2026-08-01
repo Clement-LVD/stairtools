@@ -41,18 +41,18 @@ construire_table_solutions <- function(candidats, distance_max, blondel_cible = 
       geometrie <- construire_geometrie(n_marches, hauteur_marche, sc$girons, sc$type_girons)
 
       data.frame(
-        n_marches            = n_marches,
-        hauteur_marche       = hauteur_marche,
-        ecart_hauteur_ideale = ecart_hauteur_ideale,
-        giron_standard       = giron_standard,
+        n_steps            = n_marches,
+        height       = hauteur_marche,
+        height_target_deviation = ecart_hauteur_ideale,
+        going       = giron_standard,
         scenario             = nom_scenario,
-        distance_utilisee    = sc$distance_utilisee,
-        blondel_value        = (2 * hauteur_marche) + sc$giron[[1]],
-        ecart_blondel        = sc$ecart_blondel,
-        avec_paliere         = isTRUE(sc$avec_paliere),
-        depasse_espace       = isTRUE(sc$depasse_espace),
-        palier_impossible    = isTRUE(sc$palier_impossible),
-        geometrie            = I(list(geometrie)),
+        horizontal_run    = sc$distance_utilisee,
+        blondel       = (2 * hauteur_marche) + sc$giron[[1]],
+        blondel_target_deviation        = sc$ecart_blondel,
+        has_landing         = isTRUE(sc$avec_paliere),
+        horizontal_run_exceeded       = isTRUE(sc$depasse_espace),
+        landing_impossible    = isTRUE(sc$palier_impossible),
+        geometry            = I(list(geometrie)),
         stringsAsFactors     = FALSE
       )
     })
@@ -62,12 +62,12 @@ construire_table_solutions <- function(candidats, distance_max, blondel_cible = 
 
   res <- do.call(rbind, lignes_par_candidat)
 
-  # a possible solution fit in lenght & don't have a paliere step OR there is a POSSIBLE paliere step
-  res$solution_possible <- !res$depasse_espace & (res$avec_paliere == FALSE | (res$avec_paliere == TRUE & !res$palier_impossible))
+  # a valid solution fit in lenght & don't have a paliere step OR there is a POSSIBLE paliere step
+  res$is_valid <- !res$horizontal_run_exceeded & (res$has_landing == FALSE | (res$has_landing == TRUE & !res$landing_impossible))
 
   rownames(res) <- NULL
 
-  res <- structure(res,  "n_valid_solution" = length(which(res$solution_possible) ) ) 
+  res <- structure(res,  "n_valid_solution" = length(which(res$is_valid) ) ) 
   
   class(res) <- c("escalier_solutions", class(res))
   
@@ -88,11 +88,11 @@ construire_table_solutions <- function(candidats, distance_max, blondel_cible = 
 print.escalier_solutions <- function(x, ...) {
 
   n_valid_solutions <- integer(0)
-  n_valid_solutions <- if("solution_possible" %in% names(x)) length(which(x$solution_possible) )
+  n_valid_solutions <- if("is_valid" %in% names(x)) length(which(x$is_valid) )
   if(length(n_valid_solutions) > 0) cat("\n ",n_valid_solutions , "valid solution(s)\n") 
   
   print.data.frame(x[, setdiff(names(x), "geometrie")], ...)
   
-  cat("(colonne 'geometrie' masquée à l'affichage — accessible via $geometrie[[i]])\n")
+  cat("('geometry' list-col is hidden — access via $geometrie[[i]])\n")
   invisible(x)
 }

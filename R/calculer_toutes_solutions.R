@@ -56,16 +56,16 @@ calculer_toutes_solutions <- function(hauteur_a_franchir
   candidats <- optimal_nsteps(hauteur_a_franchir, h_min, h_max, h_ideale)
   solutions <- construire_table_solutions(candidats, distance_max, blondel_cible)
 
-  if(nrow(solutions) == 0 | all(!solutions$solution_possible)) warning("No possibility of a comfortable staircase solution")
+  if(nrow(solutions) == 0 | all(!solutions$is_valid)) warning("No possibility of a comfortable staircase solution")
 
 
   # in order to sort the table : all possible solution first, then sorted by blondel law and - for equally case - sorted as a diff to a theoritical value 
-  solutions <- solutions[order(solutions$solution_possible, solutions$ecart_blondel , solutions$ecart_hauteur_ideale , decreasing = c(TRUE, FALSE, FALSE)), ]
+  solutions <- solutions[order(solutions$is_valid, solutions$blondel_target_deviation , solutions$height_target_deviation , decreasing = c(TRUE, FALSE, FALSE)), ]
 
   # rank is raw number
   solutions$rank <- seq_len(nrow(solutions))
 
-  if(!show_invalid_solution){solutions <- solutions[solutions$solution_possible == TRUE, ]}
+  if(!show_invalid_solution){solutions <- solutions[solutions$is_valid == TRUE, ]}
 
   attr(solutions, "scenarios_n_steps") <- candidats
 
