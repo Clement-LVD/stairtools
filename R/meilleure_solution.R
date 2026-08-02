@@ -14,17 +14,16 @@
 #'   de \code{solutions}.
 #'
 #' @examples
-#' sol <- calculer_toutes_solutions(hauteur_a_franchir = 200, distance_max = 160)
+#' sol <- solve_stairs(200, 160)
 #' meilleure <- meilleure_solution(sol)
-#' meilleure[, c("n_marches", "scenario", "ecart_blondel")]
-#' plot(meilleure$geometrie[[1]])
+#' plot(meilleure$geometry[[1]])
 #'
 #' @export
 meilleure_solution <- function(solutions) {
 
-  faisables <- solutions[solutions$solution_possible, ]
+  faisables <- solutions[solutions$is_valid, ]
 
-  if (!any(solutions$solution_possible)) {
+  if (!any(solutions$is_valid)) {
     warning("Aucune solution faisable (toutes dépassent l'espace disponible ou sont inconfortables). ",
          "==> Essayez d'élargir h_min/h_max, d'augmenter distance_max, voire de diminuer ou augmenter la valeur blondel_cible.")
     
@@ -36,7 +35,7 @@ meilleure_solution <- function(solutions) {
   
   best_solution <- faisables[ordre[1], ]
 
-  if(best_solution$blondel_value < 60 | best_solution$blondel_value > 64) 
+  if(best_solution$blondel < 60 | best_solution$blondel > 64) 
     warning(call. = FALSE, "The better solution does not result in a comfortable staircase, i.e. the value obtained from Blondel's formula is greater than 64 cm or smaller than 60 cm.
     ==> Vous devez augmenter la distance_max")
 

@@ -30,9 +30,9 @@
 #' plot_escalier(geo, cotes = TRUE)  # avec les côtes cumulées
 #'
 #' # Sur une solution issue de calculer_toutes_solutions() :
-#' sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 1000)
+#' sol <- solve_stairs(160, 1000)
 #' meilleure <- meilleure_solution(sol)
-#' plot(meilleure$geometrie[[1]])
+#' plot(meilleure$geometry[[1]])
 #'
 #' @export
 plot_escalier <- function(geometrie, col_standard = "black", col_paliere = "red",
@@ -111,17 +111,17 @@ plot_escalier <- function(geometrie, col_standard = "black", col_paliere = "red"
 #' quoi coter le dessin marche par marche sans avoir à relire les colonnes du
 #' data.frame.
 #'
-#' @param geometrie Un data.frame de géométrie (voir \code{\link{construire_geometrie}}).
+#' @param geometry Un data.frame de géométrie (voir \code{\link{construire_geometrie}}).
 #' @param ... Arguments supplémentaires passés à \code{\link{plot_escalier}}.
 #'
 #' @examples
-#' sol <- calculer_toutes_solutions(hauteur_a_franchir = 160, distance_max = 1000)
+#' sol <- solve_stairs(160, 1000)
 #' meilleure <- meilleure_solution(sol)
-#' plot_escalier_cotes(meilleure$geometrie[[1]])
+#' plot_escalier_cotes(meilleure$geometry[[1]])
 #'
 #' @export
-plot_escalier_cotes <- function(geometrie, ...) {
-  plot_escalier(geometrie, cotes = TRUE, ...)
+plot_escalier_cotes <- function(geometry, ...) {
+  plot_escalier(geometry, cotes = TRUE, ...)
 }
 
 #' Méthode plot() pour les géométries d'escalier

@@ -32,7 +32,7 @@ ligne retenue via \code{ligne$geometrie[[1]]}.
 \examples{
 candidats <- optimal_nsteps(hauteur_a_franchir = 160)
 tbl <- construire_table_solutions(candidats, distance_max = 1000)
-head(tbl[, c("n_marches", "scenario", "ecart_blondel")])
-plot(tbl$geometrie[[1]])
+head(tbl)
+plot(tbl$geometry[[1]])
 
 }

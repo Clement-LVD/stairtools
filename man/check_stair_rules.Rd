@@ -4,62 +4,20 @@
 \alias{check_stair_rules}
 \title{Check stair solutions against dimensional rules}
 \usage{
-check_stair_rules(x, rule)
+check_stair_rules(x, rule = NULL)
 }
 \arguments{
-\item{x}{A data frame containing stair solutions. Columns matching the
-dimensions defined in \code{stair_rules} are checked when available.
-For example, \code{height}, \code{going}, and \code{blondel}.}
+\item{x}{A \code{data.frame} of stair solutions.}
 
-\item{rule}{A character string identifying the rule to apply. Must match
-one of the identifiers available in \code{stair_rules$id}.}
+\item{rule}{\code{character} - Optional rule id. If \code{NULL}, all rules are checked.}
 }
 \value{
-The input data frame with additional logical columns indicating
-whether each dimensional requirement is satisfied:
-\itemize{
-\item \code{height_ok}: whether the stair height satisfies the rule;
-\item \code{going_ok}: whether the going satisfies the rule;
-\item \code{blondel_ok}: whether the Blondel value satisfies the rule;
-\item \code{is_compliant}: whether all applicable requirements are satisfied.
-}
-
-A value of \code{TRUE} indicates that the requirement is satisfied, whereas
-\code{FALSE} indicates that the requirement is not satisfied.
+Return the input \code{data.frame} with one logical column per rule.
 }
 \description{
-Checks stair solutions against a set of dimensional requirements
-stored in the internal \code{stair_rules} dataset.
-}
-\details{
-The function automatically detects the dimensions defined in the selected
-rule (for example \code{height}, \code{going}, and \code{blondel}) from the \verb{_min} and
-\verb{_max} suffixes in \code{stair_rules}.
-
-A missing (\code{NA}) limit in a rule means that no constraint is specified
-for that dimension. The corresponding check is therefore considered
-satisfied.
+Checks stair solutions against rules stored in \code{stair_rules}.
 }
 \examples{
-\dontrun{
-sol <- calculer_toutes_solutions(
-  height_to_climb = 160,
-  max_run = 150
-)
-
-check_stair_rules(
-  sol,
-  "habitation_common_areas"
-)
-
-ids <- stair_rules$id
-
-results <- sapply(ids, FUN = function(rule) {
-  res <- check_stair_rules(sol, rule)
-  res$is_compliant
-})
-
-sol$n_rules_respected <- rowSums(results)
-}
-
+sol <- solve_stairs(160, 150)
+check_stair_rules(sol)
 }
