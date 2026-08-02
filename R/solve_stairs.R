@@ -11,7 +11,7 @@
 #' @param max_horizontal_run `numeric` - Maximum available horizontal length (cm).
 #' @param rise_min `numeric` - Minimum acceptable step height (cm). Default: 16.
 #' @param rise_max `numeric` - Maximum acceptable step height (cm). Default: 20.
-#' @param h_target `numeric` - Target step height used to rank solutions (cm). Default: 16.
+#' @param rise_target `numeric` - Target step height used to rank solutions (cm). Default: 16.
 #' @param blondel_target `numeric` - Target value for Blondel's formula \code{2h + g}.
 #'   Default: 63 cm.
 #' @param show_invalid_solutions `logical` - If `TRUE`, returns all generated
@@ -40,11 +40,11 @@ solve_stairs <- function(total_height,
                          max_horizontal_run,
                          rise_min = 16,
                          rise_max = 20,
-                         h_target = 16,
+                         rise_target = 16,
                          blondel_target = 63,
                          show_invalid_solutions = FALSE) {
 
-  candidats <- optimal_nsteps(total_height, rise_min, rise_max, h_target)
+  candidats <- optimal_nrisers(total_height, rise_min, rise_max, rise_target)
   solutions <- construire_table_solutions(candidats, max_horizontal_run, blondel_target)
 
   if(nrow(solutions) == 0 | all(!solutions$is_valid)) warning("No possibility of a comfortable staircase solution")

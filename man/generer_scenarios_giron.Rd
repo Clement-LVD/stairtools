@@ -57,7 +57,7 @@ est quand même renvoyé, avec \code{palier_impossible = TRUE} et/ou
 comparaison ultérieure.
 }
 \examples{
-giron_standard <- giron_blondel(16.25)  # 30.5
+giron_standard <- blondel_going(16.25)  # 30.5
 scenarios <- generer_scenarios_giron(n_marches = 16, distance_max = 450,
                                       giron_standard = giron_standard)
 names(scenarios)

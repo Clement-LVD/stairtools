@@ -9,7 +9,7 @@ solve_stairs(
   max_horizontal_run,
   rise_min = 16,
   rise_max = 20,
-  h_target = 16,
+  rise_target = 16,
   blondel_target = 63,
   show_invalid_solutions = FALSE
 )
@@ -23,7 +23,7 @@ solve_stairs(
 
 \item{rise_max}{\code{numeric} - Maximum acceptable step height (cm). Default: 20.}
 
-\item{h_target}{\code{numeric} - Target step height used to rank solutions (cm). Default: 16.}
+\item{rise_target}{\code{numeric} - Target step height used to rank solutions (cm). Default: 16.}
 
 \item{blondel_target}{\code{numeric} - Target value for Blondel's formula \code{2h + g}.
 Default: 63 cm.}

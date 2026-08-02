@@ -15,7 +15,7 @@ plot_escalier(
 )
 }
 \arguments{
-\item{geometrie}{Un data.frame de géométrie (voir \code{\link{construire_geometrie}}).}
+\item{geometrie}{Un data.frame de géométrie (voir \code{\link{build_geometry}}).}
 
 \item{col_standard}{Couleur des girons standards. Défaut "black".}
 
@@ -34,20 +34,20 @@ pour un raccourci. Défaut \code{FALSE}.}
 \description{
 Trace chaque contremarche (segment vertical) et chaque giron (segment
 horizontal) à partir d'un data.frame de géométrie produit par
-\code{\link{construire_geometrie}} (ou d'une ligne de
+\code{\link{build_geometry}} (ou d'une ligne de
 \code{calculer_toutes_solutions(...)$solutions$geometrie[[i]]}).
 La marche palière (le cas échéant) est mise en évidence dans une couleur
 différente. Le sol fini de départ (y=0) et d'arrivée (y=hauteur max) sont
 tracés en pointillés pour repère.
 }
 \details{
-Les géométries produites par \code{\link{construire_geometrie}} portent la
+Les géométries produites par \code{\link{build_geometry}} portent la
 classe \code{escalier_geometrie} : appeler \code{plot()} directement dessus
 fonctionne aussi (voir \code{\link{plot.escalier_geometrie}}), pas besoin
 d'appeler \code{plot_escalier()} par son nom.
 }
 \examples{
-geo <- construire_geometrie(5, 17.33, rep(28.33, 4))
+geo <- build_geometry(5, 17.33, rep(28.33, 4))
 plot_escalier(geo)
 plot(geo)  # identique, grâce à la classe escalier_geometrie
 plot_escalier(geo, cotes = TRUE)  # avec les côtes cumulées

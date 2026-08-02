@@ -7,7 +7,7 @@
 plot_escalier_cotes(geometry, ...)
 }
 \arguments{
-\item{geometry}{Un data.frame de géométrie (voir \code{\link{construire_geometrie}}).}
+\item{geometry}{Un data.frame de géométrie (voir \code{\link{build_geometry}}).}
 
 \item{...}{Arguments supplémentaires passés à \code{\link{plot_escalier}}.}
 }

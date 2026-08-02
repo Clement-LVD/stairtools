@@ -1,61 +1,64 @@
-#' Determine the feasible numbers of steps for a given total rise
+#' Determine feasible numbers of risers (vertical element between steps) for a given total height
 #'
-#' Computes all feasible numbers of steps for a specified total rise, based on
-#' the minimum and maximum allowable step heights. For each valid solution, the
-#' corresponding step height and its deviation from the ideal step height are
-#' calculated. Results are returned in ascending order of deviation, so the
-#' first row corresponds to the solution closest to the ideal step height.
+#' Computes all feasible numbers of steps for a specified total height,
+#' according to the minimum and maximum allowable riser heights.
 #'
-#' @param hauteur_a_franchir Total rise to be climbed (cm).
-#' @param h_min Minimum allowable step height (cm). Default is 16.
-#' @param h_max Maximum allowable step height (cm). Default is 20.
-#' @param h_ideale Ideal step height used to rank the solutions (cm). Default is 16.
+#' For each feasible solution, the corresponding riser height and its
+#' absolute deviation from the target riser height are computed.
+#' Solutions are returned in ascending order of deviation, so the first
+#' row corresponds to the riser height closest to the target.
 #'
-#' @return A \code{data.frame} with one row for each feasible solution and the
-#' following columns:
+#' @param total_height `numeric` - Total vertical height to climb (cm).
+#' @param rise_min `numeric` - Minimum acceptable riser height (cm).
+#'   Default: 16.
+#' @param rise_max `numeric` - Maximum acceptable riser height (cm).
+#'   Default: 20.
+#' @param rise_target `numeric` - Target riser height used to rank
+#'   solutions (cm). Default: 16.
+#'
+#' @return Return a `data.frame` with one row per feasible solution.
+#' The returned data frame contains the following columns:
 #' \describe{
-#'   \item{n_marches}{Number of steps.}
-#'   \item{hauteur_marche}{Computed step height (cm).}
-#'   \item{ecart_hauteur_ideale}{Absolute deviation from the ideal step height (cm).}
+#'   \item{n_steps}{Number of risers.}
+#'   \item{rise}{Computed riser height (cm).}
+#'   \item{rise_target_deviation}{Absolute deviation from the target riser height (cm).}
 #' }
-#' The rows are sorted by increasing deviation from the ideal step height.
+#'
+#' Rows are ordered by increasing `rise_target_deviation`.
 #'
 #' @examples
-#' optimal_nsteps(hauteur_a_franchir = 260)
-#' #   n_marches hauteur_marche ecart_hauteur_ideale
-#' # 4        16       16.25000             0.250000
+#' optimal_nrisers(total_height = 260)
 #'
 #' @export
-optimal_nsteps <- function(hauteur_a_franchir,
-                                    h_min = 16,
-                                    h_max = 20,
-                                    h_ideale = 16) {
+optimal_nrisers <- function(total_height,
+                                    rise_min = 16,
+                                    rise_max = 20,
+                                    rise_target = 16) {
 
-  if (hauteur_a_franchir <= 0) stop("hauteur_a_franchir must be positive.")
-  if (h_min <= 0 || h_max <= 0 || h_min >= h_max) stop("h_min must be positive and inferior to h_max.")
-  if (h_ideale < h_min || h_ideale > h_max) { warning("h_ideale is not a value within the [h_min, h_max] interval.") }
+  if (total_height <= 0) stop("total_height must be positive.")
+  if (rise_min <= 0 || rise_max <= 0 || rise_min >= rise_max) stop("rise_min must be positive and smaller than rise_max.")
+  if (rise_target < rise_min || rise_target > rise_max) { warning("rise_target is outside the [rise_min, rise_max] interval.") }
 
-  # n marches -> hauteur = hauteur_a_franchir / n
-  # on veut h_min <= hauteur <= h_max
-  n_min <- ceiling(hauteur_a_franchir / h_max)
-  n_max <- floor(hauteur_a_franchir / h_min)
+  
+  n_min <- ceiling(total_height / rise_max)
+  n_max <- floor(total_height / rise_min)
 
-  if (n_min > n_max) {
-    stop(sprintf(
-      "Aucune solution : impossible de franchir %.1f cm avec des marches entre %.1f et %.1f cm. \n==>Veuillez elargir h_min/h_max.",
-      hauteur_a_franchir, h_min, h_max
-    ))
-  }
+if (n_min > n_max) {
+    stop(sprintf( paste( "No feasible solution:",
+        "cannot climb %.1f cm with riser heights between %.1f and %.1f cm.",
+        "Consider widening the rise_min/rise_max interval." )
+                , total_height, rise_min, rise_max  ))
+                    }
 
-  n_candidats <- n_min:n_max
-  hauteur_marche <- hauteur_a_franchir / n_candidats
-  ecart <- abs(hauteur_marche - h_ideale)
+  n_candidates <- n_min:n_max
+  step_height <- total_height / n_candidates
+  deviation <- abs(step_height - rise_target)
 
   res <- data.frame(
-    n_marches = n_candidats,
-    hauteur_marche = hauteur_marche,
-    ecart_hauteur_ideale = ecart
+    n_steps = n_candidates,
+    step_height = step_height,
+    height_target_deviation = deviation
   )
 
-  res[order(res$ecart_hauteur_ideale), , drop = FALSE]
+  res[order(res$height_target_deviation), , drop = FALSE]
 }

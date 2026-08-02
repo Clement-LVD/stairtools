@@ -7,7 +7,7 @@
 construire_table_solutions(candidats, distance_max, blondel_cible = 63)
 }
 \arguments{
-\item{candidats}{data.frame issu de \code{\link{optimal_nsteps}}.}
+\item{candidats}{data.frame issu de \code{\link{optimal_nrisers}}.}
 
 \item{distance_max}{Distance horizontale disponible (cm).}
 
@@ -16,7 +16,7 @@ construire_table_solutions(candidats, distance_max, blondel_cible = 63)
 \value{
 Un \code{data.frame} (classe additionnelle \code{escalier_solutions})
 avec une ligne par combinaison (nombre de marches × scénario) :
-\code{n_marches}, \code{hauteur_marche}, \code{ecart_hauteur_ideale},
+\code{n_steps}, \code{step_height}, \code{height_target_deviation},
 \code{giron_standard}, \code{scenario}, \code{distance_utilisee},
 \code{ecart_blondel}, \code{depasse_espace}, \code{palier_impossible},
 \code{geometrie} (colonne-liste : un data.frame de géométrie par ligne).
@@ -24,13 +24,13 @@ avec une ligne par combinaison (nombre de marches × scénario) :
 \description{
 Calcule, pour chaque nombre de marches valide et chaque scénario de giron
 (\code{\link{generer_scenarios_giron}}), une ligne de synthèse avec la
-géométrie complète (\code{\link{construire_geometrie}}) embarquée en
+géométrie complète (\code{\link{build_geometry}}) embarquée en
 colonne-liste \code{geometrie}. On peut filtrer/trier la table avec les outils
 habituels de data.frame, puis accéder directement à la géométrie de la
 ligne retenue via \code{ligne$geometrie[[1]]}.
 }
 \examples{
-candidats <- optimal_nsteps(hauteur_a_franchir = 160)
+candidats <- optimal_nrisers(160)
 tbl <- construire_table_solutions(candidats, distance_max = 1000)
 head(tbl)
 plot(tbl$geometry[[1]])

@@ -13,13 +13,13 @@
 }
 \description{
 Permet d'appeler \code{plot(geometrie)} directement sur une géométrie
-produite par \code{\link{construire_geometrie}} (classe
+produite par \code{\link{build_geometry}} (classe
 \code{escalier_geometrie}), sans passer par \code{plot.data.frame()} (qui
 produirait un pairs-plot illisible). Délègue entièrement à
 \code{\link{plot_escalier}}.
 }
 \examples{
-geo <- construire_geometrie(5, 17.33, rep(28.33, 4))
+geo <- build_geometry(5, 17.33, rep(28.33, 4))
 plot(geo)
 plot(geo, cotes = TRUE)
 

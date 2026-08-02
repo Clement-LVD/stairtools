@@ -12,7 +12,7 @@
 \item{...}{Arguments passés à \code{print.data.frame}.}
 }
 \description{
-La colonne \code{geometrie} contient des data.frames complets : son
+La colonne \code{geometry} contient des data.frames complets : son
 affichage brut serait illisible. Cette méthode masque cette colonne à
-l'impression (elle reste accessible normalement via \code{$geometrie}).
+l'impression (elle reste accessible normalement via \code{$geometry}).
 }

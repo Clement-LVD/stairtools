@@ -36,7 +36,7 @@
 #'
 #' @param n_marches Nombre de contremarches.
 #' @param distance_max Distance horizontale disponible (cm).
-#' @param giron_standard Giron issu de \code{\link{giron_blondel}} (cm).
+#' @param giron_standard Giron issu de \code{\link{blondel_going}} (cm).
 #'
 #' @return Une liste nommée de 5 scénarios (liste vide si \code{n_marches <= 1}).
 #'   Chaque scénario contient : \code{girons}, \code{type_girons},
@@ -45,7 +45,7 @@
 #'   \code{depasse_espace} et/ou \code{palier_impossible}.
 #'
 #' @examples
-#' giron_standard <- giron_blondel(16.25)  # 30.5
+#' giron_standard <- blondel_going(16.25)  # 30.5
 #' scenarios <- generer_scenarios_giron(n_marches = 16, distance_max = 450,
 #'                                       giron_standard = giron_standard)
 #' names(scenarios)
