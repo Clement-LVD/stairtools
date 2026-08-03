@@ -53,13 +53,13 @@ $$
 2r + g = B
 $$
 
-Where $r$ is the riser height, $g$ is the tread depth (going), and $B$ is the target Blondel value.
+Where $r$ is the rise (vertical riser height), $g$ is the going (horizontal tread depth), and $B$ is the target Blondel value.
 
 > 𓊍 In French carpentry and masonry practices for staircase construction, the Blondel ideal value should be 63 cm : it is recommended to prioritise the solution with the smallest deviation from this Blondel target value, i.e. 63 cm. Solutions with a Blondel target value between 60 cm and 64 cm are acceptable.
 
 **Best solution.** Possible solutions are sorted by their deviation from the Blondel target value, default is 63 cm. 
 
-**Edges cases.** When several solutions have a similar Blondel value, solutions are sorted by their deviation from the minimum step height, i.e. 16 cm. This is to ensure that the staircase is comfortable for older people, children and dogs. 
+**Edges cases.** When several solutions have a similar Blondel value, solutions are sorted by their deviation from the minimum rise, i.e. 16 cm. This is to ensure that the staircase is comfortable for older people, children and dogs. 
 
 ## Examples
 
