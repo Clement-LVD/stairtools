@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/Clement-LVD/stairtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Clement-LVD/stairtools/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 🪜 `stairtools` is an R package designed to calculate and visualise
@@ -14,13 +15,14 @@ easily the best stair dimensioning.
 
 ## Installation
 
+<!-- 
 Install the released version from CRAN:
-
-``` r
+&#10;``` r
 install.packages("stairtools")
 ```
+-->
 
-Or install the latest development version from GitHub:
+Install the latest development version from GitHub:
 
 ``` r
 # install.packages("remotes")
