@@ -28,12 +28,8 @@
 #' @param goings Numeric vector of going lengths, with length
 #'   \code{n_steps - 1} (standard stair) or \code{n_steps}
 #'   (including a landing going).
-#' @param going_types Character vector of the same length as
-#'   \code{goings}, describing the type of each going (e.g.
-#'   \code{"standard"} or \code{"landing"}). Defaults to
-#'   \code{"standard"} for all goings.
 #'
-#' @return A data frame with one row per riser and the following columns:
+#' @return Return a `data.frame` with one row per riser and the following columns:
 #'   \code{step}, \code{x_riser}, \code{y_bottom}, \code{y_top},
 #'   \code{going}, \code{x_going_end}, and \code{going_type}.
 #'
@@ -43,7 +39,7 @@
 #' plot(geometry)
 #'
 #' @export
-build_geometry <- function(n_steps, step_height, goings, going_types = NULL) {
+build_geometry <- function(n_steps, step_height, goings) {
 
   n_goings   <- length(goings)
   n_without_extension <- n_steps - 1
@@ -55,20 +51,11 @@ build_geometry <- function(n_steps, step_height, goings, going_types = NULL) {
   ))
 }
 
-if (is.null(going_types)) {
-  going_types <- rep("standard", n_goings  )
-} else if (length(going_types) != n_goings  ) {
-  stop("length(going_types) must match length(goings).")
-}
-
-  if (n_goings   == n_without_extension) {
-    goings <- c(goings, NA_real_)
-    going_types <- c(going_types, NA_character_)
-  }
+  if (n_goings   == n_without_extension) { goings <- c(goings, NA_real_)   }
   # from here : girons et going_types sont de longueur n_steps
 
-  girons_pour_cumul <- ifelse(is.na(goings), 0, goings)
-  x_riser  <- c(0, cumsum(girons_pour_cumul))[seq_len(n_steps)]
+  cumul_going <- ifelse(is.na(goings), 0, goings)
+  x_riser  <- c(0, cumsum(cumul_going))[seq_len(n_steps)]
   y_bottom  <- (0:(n_steps - 1)) * step_height
    y_top  <- (1:n_steps) * step_height
 
@@ -77,9 +64,8 @@ if (is.null(going_types)) {
     x_riser        = x_riser ,
     y_bottom       = y_bottom,
     y_top          =  y_top ,
-    going = goings,
-    x_going_end     = x_riser  + goings,
-    going_type      = going_types,
+    going          = goings,
+    x_going_end    = x_riser  + goings, 
     stringsAsFactors = FALSE
   )
 

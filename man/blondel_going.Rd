@@ -13,7 +13,7 @@ blondel_going(rise, blondel_target = 63)
 \code{2h + g} (cm). Default: 63.}
 }
 \value{
-The computed going length (cm).
+Return a \code{numeric} with the computed going length (cm).
 }
 \description{
 Applies Blondel's formula:

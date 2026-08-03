@@ -56,7 +56,7 @@ plot(sol$geometry[[1]])
 sol2 <- solve_stairs(160, 150, show_invalid_solutions = TRUE)
 # plot the best solution :
 
-meilleure <- meilleure_solution(sol2)
+meilleure <- best_solution(sol2)
 
 # Filter out valid solution
 subset(sol, is_valid)

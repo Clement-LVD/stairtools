@@ -4,7 +4,7 @@
 \alias{build_geometry}
 \title{Build the complete geometry of a stair}
 \usage{
-build_geometry(n_steps, step_height, goings, going_types = NULL)
+build_geometry(n_steps, step_height, goings)
 }
 \arguments{
 \item{n_steps}{Number of risers.}
@@ -14,14 +14,9 @@ build_geometry(n_steps, step_height, goings, going_types = NULL)
 \item{goings}{Numeric vector of going lengths, with length
 \code{n_steps - 1} (standard stair) or \code{n_steps}
 (including a landing going).}
-
-\item{going_types}{Character vector of the same length as
-\code{goings}, describing the type of each going (e.g.
-\code{"standard"} or \code{"landing"}). Defaults to
-\code{"standard"} for all goings.}
 }
 \value{
-A data frame with one row per riser and the following columns:
+Return a \code{data.frame} with one row per riser and the following columns:
 \code{step}, \code{x_riser}, \code{y_bottom}, \code{y_top},
 \code{going}, \code{x_going_end}, and \code{going_type}.
 }

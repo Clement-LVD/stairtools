@@ -54,18 +54,21 @@ is the target Blondel value.
 > 𓊍 In French carpentry and masonry practices for staircase
 > construction, the Blondel ideal value should be 63 cm : it is
 > recommended to prioritise the solution with the smallest deviation
-> from the Blondel target value, i.e. 63 cm. Solutions with a Blondel
+> from this Blondel target value, i.e. 63 cm. Solutions with a Blondel
 > target value between 60 cm and 64 cm are acceptable.
 
 **Best solution.** Possible solutions are sorted by their deviation from
 the Blondel target value, default is 63 cm.
 
-**Edges cases.** In the - unlikely - event of a situation where several
-solutions have a similar Blondel value, solutions are sorted by their
-deviation from the minimum step height, i.e. 16 cm. This is to ensure
-that the staircase is comfortable for older people, children and dogs.
+**Edges cases.** When several solutions have a similar Blondel value,
+solutions are sorted by their deviation from the minimum step height,
+i.e. 16 cm. This is to ensure that the staircase is comfortable for
+older people, children and dogs.
 
 ## Examples
+
+Compute stairs with `solve_stairs()`, given a total_height and a maximum
+horizontal run available.
 
 ``` r
 
@@ -78,40 +81,49 @@ possible_solutions <- sol[sol$is_valid == TRUE, ]
 print(possible_solutions) 
 #> 
 #>   2 valid solution(s)
-#>   n_steps   height height_target_deviation    going             scenario
-#> 2       6 17.16667                1.166667 28.66667 sans_palier_uniforme
-#> 5       6 17.16667                1.166667 28.66667 avec_palier_uniforme
+#>   n_steps   height height_target_deviation    going           scenario
+#> 2       6 17.16667                1.166667 28.66667 no_landing_uniform
+#> 5       6 17.16667                1.166667 28.66667    landing_uniform
 #>   horizontal_run  blondel blondel_target_deviation has_landing
 #> 2            133 60.93333                 2.066667       FALSE
 #> 5            133 56.50000                 6.500000        TRUE
-#>   horizontal_run_exceeded landing_impossible     geometry is_valid rank
-#> 2                   FALSE              FALSE 1:6, c(0....     TRUE    1
-#> 5                   FALSE              FALSE 1:6, c(0....     TRUE    2
-#> ('geometry' list-col is hidden — access via $geometrie[[i]])
+#>   horizontal_run_exceeded landing_impossible is_valid rank
+#> 2                   FALSE              FALSE     TRUE    1
+#> 5                   FALSE              FALSE     TRUE    2
+#> ('geometry' list-col is hidden - access via $geometry[[i]])
 ```
 
-Or simply find the best solution:
+Find the best solution with `best_solution()`.
 
 ``` r
 
 sol2 <- solve_stairs(160, 150)
 
-best <- meilleure_solution(sol2)
+best <- best_solution(sol2)
 
 plot(best$geometry[[1]])
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-View a drawing with dimensional measurements.
+În order to plot a drawing with dimensional measurements, use the
+`show_dimensions = TRUE` parameter within `plot()`.
 
 ``` r
 
 sol3 <- solve_stairs(80, 150)
 
-best <- meilleure_solution(sol3)
-
-plot(best$geometry[[1]], cotes = TRUE) 
+plot(sol3$geometry[[1]], show_dimensions = TRUE) 
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+Or use the shortcut function `plot_stair_dimensions()`.
+
+``` r
+sol3 <- solve_stairs(80, 150)
+
+plot_stair_dimensions(sol3$geometry[[1]])
+```
+
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->

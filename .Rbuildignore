@@ -4,3 +4,4 @@ stairtools.Rproj
 README.html
 README_files/
 ^data-raw/
+^\.github$

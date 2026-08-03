@@ -31,7 +31,7 @@
 #' sol2 <- solve_stairs(160, 150, show_invalid_solutions = TRUE)
 #' # plot the best solution :
 #' 
-#' meilleure <- meilleure_solution(sol2)
+#' meilleure <- best_solution(sol2)
 #'
 #' # Filter out valid solution
 #' subset(sol, is_valid)
@@ -45,7 +45,7 @@ solve_stairs <- function(total_height,
                          show_invalid_solutions = FALSE) {
 
   candidats <- optimal_nrisers(total_height, rise_min, rise_max, rise_target)
-  solutions <- construire_table_solutions(candidats, max_horizontal_run, blondel_target)
+  solutions <- build_solutions_table(candidats, max_horizontal_run, blondel_target)
 
   if(nrow(solutions) == 0 | all(!solutions$is_valid)) warning("No possibility of a comfortable staircase solution")
 
