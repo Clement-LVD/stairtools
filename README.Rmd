@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Clement-LVD/stairtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Clement-LVD/stairtools/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/Clement-LVD/stairtools/graph/badge.svg)](https://app.codecov.io/gh/Clement-LVD/stairtools)
 <!-- badges: end -->
 
 🪜 `stairtools` is an R package designed to calculate and visualise *staircase* designs, based on basic architectural constraints. Results are sorted according to a step
