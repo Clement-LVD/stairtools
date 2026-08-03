@@ -73,3 +73,20 @@ test_that("plot.stair_geometry dispatches correctly", {
     plot(geometry, show_dimensions = TRUE)
   )
 })
+
+
+test_that("plot.stair_geometry dispatches correctly 0 rows geometry", {
+
+  geometry <- build_geometry(
+    n_steps = 1,
+    step_height = 16,
+    going = 30
+  )
+
+  geometry <- geometry[-1, ] 
+
+  invis <- plot(geometry) 
+
+  expect_null(invis)
+})
+

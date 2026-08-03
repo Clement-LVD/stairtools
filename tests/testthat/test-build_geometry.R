@@ -19,3 +19,11 @@ test_that("plot works with stair_geometry objects", {
 
   expect_silent(plot(geo))
 })
+
+test_that("build_geometry() fail when given incoherent number of steps", {
+ 
+  testthat::expect_error(geo <- build_geometry(15, 17.33, rep(28.33, 4)))
+
+  testthat::expect_error(geo <- build_geometry(2, 17.33, rep(28.33, 4)))
+
+})

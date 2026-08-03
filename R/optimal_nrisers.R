@@ -34,12 +34,15 @@ optimal_nrisers <- function(total_height,
                                     rise_min = 16,
                                     rise_max = 20,
                                     rise_target = 16) {
-
-  if (total_height <= 0) stop("total_height must be positive.")
+  
+  total_height <- abs(total_height)
+  rise_min <- abs(rise_min)
+  rise_max <- abs(rise_max)
+  
   if (rise_min <= 0 || rise_max <= 0 || rise_min >= rise_max) stop("rise_min must be positive and smaller than rise_max.")
   if (rise_target < rise_min || rise_target > rise_max) { warning("rise_target is outside the [rise_min, rise_max] interval.") }
 
-  
+
   n_min <- ceiling(total_height / rise_max)
   n_max <- floor(total_height / rise_min)
 
