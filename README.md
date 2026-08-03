@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Clement-LVD/stairtools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Clement-LVD/stairtools/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/Clement-LVD/stairtools/graph/badge.svg)](https://app.codecov.io/gh/Clement-LVD/stairtools)
 <!-- badges: end -->
 
 🪜 `stairtools` is an R package designed to calculate and visualise
@@ -50,8 +52,8 @@ relationship.
 
 $$2r + g = B$$
 
-Where $r$ is the riser height, $g$ is the tread depth (going), and $B$
-is the target Blondel value.
+Where $r$ is the rise (vertical riser height), $g$ is the going
+(horizontal tread depth), and $B$ is the target Blondel value.
 
 > 𓊍 In French carpentry and masonry practices for staircase
 > construction, the Blondel ideal value should be 63 cm : it is
@@ -63,9 +65,9 @@ is the target Blondel value.
 the Blondel target value, default is 63 cm.
 
 **Edges cases.** When several solutions have a similar Blondel value,
-solutions are sorted by their deviation from the minimum step height,
-i.e. 16 cm. This is to ensure that the staircase is comfortable for
-older people, children and dogs.
+solutions are sorted by their deviation from the minimum rise, i.e. 16
+cm. This is to ensure that the staircase is comfortable for older
+people, children and dogs.
 
 ## Examples
 
@@ -83,9 +85,9 @@ possible_solutions <- sol[sol$is_valid == TRUE, ]
 print(possible_solutions) 
 #> 
 #>   2 valid solution(s)
-#>   n_steps   height height_target_deviation    going           scenario
-#> 2       6 17.16667                1.166667 28.66667 no_landing_uniform
-#> 5       6 17.16667                1.166667 28.66667    landing_uniform
+#>   n_risers step_rise rise_target_deviation    going           scenario
+#> 2        6  17.16667              1.166667 28.66667 no_landing_uniform
+#> 5        6  17.16667              1.166667 28.66667    landing_uniform
 #>   horizontal_run  blondel blondel_target_deviation has_landing
 #> 2            133 60.93333                 2.066667       FALSE
 #> 5            133 56.50000                 6.500000        TRUE
