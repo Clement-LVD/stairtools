@@ -1,7 +1,7 @@
 test_that("plot_stair works with stair_geometry objects", {
 
   geometry <- build_geometry(
-    n_steps = 5,
+    n_risers = 5,
     step_height = 17.33,
     going = rep(28.33, 4)
   )
@@ -21,7 +21,7 @@ test_that("plot_stair works with stair_geometry objects", {
 test_that("plot_stair supports dimensions display", {
 
   geometry <- build_geometry(
-    n_steps = 5,
+    n_risers = 5,
     step_height = 17.33,
     going = rep(28.33, 4)
   )
@@ -42,7 +42,7 @@ test_that("plot_stair supports dimensions display", {
 test_that("plot_stair handles missing final going", {
 
   geometry <- build_geometry(
-    n_steps = 5,
+    n_risers = 5,
     step_height = 17.33,
     going = rep(28.33, 4)
   )
@@ -60,7 +60,7 @@ test_that("plot_stair handles missing final going", {
 test_that("plot.stair_geometry dispatches correctly", {
 
   geometry <- build_geometry(
-    n_steps = 3,
+    n_risers = 3,
     step_height = 16,
     going = rep(30, 2)
   )
@@ -75,10 +75,10 @@ test_that("plot.stair_geometry dispatches correctly", {
 })
 
 
-test_that("plot.stair_geometry dispatches correctly 0 rows geometry", {
+test_that("plot.stair_geometry dispatches correctly 0 row geometry", {
 
   geometry <- build_geometry(
-    n_steps = 1,
+    n_risers = 1,
     step_height = 16,
     going = 30
   )

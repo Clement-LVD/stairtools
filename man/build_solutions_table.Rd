@@ -21,9 +21,9 @@ Return a \code{data.frame} (with additional class
 number of steps and going scenario. The returned data frame includes
 the following columns:
 \itemize{
-\item \code{n_steps}: Number of steps.
-\item \code{height}: Step height (rise).
-\item \code{height_target_deviation}: Deviation from the target step height.
+\item \code{n_risers}: Number of steps to climb.
+\item \code{step_rise}: Step height (rise).
+\item \code{rise_target_deviation}: Deviation from the target step height.
 \item \code{going}: Standard going.
 \item \code{scenario}: Name of the going scenario.
 \item \code{horizontal_run}: Total horizontal run.

@@ -19,9 +19,9 @@
 #'   number of steps and going scenario. The returned data frame includes
 #'   the following columns:
 #'   \itemize{
-#'     \item \code{n_steps}: Number of steps.
-#'     \item \code{height}: Step height (rise).
-#'     \item \code{height_target_deviation}: Deviation from the target step height.
+#'     \item \code{n_risers}: Number of steps to climb.
+#'     \item \code{step_rise}: Step height (rise).
+#'     \item \code{rise_target_deviation}: Deviation from the target step height.
 #'     \item \code{going}: Standard going.
 #'     \item \code{scenario}: Name of the going scenario.
 #'     \item \code{horizontal_run}: Total horizontal run.
@@ -45,25 +45,25 @@ build_solutions_table <- function(candidates, max_horizontal_run, blondel_target
 
   lines_per_candidate <- lapply(seq_len(nrow(candidates)), function(i) {
 
-    n_steps <- candidates$n_steps[i]
-    step_height <- candidates$step_height [i]
-    height_target_deviation <- candidates$height_target_deviation[i]
-    standard_going <- blondel_going(step_height, blondel_target)
+    n_risers <- candidates$n_risers[i]
+    step_rise <- candidates$rise [i]
+    rise_target_deviation <- candidates$rise_target_deviation[i]
+    standard_going <- blondel_going(step_rise, blondel_target)
 
-    scenarios <- generate_going_scenarios(n_steps, max_horizontal_run, standard_going)
+    scenarios <- generate_going_scenarios(n_risers, max_horizontal_run, standard_going)
 
     lignes <- lapply(names(scenarios), function(name_scenario) {
       sc <- scenarios[[name_scenario]]
-      geometry <- build_geometry(n_steps, step_height, sc$goings)
+      geometry <- build_geometry(n_risers, step_rise, sc$goings)
 
       data.frame(
-        n_steps            = n_steps,
-        height       = step_height,
-        height_target_deviation = height_target_deviation,
+        n_risers            = n_risers,
+        step_rise       = step_rise,
+        rise_target_deviation = rise_target_deviation,
         going       = standard_going,
         scenario             = name_scenario,
         horizontal_run    = sc$horizontal_run,
-        blondel       = (2 * step_height) + sc$goings[[1]],
+        blondel       = (2 * step_rise) + sc$goings[[1]],
         blondel_target_deviation        = sc$blondel_target_deviation,
         has_landing         = isTRUE(sc$has_landing),
         horizontal_run_exceeded       = isTRUE(sc$horizontal_run_exceeded),

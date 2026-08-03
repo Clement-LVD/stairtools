@@ -19,7 +19,7 @@
 #' @return Return a `data.frame` with one row per feasible solution.
 #' The returned data frame contains the following columns:
 #' \describe{
-#'   \item{n_steps}{Number of risers.}
+#'   \item{n_risers}{Number of risers.}
 #'   \item{rise}{Computed riser height (cm).}
 #'   \item{rise_target_deviation}{Absolute deviation from the target riser height (cm).}
 #' }
@@ -54,14 +54,14 @@ if (n_min > n_max) {
                     }
 
   n_candidates <- n_min:n_max
-  step_height <- total_height / n_candidates
-  deviation <- abs(step_height - rise_target)
+  rise <- total_height / n_candidates
+  deviation <- abs(rise - rise_target)
 
   res <- data.frame(
-    n_steps = n_candidates,
-    step_height = step_height,
-    height_target_deviation = deviation
+    n_risers = n_candidates,
+    rise = rise,
+    rise_target_deviation = deviation
   )
 
-  res[order(res$height_target_deviation), , drop = FALSE]
+  res[order(res$rise_target_deviation), , drop = FALSE]
 }

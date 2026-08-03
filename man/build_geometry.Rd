@@ -4,15 +4,15 @@
 \alias{build_geometry}
 \title{Build the complete geometry of a stair}
 \usage{
-build_geometry(n_steps, step_height, goings)
+build_geometry(n_risers, step_height, goings)
 }
 \arguments{
-\item{n_steps}{Number of risers.}
+\item{n_risers}{Number of risers.}
 
 \item{step_height}{Uniform riser height.}
 
 \item{goings}{Numeric vector of going lengths, with length
-\code{n_steps - 1} (standard stair) or \code{n_steps}
+\code{n_risers - 1} (standard stair) or \code{n_risers}
 (including a landing going).}
 }
 \value{
@@ -28,10 +28,10 @@ its bottom and top elevations.
 \details{
 Two going configurations are supported:
 \itemize{
-\item A vector of length \code{n_steps - 1}, corresponding to a
+\item A vector of length \code{n_risers - 1}, corresponding to a
 conventional stair where the last riser reaches the landing
 directly, with no going beyond it.
-\item A vector of length \code{n_steps}, corresponding to a stair
+\item A vector of length \code{n_risers}, corresponding to a stair
 with an additional landing going after the last riser, at the
 same elevation as the destination landing.
 }
@@ -46,7 +46,7 @@ The returned geometry is intended to be plotted directly using
 }
 }
 \examples{
-geometry <- build_geometry(n_steps = 5, step_height = 17.33, goings = rep(28.33, 4) )
+geometry <- build_geometry(n_risers = 5, step_height = 17.33, goings = rep(28.33, 4) )
 geometry
 plot(geometry)
 

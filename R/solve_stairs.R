@@ -51,7 +51,7 @@ solve_stairs <- function(total_height,
 
 
   # in order to sort the table : all possible solution first, then sorted by blondel law and - for equally case - sorted as a diff to a theoritical value 
-  solutions <- solutions[order(solutions$is_valid, solutions$blondel_target_deviation , solutions$height_target_deviation , decreasing = c(TRUE, FALSE, FALSE)), ]
+  solutions <- solutions[order(solutions$is_valid, solutions$blondel_target_deviation , solutions$rise_target_deviation , decreasing = c(TRUE, FALSE, FALSE)), ]
 
   # rank is raw number
   solutions$rank <- seq_len(nrow(solutions))

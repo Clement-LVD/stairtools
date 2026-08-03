@@ -22,7 +22,7 @@ solutions (cm). Default: 16.}
 Return a \code{data.frame} with one row per feasible solution.
 The returned data frame contains the following columns:
 \describe{
-\item{n_steps}{Number of risers.}
+\item{n_risers}{Number of risers.}
 \item{rise}{Computed riser height (cm).}
 \item{rise_target_deviation}{Absolute deviation from the target riser height (cm).}
 }
