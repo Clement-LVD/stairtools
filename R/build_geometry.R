@@ -20,7 +20,7 @@
 #'   \item Riser \emph{i} (vertical): from
 #'     \code{(x_riser, y_bottom)} to \code{(x_riser, y_top)}.
 #'   \item Going \emph{i} (horizontal), when present: from
-#'     \code{(x_riser, y_top)} to \code{(x_going_end, y_top)}.
+#'     \code{(x_riser, y_top)} to \code{(x_going_end, y_top)}. 
 #' }
 #'
 #' @param n_risers Number of risers.
@@ -52,19 +52,23 @@ build_geometry <- function(n_risers, step_height, goings) {
 }
 
   if (n_goings   == n_without_extension) { goings <- c(goings, NA_real_)   }
-  
-  cumul_going <- ifelse(is.na(goings), 0, goings)
-  x_riser  <- c(0, cumsum(cumul_going))[seq_len(n_risers)]
-  y_bottom  <- (0:(n_risers - 1)) * step_height
-   y_top  <- (1:n_risers) * step_height
+  # if a going is missing : the step don't exist (the arrival floor level is the last step)
+  has_tread <- !is.na(goings)
+
+  cumul_going <- goings
+  cumul_going[is.na(cumul_going)] <- 0 # equiv to : cumul_going <- ifelse(is.na(goings), 0, goings)
+
+   x_riser <- c(0, cumsum(cumul_going))[seq_len(n_risers)] 
 
   geometry <- data.frame(
     step           = seq_len(n_risers),
-    x_riser        = x_riser ,
-    y_bottom       = y_bottom,
-    y_top          =  y_top ,
+    x_riser        = x_riser,
+    y_bottom       = (0:(n_risers - 1)) * step_height,
+    y_top          =  (1:n_risers) * step_height ,
+    rise         = rep(step_height, n_risers),
     going          = goings,
     x_going_end    = x_riser  + goings, 
+    has_tread    = has_tread,
     stringsAsFactors = FALSE
   )
 

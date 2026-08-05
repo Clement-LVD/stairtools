@@ -32,6 +32,8 @@ stair_rules <- data.frame(
 "FR_workplace_accessibility",
 "FR_public_circulation_stairs",
   
+    #ISO 14122-3:2016 (E) "ISO"
+    
   # iso
 "ISO_machinery_access"
   
@@ -66,15 +68,15 @@ stair_rules <- data.frame(
 
   , jurisdiction = c( rep("United States",8), rep("France", 5 ), "International", rep("United Kingdom", 3))
   
-  , step_rise_min = c(10, NA , NA, NA, NA , 10.2, NA , 17.8, NA, NA, NA, NA, 13, NA   , 15, 15, 15)
+  , step_rise_min = c(10, NA , NA, NA, NA , 10.2, NA , 17.8, NA, NA, NA, NA, 13, 15   , 15, 15, 15)
 
-  , step_rise_max = c(18, NA , NA, 20.3, 19.7 , 17.8, 19.6 ,  30.5 , 17, 18, 16, 16, 17, 21     , 22, 19, 17)
-  , going_min =  c(28, 28, 35.5 , 22.9, 25.4 , 27.9, 25.4 ,  NA, 28 , 24, 28, 28, 36, 19   , 22, 25, 25)
-  , going_max = c(NA, NA, 43 ,  NA, NA , NA, NA , NA, NA, NA, NA, NA, 36, NA , 30, 40, 40 )
-  , blondel_min = c(NA, NA , NA ,  NA, NA , NA, NA,NA, NA, NA, NA, NA, 60, NA , rep(55, 3) )
-  , blondel_max = c(NA, NA , NA , NA, NA , NA, NA, NA, NA, NA, NA, NA, 64, NA , rep(70, 3) )
+  , step_rise_max = c(18, NA , NA, 20.3, 19.7 , 17.8, 19.6 ,  30.5 , 17, 18, 16, 16, 17, 20     , 22, 19, 17) #note : depend de l'angle !
+  , going_min =  c(28, 28, 35.5 , 22.9, 25.4 , 27.9, 25.4 ,  NA, 28 , 24, 28, 28, 36, 21   , 22, 25, 25)
+  , going_max = c(NA, NA, 43 ,  NA, NA , NA, NA , NA, NA, NA, NA, NA, 36, 31 , 30, 40, 40 )
+  , blondel_min = c(NA, NA , NA ,  NA, NA , NA, NA,NA, NA, NA, NA, NA, 60, 60 , rep(55, 3) )
+  , blondel_max = c(NA, NA , NA , NA, NA , NA, NA, NA, NA, NA, NA, NA, 64, 66 , rep(70, 3) )
  
-  , other_calcs = c(NA, NA, NA, NA, NA, NA, NA, "1. The trad depth shall be 508 mm minus four-thirds of the riser height OR 2. The riser height shall be 381 mm minus three-fourths of the tread depth", rep(NA, 9))
+  , other_calcs = c(NA, NA, NA, NA, NA, NA, NA, "1. The trad depth shall be 508 mm minus four-thirds of the riser height OR 2. The riser height shall be 381 mm minus three-fourths of the tread depth", rep(NA, 5), "According to the ISO 14122-3:2016, if the stair angle is between 60° and 75° rise min will be 23 cm and rise max will be 30 cm", rep(NA, 3))
   
   , article = c("ADA 2010 - Articles 504.2", "ADA 2010 - Articles 1009.6.1",  "ADA 2010 - Articles 1009.5.4"
   ,  rep("IBS 2021 - Chapter 10, articles 1011.5.2", 3)
