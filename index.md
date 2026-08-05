@@ -31,7 +31,7 @@ steps and whether or not there is a landing step.
 > below) and the best solution is identified, but you can explore the
 > alternative solutions.
 
-**Blondel’s rule.** A stair geometry follows the Blondel - comfort -
+**Blondel’s value.** A stair geometry follows the Blondel - comfort -
 relationship.
 
 ``` math
@@ -41,19 +41,25 @@ relationship.
 Where $`r`$ is the rise (vertical riser height), $`g`$ is the going
 (horizontal tread depth), and $`B`$ is the target Blondel value.
 
-> 𓊍 In French carpentry and masonry practices for staircase
-> construction, the Blondel ideal value should be 63 cm. It is
-> recommended to prioritise the solution with the smallest deviation
-> from this Blondel target value. From this French point of view,
-> solutions with a Blondel value between 60 cm and 64 cm are acceptable.
-> Moreover, older French laws therefore stipulate that “the height and
-> width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m”
-> (<https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/>).
-> Other standards and laws do not specify the permissible Blondel
-> values, or even specify a range of values that differs from the range
-> set out in French law, e.g., UK laws specify permissible Blondel
-> values between 55 cm and 70 cm
-> (<https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf>).
+𓊍 In French carpentry and masonry practices for domestic staircase
+construction, the Blondel ideal value should be 63 cm. It is recommended
+to prioritise the staircase solution with the smallest deviation from
+this Blondel target value. From this French point of view, solutions
+with a Blondel value between 60 cm and 64 cm are acceptable. In the same
+vein, older French laws therefore stipulate that “the height and width
+must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m”
+(<https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/>).
+Other standards and laws do not specify the permissible Blondel values,
+or even specify a range of values that differs from the range set out in
+French law, e.g., UK laws specify permissible Blondel values between 55
+cm and 70 cm
+(<https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf>).
+In other words, it is possible to build staircases that complying with
+British standards but do not comply with French standards.
+
+Some standards apply specifically to a particular type of staircase,
+e.g., according to the ISO standard, a stair that is a permanent mean of
+access to machinery require a Blondel value between 60 cm and 66 cm[^1].
 
 **Best solution.** Possible solutions are sorted by their deviation from
 the Blondel target value, default is 63 cm.
@@ -133,3 +139,8 @@ plot_stair_dimensions(sol3$geometry[[1]])
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)
+
+[^1]: International Organization for Standardization. (2016). Safety of
+    machinery — Permanent means of access to machinery — Part 3: Stairs,
+    stepladders and guard-rail (ISO Standard No. 14122-3:2016).
+    <https://www.iso.org/standard/61282.html>
