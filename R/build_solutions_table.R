@@ -78,7 +78,7 @@ build_solutions_table <- function(candidates, max_horizontal_run, blondel_target
 
   res <- do.call(rbind, lines_per_candidate)
 
-  # a valid solution fit in length & don't have a landing step OR there is a POSSIBLE landing step
+  # a valid solution fit in length & don't have a landing step OR there is a possible landing step
   res$is_valid <- !res$horizontal_run_exceeded & (res$has_landing == FALSE | (res$has_landing == TRUE & !res$landing_impossible))
 
   rownames(res) <- NULL

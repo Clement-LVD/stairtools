@@ -52,8 +52,7 @@ build_geometry <- function(n_risers, step_height, goings) {
 }
 
   if (n_goings   == n_without_extension) { goings <- c(goings, NA_real_)   }
-  # from here : girons et going_types sont de longueur n_risers
-
+  
   cumul_going <- ifelse(is.na(goings), 0, goings)
   x_riser  <- c(0, cumsum(cumul_going))[seq_len(n_risers)]
   y_bottom  <- (0:(n_risers - 1)) * step_height
@@ -69,23 +68,6 @@ build_geometry <- function(n_risers, step_height, goings) {
     stringsAsFactors = FALSE
   )
 
-  # code en frenchi : 
-  # geometrie <- data.frame( num_steps = seq_len(n_risers), x_contremarche = x_contremarche, y_bas = y_bas, y_haut = y_haut, giron = goings, x_fin_giron = x_contremarche + goings, type_giron = going_types, stringsAsFactors = FALSE )
-
-  # TODO il faudrait mettre des NA pour la derniere contramarche !
-  #geometry <- data.frame(
- # step        = seq_len(n_risers),
- # x_riser     = x_riser,
- # y_bottom    = y_bottom,
-  #y_top       = y_top,
-  #going       = c(goings, NA)[seq_len(n_risers)],
- # x_going_end = c(x_riser + goings, NA)[seq_len(n_risers)],
-  #going_type  = c(going_types, NA)[seq_len(n_risers)],
-  #stringsAsFactors = FALSE)
-
-  # Classe S3 dédiée : permet d'appeler plot(geometrie) directement (voir
-  # plot.escalier_geometrie() dans plot_escalier.R) plutôt que d'obtenir le
-  # pairs-plot par défaut de plot.data.frame().
   class(geometry) <- c("stair_geometry", class(geometry))
   geometry
 }

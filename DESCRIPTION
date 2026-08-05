@@ -1,9 +1,9 @@
 Package: stairtools
-Title: Compute Stairs
+Title: Compute Stairs And Made Plans
 Version: 0.2
 Authors@R: 
-    person("Clément", "Laverdet", , "clementlvd@gmail.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-4466-3394"))
-Description: Compute stairs and get measures.
+    person("Clément", "Laverdet", email =  "clementlvd@gmail.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-4466-3394"))
+Description: Compute stairs, get measures and create a graphic.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -17,3 +17,5 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
 LazyData: true
+URL: https://clement-lvd.github.io/stairtools/
+BugReports: https://github.com/Clement-LVD/stairtools/issues

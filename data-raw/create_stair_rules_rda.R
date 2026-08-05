@@ -10,7 +10,7 @@
 #' @return A data frame containing one row per reference rule. 
 #' @keywords internal
 #' @internal
-create_stair_ruless_rda <- function() {
+create_stair_rules_rda <- function() {
 
 stair_rules <- data.frame(
  
@@ -27,7 +27,7 @@ stair_rules <- data.frame(
 , destination = c( "Common areas of collective residential buildings and individual houses" # "Parties communes des batiments d'habitation collectifs et des maisons individuelles"
   , "Interiors of dwellings" # "Interieurs des logements"
   , "Accessibility of establishments open to the public and publicly accessible facilities" # "Accessibilite aux personnes handicap'é'es des 'é'tablissements recevant du public et des installations ouvertes au public"
-  , "Workplaces: occasional use of a level by persons with disabilities" # "Lieux de travail : usage occasionnel d'un niveau é desservir pour les personnes handicapees" 
+  , "Workplaces: occasional use of a level by persons with disabilities" # "Lieux de travail : usage occasionnel d'un niveau a desservir pour les personnes handicapees" 
   , "Straight stairs intended for public circulation"# "Escaliers droits destines a la circulation du public"
   , "Access to machinery" # "Accessing Machineries (ISO standards)"
   , "Private stair" # brit' standards
