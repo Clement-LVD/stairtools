@@ -22,7 +22,7 @@
   : Plot a stair profile
 - [`plot_stair_dimensions()`](https://clement-lvd.github.io/stairtools/reference/plot_stair_dimensions.md)
   : Plot a stair profile with dimensions
-- [`print(`*`<escalier_solutions>`*`)`](https://clement-lvd.github.io/stairtools/reference/print.escalier_solutions.md)
+- [`print(`*`<stair_solutions>`*`)`](https://clement-lvd.github.io/stairtools/reference/print.stair_solutions.md)
   : Print stair solutions without the geometry list-column
 - [`solve_stairs()`](https://clement-lvd.github.io/stairtools/reference/solve_stairs.md)
   : Compute all possible stair solutions
