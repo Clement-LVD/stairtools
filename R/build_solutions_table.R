@@ -85,7 +85,7 @@ build_solutions_table <- function(candidates, max_horizontal_run, blondel_target
 
   res <- structure(res,  "n_valid_solution" = length(which(res$is_valid) ) ) 
   
-  class(res) <- c("escalier_solutions", class(res))
+  class(res) <- c("stair_solutions", class(res))
   
   return(res)
   
@@ -103,7 +103,7 @@ build_solutions_table <- function(candidates, max_horizontal_run, blondel_target
 #'   \code{print.data.frame()}.
 #'
 #' @export
-print.escalier_solutions <- function(x, ...) {
+print.stair_solutions <- function(x, ...) {
 
   n_valid_solutions <- integer(0)
   n_valid_solutions <- if("is_valid" %in% names(x)) length(which(x$is_valid) )
