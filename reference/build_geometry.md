@@ -57,12 +57,12 @@ The returned geometry is intended to be plotted directly using
 ``` r
 geometry <- build_geometry(n_risers = 5, step_height = 17.33, goings = rep(28.33, 4) )
 geometry
-#>   step x_riser y_bottom y_top going x_going_end
-#> 1    1    0.00     0.00 17.33 28.33       28.33
-#> 2    2   28.33    17.33 34.66 28.33       56.66
-#> 3    3   56.66    34.66 51.99 28.33       84.99
-#> 4    4   84.99    51.99 69.32 28.33      113.32
-#> 5    5  113.32    69.32 86.65    NA          NA
+#>   step x_riser y_bottom y_top  rise going x_going_end has_tread
+#> 1    1    0.00     0.00 17.33 17.33 28.33       28.33      TRUE
+#> 2    2   28.33    17.33 34.66 17.33 28.33       56.66      TRUE
+#> 3    3   56.66    34.66 51.99 17.33 28.33       84.99      TRUE
+#> 4    4   84.99    51.99 69.32 17.33 28.33      113.32      TRUE
+#> 5    5  113.32    69.32 86.65 17.33    NA          NA     FALSE
 plot(geometry)
 
 ```

@@ -95,17 +95,17 @@ check_stair_rules(sol)
 #> 5                  TRUE                       TRUE                        FALSE
 #>    ISO_machinery_access UK_private UK_utility UK_general_access n_rules_ok
 #> 12                 TRUE       TRUE      FALSE             FALSE          4
-#> 15                 TRUE       TRUE      FALSE             FALSE          4
-#> 7                  TRUE      FALSE      FALSE             FALSE          5
-#> 10                 TRUE      FALSE      FALSE             FALSE          5
-#> 2                  TRUE      FALSE      FALSE             FALSE         11
-#> 5                  TRUE      FALSE      FALSE             FALSE         11
+#> 15                FALSE       TRUE      FALSE             FALSE          3
+#> 7                 FALSE      FALSE      FALSE             FALSE          4
+#> 10                FALSE      FALSE      FALSE             FALSE          4
+#> 2                 FALSE      FALSE      FALSE             FALSE         10
+#> 5                 FALSE      FALSE      FALSE             FALSE         10
 #>    rate_rules_ok
 #> 12     0.2352941
-#> 15     0.2352941
-#> 7      0.2941176
-#> 10     0.2941176
-#> 2      0.6470588
-#> 5      0.6470588
+#> 15     0.1764706
+#> 7      0.2352941
+#> 10     0.2352941
+#> 2      0.5882353
+#> 5      0.5882353
 #> ('geometry' list-col is hidden - access via $geometry[[i]])
 ```
