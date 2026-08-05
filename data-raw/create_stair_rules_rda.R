@@ -16,17 +16,21 @@ stair_rules <- data.frame(
  
   id = c( 
 # US
-  "US_IBC_means_of_egress" 
+  "US_ADA_public_stairs"
+  ,  "US_ADA_pool_stairs"
+  ,  "US_ADA_pool_transfer_steps"
+  , "US_IBC_means_of_egress" 
   , "US_IBC_dwelling_units"
   , "US_IBC_guard_towers_obeservation_stations_and_control_rooms"
-, "US_IRC_means_of_egress", "US_IRC_sleeping_loft", 
+, "US_IRC_means_of_egress"
+  , "US_IRC_sleeping_loft", 
 
     # france
-"FR_habitation_common_areas",
-"FR_habitation_dwellings",
-"FR_access_public_building",
+"FR_collective_housing_common_areas",
+"FR_private_dwelling_interior",
+"FR_ERP_accessibility",
 "FR_workplace_accessibility",
-"FR_erp_public_stairs",
+"FR_public_circulation_stairs",
   
   # iso
 "ISO_machinery_access"
@@ -35,7 +39,11 @@ stair_rules <- data.frame(
 , "UK_private", "UK_utility", "UK_general_access" 
 )
 
-, destination = c(  "Means of egress (IBC)"
+, destination = c("State and local government facilities, public accommodations, and commercial facilities (ADA)"
+   , "Pool stairs (ADA)"
+  , "Pool transfer steps (ADA)"
+
+  ,  "Means of egress (IBC)"
   , "Dwelling units (IBC)"
   , "Guard towers, observation stations and control rooms (IBC)"
  , "Means of egress (IRC)"
@@ -56,19 +64,20 @@ stair_rules <- data.frame(
   , "General access stair" # brit' standards
   )
 
-  , jurisdiction = c( rep("United States",5), rep("France", 5 ), "International", rep("United Kingdom", 3))
+  , jurisdiction = c( rep("United States",8), rep("France", 5 ), "International", rep("United Kingdom", 3))
   
-  , step_rise_min = c(NA, NA , 10.2, NA , 17.8, NA, NA, NA, NA, 13, NA   , 15, 15, 15)
+  , step_rise_min = c(10, NA , NA, NA, NA , 10.2, NA , 17.8, NA, NA, NA, NA, 13, NA   , 15, 15, 15)
 
-  , step_rise_max = c(20.3, 19.7 , 17.8, 19.6 ,  30.5 , 17, 18, 16, 16, 17, 21     , 22, 19, 17)
-  , going_min =  c(22.9, 25.4 , 27.9, 25.4 ,  NA, 28 , 24, 28, 28, 36, 19   , 22, 25, 25)
-  , going_max = c(NA, NA , NA, NA , NA, NA, NA, NA, NA, 36, NA , 30, 40, 40 )
-  , blondel_min = c(NA, NA , NA, NA,NA, NA, NA, NA, NA, 60, NA , rep(55, 3) )
-  , blondel_max = c(NA, NA , NA, NA, NA, NA, NA, NA, NA, 64, NA , rep(70, 3) )
+  , step_rise_max = c(18, NA , NA, 20.3, 19.7 , 17.8, 19.6 ,  30.5 , 17, 18, 16, 16, 17, 21     , 22, 19, 17)
+  , going_min =  c(28, 28, 35.5 , 22.9, 25.4 , 27.9, 25.4 ,  NA, 28 , 24, 28, 28, 36, 19   , 22, 25, 25)
+  , going_max = c(NA, NA, 43 ,  NA, NA , NA, NA , NA, NA, NA, NA, NA, 36, NA , 30, 40, 40 )
+  , blondel_min = c(NA, NA , NA ,  NA, NA , NA, NA,NA, NA, NA, NA, NA, 60, NA , rep(55, 3) )
+  , blondel_max = c(NA, NA , NA , NA, NA , NA, NA, NA, NA, NA, NA, NA, 64, NA , rep(70, 3) )
  
-  , other_calcs = c(NA, NA, NA, NA, "1. The trad depth shall be 508 mm minus four-thirds of the riser height OR 2. The riser height shall be 381 mm minus three-fourths of the tread depth", rep(NA, 9))
+  , other_calcs = c(NA, NA, NA, NA, NA, NA, NA, "1. The trad depth shall be 508 mm minus four-thirds of the riser height OR 2. The riser height shall be 381 mm minus three-fourths of the tread depth", rep(NA, 9))
   
-  , article = c(rep("IBS 2021 - Chapter 10, articles 1011.5.2", 3)
+  , article = c("ADA 2010 - Articles 504.2", "ADA 2010 - Articles 1009.6.1",  "ADA 2010 - Articles 1009.5.4"
+  ,  rep("IBS 2021 - Chapter 10, articles 1011.5.2", 3)
    ,  "IRC 2024 - Chapter 3, articles R318.7"
   , "IRC 2024 - Chapter 3, articles R315.5"
   ,  "Arrêté du 24 décembre 2015, article 6-1 [building regulations in France]"
@@ -80,13 +89,15 @@ stair_rules <- data.frame(
   , rep("Approved Document K [building regulations in England]", 3) # p. 5
           )
 
-          , main_source = c(rep("International Building Code 2021 (IBC)", 3)
+          , main_source = c(rep("ADA Standards for accessible design (2010)",3), rep("International Building Code 2021 (IBC)", 3)
            ,  rep("International Residential Code 2024 (IRC)", 2)
           , rep("Building regulations in France", 5)
         , "ISO standards"
      ,  rep("Building regulations in England", 3))
 
-, url = c(rep("https://codes.iccsafe.org/content/IBC2018P6/chapter-10-means-of-egress#IBC2018P6_Ch10_Sec1011.5.2", 3)
+, url = c("https://www.ada.gov/law-and-regs/design-standards/2010-stds/#inPageResult4#section95"
+  , rep("https://www.ada.gov/law-and-regs/design-standards/2010-stds/#inPageResult13#section144", 2)
+  , rep("https://codes.iccsafe.org/content/IBC2018P6/chapter-10-means-of-egress#IBC2018P6_Ch10_Sec1011.5.2", 3)
   , rep("https://codes.iccsafe.org/content/IRC2024P2/chapter-3-building-planning", 2)
   , "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000031692481"
   , "https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000031830909" 
@@ -98,9 +109,6 @@ stair_rules <- data.frame(
 
   
   )
-
-  
- , source_type = c(rep("regulation",5), "regulation", "regulation", "regulation", "regulation", "regulation", "standard", rep("regulation", 3) )
 
 ,   stringsAsFactors = FALSE
 
