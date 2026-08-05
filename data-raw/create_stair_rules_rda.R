@@ -14,26 +14,40 @@ create_stair_rules_rda <- function() {
 
 stair_rules <- data.frame(
  
-  id = c(
-"habitation_common_areas",
-"habitation_dwellings",
-"access_public_building",
-"workplace_accessibility",
-"erp_public_stairs",
-"machinery_access"
-, "private_uk", "utility_uk", "general_access_uk" 
+  id = c( 
+    # france
+"FR_habitation_common_areas",
+"FR_habitation_dwellings",
+"FR_access_public_building",
+"FR_workplace_accessibility",
+"FR_erp_public_stairs",
+  
+  # iso
+"ISO_machinery_access"
+  
+  # uk
+, "UK_private", "UK_utility", "UK_general_access" 
 )
 
-, destination = c( "Common areas of collective residential buildings and individual houses" # "Parties communes des batiments d'habitation collectifs et des maisons individuelles"
+, destination = c( 
+  
+  
+  "Common areas of collective residential buildings and individual houses" # "Parties communes des batiments d'habitation collectifs et des maisons individuelles"
   , "Interiors of dwellings" # "Interieurs des logements"
   , "Accessibility of establishments open to the public and publicly accessible facilities" # "Accessibilite aux personnes handicap'é'es des 'é'tablissements recevant du public et des installations ouvertes au public"
   , "Workplaces: occasional use of a level by persons with disabilities" # "Lieux de travail : usage occasionnel d'un niveau a desservir pour les personnes handicapees" 
   , "Straight stairs intended for public circulation"# "Escaliers droits destines a la circulation du public"
+  
+  # iso
   , "Access to machinery" # "Accessing Machineries (ISO standards)"
+  
+  # uk
   , "Private stair" # brit' standards
   , "Utility stair" # brit' standards
   , "General access stair" # brit' standards
   )
+
+  , jurisdiction = c(rep("France", 5 ), "International", rep("United Kingdom", 3))
 
   , height_max = c(17, 18, 16, 16, 17, 21     , 22, 19, 17)
   , going_min =  c(28 , 24, 28, 28, 36, 19   , 22, 25, 25)
@@ -58,6 +72,8 @@ stair_rules <- data.frame(
   , "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/"
   , "https://www.boutique.afnor.org/fr-fr/norme/nf-en-iso-141223"
   , rep("https://www.gov.uk/government/publications/protection-from-falling-collision-and-impact-approved-document-k", 3)
+
+  
   )
 
   
