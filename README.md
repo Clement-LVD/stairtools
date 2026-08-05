@@ -56,10 +56,18 @@ Where $r$ is the rise (vertical riser height), $g$ is the going
 (horizontal tread depth), and $B$ is the target Blondel value.
 
 > 𓊍 In French carpentry and masonry practices for staircase
-> construction, the Blondel ideal value should be 63 cm : it is
+> construction, the Blondel ideal value should be 63 cm. It is
 > recommended to prioritise the solution with the smallest deviation
-> from this Blondel target value, i.e. 63 cm. Solutions with a Blondel
-> target value between 60 cm and 64 cm are acceptable.
+> from this Blondel target value. From this French point of view,
+> solutions with a Blondel value between 60 cm and 64 cm are acceptable.
+> Moreover, older French laws therefore stipulate that “the height and
+> width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m”
+> (<https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/>).
+> Other standards and laws do not specify the permissible Blondel
+> values, or even specify a range of values that differs from the range
+> set out in French law, e.g., UK laws specify permissible Blondel
+> values between 55 cm and 70 cm
+> (<https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf>).
 
 **Best solution.** Possible solutions are sorted by their deviation from
 the Blondel target value, default is 63 cm.

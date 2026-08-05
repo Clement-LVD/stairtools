@@ -12,7 +12,7 @@ check_stair_rules(x, rule = NULL)
 \item{rule}{\code{character} - Optional rule id. If \code{NULL}, all rules are checked.}
 }
 \value{
-Return the input \code{data.frame} with one logical column per rule.
+Return the input \code{data.frame} with one logical column per rule and a 'n_rules_ok' and a 'rate_rules_ok' columns.
 }
 \description{
 Checks stair solutions against rules stored in \code{stair_rules}.
