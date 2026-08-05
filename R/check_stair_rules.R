@@ -5,7 +5,7 @@
 #' @param x A `data.frame` of stair solutions.
 #' @param rule `character` - Optional rule id. If `NULL`, all rules are checked.
 #'
-#' @return Return the input `data.frame` with one logical column per rule and a 'n_rules_ok' and a 'rate_rules_ok' columns.
+#' @return Return the input `data.frame` with one logical column per rule, a 'n_rules_ok' and a 'rate_rules_ok' columns.
 #' @examples
 #' sol <- solve_stairs(160, 150)
 #' check_stair_rules(sol)
