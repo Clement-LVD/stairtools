@@ -20,7 +20,8 @@ check_stair_rules(x, rule = NULL)
 
 ## Value
 
-Return the input `data.frame` with one logical column per rule.
+Return the input `data.frame` with one logical column per rule and a
+'n_rules_ok' and a 'rate_rules_ok' columns.
 
 ## Examples
 
@@ -50,26 +51,47 @@ check_stair_rules(sol)
 #> 10                   FALSE              FALSE     TRUE    4
 #> 2                    FALSE              FALSE     TRUE    5
 #> 5                    FALSE              FALSE     TRUE    6
-#>    habitation_common_areas habitation_dwellings access_public_building
-#> 12                   FALSE                FALSE                  FALSE
-#> 15                   FALSE                FALSE                  FALSE
-#> 7                    FALSE                 TRUE                  FALSE
-#> 10                   FALSE                 TRUE                  FALSE
-#> 2                     TRUE                 TRUE                   TRUE
-#> 5                     TRUE                 TRUE                   TRUE
-#>    workplace_accessibility erp_public_stairs machinery_access private_uk
-#> 12                   FALSE              TRUE             TRUE       TRUE
-#> 15                   FALSE              TRUE             TRUE       TRUE
-#> 7                    FALSE              TRUE             TRUE       TRUE
-#> 10                   FALSE              TRUE             TRUE       TRUE
-#> 2                     TRUE              TRUE             TRUE       TRUE
-#> 5                     TRUE              TRUE             TRUE       TRUE
-#>    utility_uk general_access_uk
-#> 12       TRUE              TRUE
-#> 15       TRUE              TRUE
-#> 7        TRUE              TRUE
-#> 10       TRUE              TRUE
-#> 2        TRUE              TRUE
-#> 5        TRUE              TRUE
+#>    US_IBC_means_of_egress US_IBC_dwelling_units
+#> 12                   TRUE                 FALSE
+#> 15                   TRUE                 FALSE
+#> 7                    TRUE                  TRUE
+#> 10                   TRUE                  TRUE
+#> 2                    TRUE                  TRUE
+#> 5                    TRUE                  TRUE
+#>    US_IBC_guard_towers_obeservation_stations_and_control_rooms
+#> 12                                                       FALSE
+#> 15                                                       FALSE
+#> 7                                                        FALSE
+#> 10                                                       FALSE
+#> 2                                                         TRUE
+#> 5                                                         TRUE
+#>    US_IRC_means_of_egress US_IRC_sleeping_loft FR_habitation_common_areas
+#> 12                  FALSE                 TRUE                      FALSE
+#> 15                  FALSE                 TRUE                      FALSE
+#> 7                    TRUE                FALSE                      FALSE
+#> 10                   TRUE                FALSE                      FALSE
+#> 2                    TRUE                FALSE                       TRUE
+#> 5                    TRUE                FALSE                       TRUE
+#>    FR_habitation_dwellings FR_access_public_building FR_workplace_accessibility
+#> 12                   FALSE                     FALSE                      FALSE
+#> 15                   FALSE                     FALSE                      FALSE
+#> 7                     TRUE                     FALSE                      FALSE
+#> 10                    TRUE                     FALSE                      FALSE
+#> 2                     TRUE                      TRUE                       TRUE
+#> 5                     TRUE                      TRUE                       TRUE
+#>    FR_erp_public_stairs ISO_machinery_access UK_private UK_utility
+#> 12                FALSE                 TRUE       TRUE      FALSE
+#> 15                FALSE                 TRUE       TRUE      FALSE
+#> 7                 FALSE                 TRUE      FALSE      FALSE
+#> 10                FALSE                 TRUE      FALSE      FALSE
+#> 2                 FALSE                 TRUE      FALSE      FALSE
+#> 5                 FALSE                 TRUE      FALSE      FALSE
+#>    UK_general_access n_rules_ok rate_rules_ok
+#> 12             FALSE          4     0.2857143
+#> 15             FALSE          4     0.2857143
+#> 7              FALSE          5     0.3571429
+#> 10             FALSE          5     0.3571429
+#> 2              FALSE          9     0.6428571
+#> 5              FALSE          9     0.6428571
 #> ('geometry' list-col is hidden - access via $geometry[[i]])
 ```

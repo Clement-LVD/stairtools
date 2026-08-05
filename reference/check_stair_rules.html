@@ -60,7 +60,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Return the input <code>data.frame</code> with one logical column per rule.</p>
+    <p>Return the input <code>data.frame</code> with one logical column per rule and a 'n_rules_ok' and a 'rate_rules_ok' columns.</p>
     </div>
 
     <div class="section level2">
@@ -90,27 +90,48 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10                   FALSE              FALSE     TRUE    4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                    FALSE              FALSE     TRUE    5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5                    FALSE              FALSE     TRUE    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    habitation_common_areas habitation_dwellings access_public_building</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12                   FALSE                FALSE                  FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15                   FALSE                FALSE                  FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                    FALSE                 TRUE                  FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                   FALSE                 TRUE                  FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     TRUE                 TRUE                   TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     TRUE                 TRUE                   TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    workplace_accessibility erp_public_stairs machinery_access private_uk</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12                   FALSE              TRUE             TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15                   FALSE              TRUE             TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                    FALSE              TRUE             TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                   FALSE              TRUE             TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     TRUE              TRUE             TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     TRUE              TRUE             TRUE       TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    utility_uk general_access_uk</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12       TRUE              TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15       TRUE              TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7        TRUE              TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       TRUE              TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        TRUE              TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        TRUE              TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    US_IBC_means_of_egress US_IBC_dwelling_units</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                   TRUE                 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                   TRUE                 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                    TRUE                  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                   TRUE                  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    TRUE                  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                    TRUE                  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    US_IBC_guard_towers_obeservation_stations_and_control_rooms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                                                       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                                                       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                                                        FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                                                       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                         TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    US_IRC_means_of_egress US_IRC_sleeping_loft FR_habitation_common_areas</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                  FALSE                 TRUE                      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                  FALSE                 TRUE                      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                    TRUE                FALSE                      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                   TRUE                FALSE                      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    TRUE                FALSE                       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                    TRUE                FALSE                       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    FR_habitation_dwellings FR_access_public_building FR_workplace_accessibility</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                   FALSE                     FALSE                      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                   FALSE                     FALSE                      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                     TRUE                     FALSE                      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                    TRUE                     FALSE                      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     TRUE                      TRUE                       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     TRUE                      TRUE                       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    FR_erp_public_stairs ISO_machinery_access UK_private UK_utility</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                FALSE                 TRUE       TRUE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                FALSE                 TRUE       TRUE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                 FALSE                 TRUE      FALSE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                FALSE                 TRUE      FALSE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 FALSE                 TRUE      FALSE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                 FALSE                 TRUE      FALSE      FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    UK_general_access n_rules_ok rate_rules_ok</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12             FALSE          4     0.2857143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15             FALSE          4     0.2857143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7              FALSE          5     0.3571429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10             FALSE          5     0.3571429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2              FALSE          9     0.6428571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5              FALSE          9     0.6428571</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ('geometry' list-col is hidden - access via $geometry[[i]])</span>
 </code></pre></div>
     </div>
