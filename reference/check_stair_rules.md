@@ -20,7 +20,7 @@ check_stair_rules(x, rule = NULL)
 
 ## Value
 
-Return the input `data.frame` with one logical column per rule and a
+Return the input `data.frame` with one logical column per rule, a
 'n_rules_ok' and a 'rate_rules_ok' columns.
 
 ## Examples
