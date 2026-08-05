@@ -51,6 +51,13 @@ check_stair_rules(sol)
 #> 10                   FALSE              FALSE     TRUE    4
 #> 2                    FALSE              FALSE     TRUE    5
 #> 5                    FALSE              FALSE     TRUE    6
+#>    US_ADA_public_stairs US_ADA_pool_stairs US_ADA_pool_transfer_steps
+#> 12                FALSE              FALSE                      FALSE
+#> 15                FALSE              FALSE                      FALSE
+#> 7                 FALSE              FALSE                      FALSE
+#> 10                FALSE              FALSE                      FALSE
+#> 2                  TRUE               TRUE                      FALSE
+#> 5                  TRUE               TRUE                      FALSE
 #>    US_IBC_means_of_egress US_IBC_dwelling_units
 #> 12                   TRUE                 FALSE
 #> 15                   TRUE                 FALSE
@@ -65,33 +72,40 @@ check_stair_rules(sol)
 #> 10                                                       FALSE
 #> 2                                                         TRUE
 #> 5                                                         TRUE
-#>    US_IRC_means_of_egress US_IRC_sleeping_loft FR_habitation_common_areas
-#> 12                  FALSE                 TRUE                      FALSE
-#> 15                  FALSE                 TRUE                      FALSE
-#> 7                    TRUE                FALSE                      FALSE
-#> 10                   TRUE                FALSE                      FALSE
-#> 2                    TRUE                FALSE                       TRUE
-#> 5                    TRUE                FALSE                       TRUE
-#>    FR_habitation_dwellings FR_access_public_building FR_workplace_accessibility
-#> 12                   FALSE                     FALSE                      FALSE
-#> 15                   FALSE                     FALSE                      FALSE
-#> 7                     TRUE                     FALSE                      FALSE
-#> 10                    TRUE                     FALSE                      FALSE
-#> 2                     TRUE                      TRUE                       TRUE
-#> 5                     TRUE                      TRUE                       TRUE
-#>    FR_erp_public_stairs ISO_machinery_access UK_private UK_utility
-#> 12                FALSE                 TRUE       TRUE      FALSE
-#> 15                FALSE                 TRUE       TRUE      FALSE
-#> 7                 FALSE                 TRUE      FALSE      FALSE
-#> 10                FALSE                 TRUE      FALSE      FALSE
-#> 2                 FALSE                 TRUE      FALSE      FALSE
-#> 5                 FALSE                 TRUE      FALSE      FALSE
-#>    UK_general_access n_rules_ok rate_rules_ok
-#> 12             FALSE          4     0.2857143
-#> 15             FALSE          4     0.2857143
-#> 7              FALSE          5     0.3571429
-#> 10             FALSE          5     0.3571429
-#> 2              FALSE          9     0.6428571
-#> 5              FALSE          9     0.6428571
+#>    US_IRC_means_of_egress US_IRC_sleeping_loft
+#> 12                  FALSE                 TRUE
+#> 15                  FALSE                 TRUE
+#> 7                    TRUE                FALSE
+#> 10                   TRUE                FALSE
+#> 2                    TRUE                FALSE
+#> 5                    TRUE                FALSE
+#>    FR_collective_housing_common_areas FR_private_dwelling_interior
+#> 12                              FALSE                        FALSE
+#> 15                              FALSE                        FALSE
+#> 7                               FALSE                         TRUE
+#> 10                              FALSE                         TRUE
+#> 2                                TRUE                         TRUE
+#> 5                                TRUE                         TRUE
+#>    FR_ERP_accessibility FR_workplace_accessibility FR_public_circulation_stairs
+#> 12                FALSE                      FALSE                        FALSE
+#> 15                FALSE                      FALSE                        FALSE
+#> 7                 FALSE                      FALSE                        FALSE
+#> 10                FALSE                      FALSE                        FALSE
+#> 2                  TRUE                       TRUE                        FALSE
+#> 5                  TRUE                       TRUE                        FALSE
+#>    ISO_machinery_access UK_private UK_utility UK_general_access n_rules_ok
+#> 12                 TRUE       TRUE      FALSE             FALSE          4
+#> 15                 TRUE       TRUE      FALSE             FALSE          4
+#> 7                  TRUE      FALSE      FALSE             FALSE          5
+#> 10                 TRUE      FALSE      FALSE             FALSE          5
+#> 2                  TRUE      FALSE      FALSE             FALSE         11
+#> 5                  TRUE      FALSE      FALSE             FALSE         11
+#>    rate_rules_ok
+#> 12     0.2352941
+#> 15     0.2352941
+#> 7      0.2941176
+#> 10     0.2941176
+#> 2      0.6470588
+#> 5      0.6470588
 #> ('geometry' list-col is hidden - access via $geometry[[i]])
 ```
