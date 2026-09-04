@@ -4,20 +4,32 @@
 \alias{check_stair_rules}
 \title{Check stair solutions against dimensional rules}
 \usage{
-check_stair_rules(x, rule = NULL)
+check_stair_rules(
+  x,
+  rule = NULL,
+  dimensions = c("step_rise", "going", "blondel")
+)
 }
 \arguments{
-\item{x}{A \code{data.frame} of stair solutions.}
+\item{x}{A \code{data.frame} of stair solutions, e.g., returned by \code{solve_stairs()}.}
 
 \item{rule}{\code{character} - Optional rule id. If \code{NULL}, all rules are checked.}
 }
 \value{
-Return the input \code{data.frame} with one logical column per rule, a 'n_rules_ok' and a 'rate_rules_ok' columns.
+The input \code{data.frame} with one logical column per rule,
+\code{n_rules_ok}, and \code{rate_rules_ok}.
 }
 \description{
-Checks stair solutions against rules stored in \code{stair_rules}.
+Checks stair solutions against rules stored in \code{stair_rules} (rules from
+\code{sysdata.rda}).
 }
 \examples{
-sol <- solve_stairs(160, 150)
-check_stair_rules(sol)
+x <- data.frame(
+  step_rise = c(15, 17, 19),
+  going = c(30, 28, 25),
+  blondel = c(60, 62, 63)
+)
+
+check_stair_rules(x)
+
 }
