@@ -1,54 +1,77 @@
 #' Check stair solutions against dimensional rules
 #'
-#' Checks stair solutions against rules stored in `stair_rules`.
+#' Checks stair solutions against rules stored in `stair_rules` (rules from
+#' `sysdata.rda`).
 #'
-#' @param x A `data.frame` of stair solutions.
+#' @param x A `data.frame` of stair solutions, e.g., returned by `solve_stairs()`.
 #' @param rule `character` - Optional rule id. If `NULL`, all rules are checked.
 #'
-#' @return Return the input `data.frame` with one logical column per rule, a 'n_rules_ok' and a 'rate_rules_ok' columns.
+#' @return The input `data.frame` with one logical column per rule,
+#'   `n_rules_ok`, and `rate_rules_ok`.
+#'
 #' @examples
-#' sol <- solve_stairs(160, 150)
-#' check_stair_rules(sol)
+#' x <- data.frame(
+#'   step_rise = c(15, 17, 19),
+#'   going = c(30, 28, 25),
+#'   blondel = c(60, 62, 63)
+#' )
+#'
+#' check_stair_rules(x)
+#'
 #' @export
-check_stair_rules <- function(x, rule = NULL) {
+check_stair_rules <- function(
+    x,
+    rule = NULL,
+    dimensions = c("step_rise", "going", "blondel")
+) {
 
   rules <- stair_rules
 
   if (!is.null(rule)) {
-
     rules <- rules[rules$id == rule, , drop = FALSE]
-
     if (nrow(rules) != 1)
       stop("Unknown rule.")
-
   }
 
-  dimensions <- unique(sub("_(min|max)$", "",  grep("_(min|max)$", names(rules), value = TRUE)  ))
+check <- function(r) {
 
-  check <- function(r) {
+    checks <- lapply(dimensions, function(d) {
 
-  ok <- rep(TRUE, nrow(x))
+      min <- r[[paste0(d, "_min")]]
+      max <- r[[paste0(d, "_max")]]
 
-  for (d in intersect(dimensions, names(x))) {
+      if (is.na(min) && is.na(max))
+        return(NULL)
 
-    min_value <- r[[paste0(d, "_min")]]
-    max_value <- r[[paste0(d, "_max")]]
+      if (!d %in% names(x))
+        return(rep(NA, nrow(x)))
 
-    if (!is.na(min_value))
-      ok <- ok & (is.na(x[[d]]) | x[[d]] >= min_value)
+      ok <- TRUE
 
-    if (!is.na(max_value))
-      ok <- ok & (is.na(x[[d]]) | x[[d]] <= max_value)
+      if (!is.na(min))
+        ok <- ok & x[[d]] >= min
+
+      if (!is.na(max))
+        ok <- ok & x[[d]] <= max
+
+      ok
+    })
+
+    checks <- Filter(Negate(is.null), checks)
+
+    if (!length(checks))
+      return(rep(TRUE, nrow(x)))
+
+    Reduce(`&`, checks)
   }
 
-  ok
-}
-
-  x[ rules$id ] <- lapply(seq_len(nrow(rules)), function(i) check(rules[i, , drop = FALSE])  )
+  x[rules$id] <- lapply(
+    seq_len(nrow(rules)),
+    function(i) check(rules[i, , drop = FALSE])
+  )
 
   x$n_rules_ok <- rowSums(x[rules$id] == TRUE, na.rm = TRUE)
-  
-  x$rate_rules_ok <-  x$n_rules_ok  / length( rules$id )
-    
+  x$rate_rules_ok <- x$n_rules_ok / nrow(rules)
+
   x
 }
