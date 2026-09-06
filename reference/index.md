@@ -2,6 +2,8 @@
 
 ## All functions
 
+- [`add_stair_comfort_values()`](https://clement-lvd.github.io/stairtools/reference/add_stair_comfort_values.md)
+  : Add stair comfort indicators
 - [`best_solution()`](https://clement-lvd.github.io/stairtools/reference/best_solution.md)
   : Select the best stair solution
 - [`blondel_going()`](https://clement-lvd.github.io/stairtools/reference/blondel_going.md)

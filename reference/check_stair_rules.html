@@ -64,6 +64,10 @@ sysdata.rda)."></head><body>
 <dt id="arg-rule">rule<a class="anchor" aria-label="anchor" href="#arg-rule"></a></dt>
 <dd><p><code>character</code> - Optional rule id. If <code>NULL</code>, all rules are checked.</p></dd>
 
+
+<dt id="arg-dimensions">dimensions<a class="anchor" aria-label="anchor" href="#arg-dimensions"></a></dt>
+<dd><p><code>character</code> - Names of <code>x</code> variables to check according to the <code>stair_rules</code> internal data.frame, in order to check for a "_min" and "_max" values, default are "step_rise", "going" and "blondel"</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -88,10 +92,10 @@ sysdata.rda)."></head><body>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                      FALSE                   TRUE                  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                      FALSE                   TRUE                  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3                      FALSE                   TRUE                 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   US_IBC_guard_towers_obeservation_stations_and_control_rooms</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   US_IBC_guard_towers_observation_stations_and_control_rooms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                       TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                      FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   US_IRC_means_of_egress US_IRC_sleeping_loft</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                   TRUE                FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                   TRUE                FALSE</span>
@@ -104,14 +108,18 @@ sysdata.rda)."></head><body>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                 TRUE                       TRUE                        FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                FALSE                      FALSE                        FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3                FALSE                      FALSE                        FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ISO_machinery_access UK_private UK_utility UK_general_access n_rules_ok</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 TRUE       TRUE       TRUE              TRUE         14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 TRUE       TRUE       TRUE              TRUE         12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                 TRUE       TRUE       TRUE             FALSE          5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ISO_machinery_access UK_private UK_utility UK_general_access</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 TRUE       TRUE       TRUE              TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 TRUE       TRUE       TRUE              TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                 TRUE       TRUE       TRUE             FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   academic_compromise etiological_studies feet_accommodation n_rules_ok</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               FALSE                TRUE               TRUE         16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                TRUE                TRUE               TRUE         15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3               FALSE                TRUE              FALSE          6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   rate_rules_ok</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.8235294</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     0.7058824</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     0.2941176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          0.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          0.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          0.30</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

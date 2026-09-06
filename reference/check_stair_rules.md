@@ -24,6 +24,12 @@ check_stair_rules(
 
   `character` - Optional rule id. If `NULL`, all rules are checked.
 
+- dimensions:
+
+  `character` - Names of `x` variables to check according to the
+  `stair_rules` internal data.frame, in order to check for a "\_min" and
+  "\_max" values, default are "step_rise", "going" and "blondel"
+
 ## Value
 
 The input `data.frame` with one logical column per rule, `n_rules_ok`,
@@ -47,10 +53,10 @@ check_stair_rules(x)
 #> 1                      FALSE                   TRUE                  TRUE
 #> 2                      FALSE                   TRUE                  TRUE
 #> 3                      FALSE                   TRUE                 FALSE
-#>   US_IBC_guard_towers_obeservation_stations_and_control_rooms
-#> 1                                                        TRUE
-#> 2                                                        TRUE
-#> 3                                                       FALSE
+#>   US_IBC_guard_towers_observation_stations_and_control_rooms
+#> 1                                                       TRUE
+#> 2                                                       TRUE
+#> 3                                                      FALSE
 #>   US_IRC_means_of_egress US_IRC_sleeping_loft
 #> 1                   TRUE                FALSE
 #> 2                   TRUE                FALSE
@@ -63,12 +69,16 @@ check_stair_rules(x)
 #> 1                 TRUE                       TRUE                        FALSE
 #> 2                FALSE                      FALSE                        FALSE
 #> 3                FALSE                      FALSE                        FALSE
-#>   ISO_machinery_access UK_private UK_utility UK_general_access n_rules_ok
-#> 1                 TRUE       TRUE       TRUE              TRUE         14
-#> 2                 TRUE       TRUE       TRUE              TRUE         12
-#> 3                 TRUE       TRUE       TRUE             FALSE          5
+#>   ISO_machinery_access UK_private UK_utility UK_general_access
+#> 1                 TRUE       TRUE       TRUE              TRUE
+#> 2                 TRUE       TRUE       TRUE              TRUE
+#> 3                 TRUE       TRUE       TRUE             FALSE
+#>   academic_compromise etiological_studies feet_accommodation n_rules_ok
+#> 1               FALSE                TRUE               TRUE         16
+#> 2                TRUE                TRUE               TRUE         15
+#> 3               FALSE                TRUE              FALSE          6
 #>   rate_rules_ok
-#> 1     0.8235294
-#> 2     0.7058824
-#> 3     0.2941176
+#> 1          0.80
+#> 2          0.75
+#> 3          0.30
 ```
