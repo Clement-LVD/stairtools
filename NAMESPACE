@@ -3,6 +3,7 @@
 S3method(plot,stair_geometry)
 S3method(plot,stair_scene)
 S3method(print,stair_solutions)
+export(add_stair_comfort_values)
 export(best_solution)
 export(blondel_going)
 export(build_geometry)

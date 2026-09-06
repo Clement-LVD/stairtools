@@ -5,7 +5,7 @@
 #'
 #' @param x A `data.frame` of stair solutions, e.g., returned by `solve_stairs()`.
 #' @param rule `character` - Optional rule id. If `NULL`, all rules are checked.
-#'
+#' @param dimensions `character` - Names of `x` variables to check according to the `stair_rules` internal data.frame, in order to check for a "_min" and "_max" values, default are "step_rise", "going" and "blondel"
 #' @return The input `data.frame` with one logical column per rule,
 #'   `n_rules_ok`, and `rate_rules_ok`.
 #'

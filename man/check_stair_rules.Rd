@@ -14,6 +14,8 @@ check_stair_rules(
 \item{x}{A \code{data.frame} of stair solutions, e.g., returned by \code{solve_stairs()}.}
 
 \item{rule}{\code{character} - Optional rule id. If \code{NULL}, all rules are checked.}
+
+\item{dimensions}{\code{character} - Names of \code{x} variables to check according to the \code{stair_rules} internal data.frame, in order to check for a "_min" and "_max" values, default are "step_rise", "going" and "blondel"}
 }
 \value{
 The input \code{data.frame} with one logical column per rule,
