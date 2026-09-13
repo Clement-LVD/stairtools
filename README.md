@@ -141,7 +141,7 @@ sol2 <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing =
 # some computed solutions have a landing step
 landing_step_solutions <- sol2[sol2$has_landing == TRUE, ]
 
-plot(landing_step_solutions$geometry[[1]])
+plot_stair(landing_step_solutions$geometry[[1]])
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
@@ -153,7 +153,7 @@ Add nosing in negative direction with
 
 sol_neg <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing = 2.5, positive_nosing_direction = FALSE)
  
-plot(sol_neg$geometry[[1]])
+plot_stair(sol_neg$geometry[[1]])
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
