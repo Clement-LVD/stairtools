@@ -98,6 +98,14 @@ head(tbl)
 #> 5                   FALSE              FALSE     TRUE
 #> 6                   FALSE              FALSE     TRUE
 #> ('geometry' list-col is hidden - access via $geometry[[i]])
-plot(tbl$geometry[[1]])
-#> Error: geometry is missing required columns: x_tread_start, x_tread_end, x_riser. Call add_stair_surface_geometry() first.
+str(tbl$geometry[[1]])
+#> Classes ‘stair_geometry’ and 'data.frame':   10 obs. of  8 variables:
+#>  $ step        : int  1 2 3 4 5 6 7 8 9 10
+#>  $ x_step_start: num  0 31 62 93 124 155 186 217 248 279
+#>  $ y_bottom    : num  0 16 32 48 64 80 96 112 128 144
+#>  $ y_top       : num  16 32 48 64 80 96 112 128 144 160
+#>  $ rise        : num  16 16 16 16 16 16 16 16 16 16
+#>  $ going       : num  31 31 31 31 31 31 31 31 31 NA
+#>  $ x_going_end : num  31 62 93 124 155 186 217 248 279 NA
+#>  $ has_tread   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
 ```

@@ -1,18 +1,14 @@
-# Plot a fine stair geometry
+# Plot a stair geometry
 
-Plots a stair geometry using physical tread and riser surfaces,
-including their thicknesses.
+Plots a stair geometry using physical tread and riser surfaces. Physical
+surface coordinates and thicknesses must already have been added with
+[`add_stair_surface_geometry()`](https://clement-lvd.github.io/stairtools/reference/add_stair_surface_geometry.md).
 
 ## Usage
 
 ``` r
-# S3 method for class 'stair_geometry'
-plot(x, ...)
-
 plot_stair(
   geometry,
-  tread_thickness = 0,
-  riser_thickness = 0,
   riser = TRUE,
   legend_columns = c(`Step begin` = "x_tread_start", `Step end` = "x_tread_end", Riser =
     "x_riser"),
@@ -24,26 +20,9 @@ plot_stair(
 
 ## Arguments
 
-- x:
-
-  A `stair_geometry` object.
-
-- ...:
-
-  Additional graphical parameters passed to
-  [`plot()`](https://rdrr.io/r/graphics/plot.default.html).
-
 - geometry:
 
   A stair geometry data frame containing physical surface coordinates.
-
-- tread_thickness:
-
-  Thickness of the tread.
-
-- riser_thickness:
-
-  Thickness of the riser.
 
 - riser:
 
@@ -64,6 +43,23 @@ plot_stair(
 
   Border colour of the stair surfaces.
 
+- ...:
+
+  Additional graphical parameters passed to
+  [`graphics::plot()`](https://rdrr.io/r/graphics/plot.default.html).
+
 ## Value
 
-Invisibly returns the fine geometry used for plotting.
+Invisibly returns `geometry`.
+
+## Examples
+
+``` r
+sol <- solve_stairs(total_height = 160, 150, tread_thickness = 4, riser_thickness = 2)
+plot_stair(sol$geometry[[1]])
+
+
+sol2 <- solve_stairs(total_height = 60, 150, tread_thickness = 4,nosing = 4)
+# no riser stair :
+plot_stair(sol2$geometry[sol$has_landing][[1]],  riser = FALSE)
+```

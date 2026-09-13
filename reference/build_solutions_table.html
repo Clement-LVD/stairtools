@@ -128,8 +128,16 @@ can be accessed directly with <code>solution$geometry[[1]]</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5                   FALSE              FALSE     TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6                   FALSE              FALSE     TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ('geometry' list-col is hidden - access via $geometry[[i]])</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tbl</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> geometry is missing required columns: x_tread_start, x_tread_end, x_riser. Call add_stair_surface_geometry() first.</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">tbl</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Classes ‘stair_geometry’ and 'data.frame':	10 obs. of  8 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ step        : int  1 2 3 4 5 6 7 8 9 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x_step_start: num  0 31 62 93 124 155 186 217 248 279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y_bottom    : num  0 16 32 48 64 80 96 112 128 144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y_top       : num  16 32 48 64 80 96 112 128 144 160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ rise        : num  16 16 16 16 16 16 16 16 16 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ going       : num  31 31 31 31 31 31 31 31 31 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x_going_end : num  31 62 93 124 155 186 217 248 279 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ has_tread   : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

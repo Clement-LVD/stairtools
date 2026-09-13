@@ -63,6 +63,4 @@ geometry
 #> 3    3        56.66    34.66 51.99 17.33 28.33       84.99      TRUE
 #> 4    4        84.99    51.99 69.32 17.33 28.33      113.32      TRUE
 #> 5    5       113.32    69.32 86.65 17.33    NA          NA     FALSE
-plot(geometry)
-#> Error: geometry is missing required columns: x_tread_start, x_tread_end, x_riser. Call add_stair_surface_geometry() first.
 ```

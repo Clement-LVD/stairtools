@@ -79,12 +79,13 @@ install.packages("stairtools")
 <p><strong>Input.</strong> The user must indicate a total rise to elevate and a total length available. If length is not a constraint on your project, you can specify a very large value.</p>
 <p><strong>Output.</strong> The package calculates all possible – reasonable – staircase configurations and return various solutions, i.e. varying numbers of steps and whether or not there is a landing step.</p>
 <blockquote>
-<p>𓊍 The possible solutions are scored according to Blondel’s rule (see below) and the best solution is identified, but you can explore the alternative solutions.</p>
+<p>𓊍 The possible solutions are scored according to Blondel’s rule (see below).</p>
 </blockquote>
 <p><strong>Blondel’s value.</strong> A stair geometry follows the Blondel - comfort - relationship.</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>r</mi><mo>+</mo><mi>g</mi><mo>=</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">2r + g = B</annotation></semantics></math></p>
 <p>Where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math> is the rise (vertical riser height), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math> is the going (horizontal tread depth), and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is the target Blondel value.</p>
-<p>𓊍 In French carpentry and masonry practices for domestic staircase construction, the Blondel ideal value should be 63 cm. It is recommended to prioritise the staircase solution with the smallest deviation from this Blondel target value. From this French point of view, solutions with a Blondel value between 60 cm and 64 cm are acceptable. In the same vein, older French laws therefore stipulate that “the height and width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m” (<a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/" class="external-link uri">https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/</a>). Other standards and laws do not specify the permissible Blondel values, or even specify a range of values that differs from the range set out in French law, e.g., UK laws specify permissible Blondel values between 55 cm and 70 cm (<a href="https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf" class="external-link uri">https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf</a>). In other words, it is possible to build staircases that complying with British standards but do not comply with French standards.</p>
+<p>𓊍 In French carpentry and masonry practices for domestic staircase construction, the Blondel ideal value should be 63 cm. It is recommended to prioritise the staircase solution with the smallest deviation from this Blondel target value. From this French point of view, solutions with a Blondel value between 60 cm and 64 cm are acceptable.</p>
+<p>In the same vein, older French laws therefore stipulate that “the height and width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m” (<a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/" class="external-link uri">https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/</a>). Other standards and laws do not specify the permissible Blondel values, or even specify a range of values that differs from the range set out in French law, e.g., UK laws specify permissible Blondel values between 55 cm and 70 cm (<a href="https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf" class="external-link uri">https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf</a>). In other words, it is possible to build staircases that complying with British standards but do not comply with French standards.</p>
 <p>Some standards apply specifically to a particular type of staircase, e.g., according to the ISO standard, a stair that is a permanent mean of access to machinery require a Blondel value between 60 cm and 66 cm<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;International Organization for Standardization. (2016). Safety of machinery — Permanent means of access to machinery — Part 3: Stairs, stepladders and guard-rail (ISO Standard No. 14122-3:2016). &lt;a href="https://www.iso.org/standard/61282.html" class="external-link uri"&gt;https://www.iso.org/standard/61282.html&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a>.</p>
 <p><strong>Best solution.</strong> Possible solutions are sorted by their deviation from the Blondel target value, default is 63 cm.</p>
 <p><strong>Edges cases.</strong> When several solutions have a similar Blondel value, solutions are sorted by their deviation from the minimum rise, i.e. 16 cm. This is to ensure that the staircase is comfortable for older people, children and dogs.</p>
@@ -99,9 +100,7 @@ install.packages("stairtools")
 <span></span>
 <span><span class="va">sol</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span>total_height <span class="op">=</span> <span class="fl">103</span>, max_horizontal_run <span class="op">=</span>  <span class="fl">133</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">possible_solutions</span> <span class="op">&lt;-</span> <span class="va">sol</span><span class="op">[</span><span class="va">sol</span><span class="op">$</span><span class="va">is_valid</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">possible_solutions</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   2 valid solution(s)</span></span>
 <span><span class="co">#&gt;   n_risers step_rise rise_target_deviation    going           scenario</span></span>
@@ -113,28 +112,41 @@ install.packages("stairtools")
 <span><span class="co">#&gt;   horizontal_run_exceeded landing_impossible is_valid rank</span></span>
 <span><span class="co">#&gt; 2                   FALSE              FALSE     TRUE    1</span></span>
 <span><span class="co">#&gt; 5                   FALSE              FALSE     TRUE    2</span></span>
+<span><span class="co">#&gt; ('geometry' list-col is hidden - access via $geometry[[i]])</span></span>
+<span></span>
+<span><span class="co"># some computed solutions have a landing step</span></span>
+<span><span class="va">landing_step_solutions</span> <span class="op">&lt;-</span> <span class="va">sol</span><span class="op">[</span><span class="va">sol</span><span class="op">$</span><span class="va">has_landing</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">landing_step_solutions</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   1 valid solution(s)</span></span>
+<span><span class="co">#&gt;   n_risers step_rise rise_target_deviation    going        scenario</span></span>
+<span><span class="co">#&gt; 5        6  17.16667              1.166667 28.66667 landing_uniform</span></span>
+<span><span class="co">#&gt;   horizontal_run blondel blondel_target_deviation has_landing</span></span>
+<span><span class="co">#&gt; 5            133    56.5                      6.5        TRUE</span></span>
+<span><span class="co">#&gt;   horizontal_run_exceeded landing_impossible is_valid rank</span></span>
+<span><span class="co">#&gt; 5                   FALSE              FALSE     TRUE    2</span></span>
 <span><span class="co">#&gt; ('geometry' list-col is hidden - access via $geometry[[i]])</span></span></code></pre></div>
-<p>Find the best solution with <code><a href="reference/best_solution.html">best_solution()</a></code>.</p>
+<p>Compute a wood stair.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">160</span>, <span class="fl">150</span><span class="op">)</span></span>
+<span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2</span>, nosing <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">best</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/best_solution.html">best_solution</a></span><span class="op">(</span><span class="va">sol2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">best</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol2</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-5-1.png"><!-- --></p>
-<p>În order to plot a drawing with dimensional measurements, use the <code>show_dimensions = TRUE</code> parameter within <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>.</p>
+<p>Open-riser stairs are ploted with <code>plot_stair(riser = FALSE)</code>. plot_stair will plot the riser by default (<code>riser = TRUE</code>).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">sol3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">sol4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>,  nosing <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sol3</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, show_dimensions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span></code></pre></div>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol4</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, riser <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-6-1.png"><!-- --></p>
-<p>Or use the shortcut function <code><a href="reference/plot_stair_dimensions.html">plot_stair_dimensions()</a></code>.</p>
+<p>Basic concrete stairs are computed with <code>tread_thickness = 0, riser_thickness = 0, nosing = 0</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sol3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span><span class="op">)</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="va">sol3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">0</span>, riser_thickness <span class="op">=</span> <span class="fl">0</span>, nosing <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/plot_stair_dimensions.html">plot_stair_dimensions</a></span><span class="op">(</span><span class="va">sol3</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#Riser - vertical limit - are ploted with riser = `TRUE`, the default.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sol3</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-7-1.png"><!-- --></p>
 </div>
 </div>

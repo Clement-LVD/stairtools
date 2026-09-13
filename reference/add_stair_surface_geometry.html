@@ -52,7 +52,9 @@ modified.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_stair_surface_geometry</span><span class="op">(</span></span>
 <span>  <span class="va">geometry</span>,</span>
 <span>  <span class="va">nosing</span>,</span>
-<span>  nosing_direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span>, <span class="st">"negative"</span><span class="op">)</span></span>
+<span>  positive_nosing_direction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  tread_thickness <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  riser_thickness <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -61,87 +63,103 @@ modified.</p>
 
 
 <dl><dt id="arg-geometry">geometry<a class="anchor" aria-label="anchor" href="#arg-geometry"></a></dt>
-<dd><p>A stair geometry data frame containing at least
-<code>x_step_start</code>, <code>x_going_end</code>, and <code>has_tread</code>.</p></dd>
+<dd><p><code>data.frame</code> - A stair geometry data frame containing at least
+<code>x_step_start</code>, <code>x_going_end</code>, <code>y_top</code>, <code>y_bottom</code>, and <code>has_tread</code>.</p></dd>
 
 
 <dt id="arg-nosing">nosing<a class="anchor" aria-label="anchor" href="#arg-nosing"></a></dt>
-<dd><p>Numeric length of the nosing extension. Must be
+<dd><p><code>numeric</code> - length of the nosing extension. Must be
 non-negative and use the same units as <code>geometry</code>.</p></dd>
 
 
-<dt id="arg-nosing-direction">nosing_direction<a class="anchor" aria-label="anchor" href="#arg-nosing-direction"></a></dt>
-<dd><p>Direction of the physical tread extension.
-Either <code>"positive"</code> or <code>"negative"</code>.</p></dd>
+<dt id="arg-positive-nosing-direction">positive_nosing_direction<a class="anchor" aria-label="anchor" href="#arg-positive-nosing-direction"></a></dt>
+<dd><p><code>logical</code> - If <code>TRUE</code>, the nosing
+extends toward the positive x-axis. If <code>FALSE</code>, it extends toward
+the negative x-axis.</p></dd>
+
+
+<dt id="arg-tread-thickness">tread_thickness<a class="anchor" aria-label="anchor" href="#arg-tread-thickness"></a></dt>
+<dd><p><code>numeric</code> - Tread thickness (cm). Defaults to <code>0</code>.</p></dd>
+
+
+<dt id="arg-riser-thickness">riser_thickness<a class="anchor" aria-label="anchor" href="#arg-riser-thickness"></a></dt>
+<dd><p><code>numeric</code> - Riser thickness (cm). Defaults to <code>0</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The input geometry with three additional columns:
-<code>x_tread_start</code>, the horizontal coordinate of the physical
-beginning of the tread surface;
-<code>x_tread_end</code>, the horizontal coordinate of the physical end
-of the tread surface, including the nosing extension; and
-<code>x_riser</code>, the horizontal coordinate of the front face of
-the corresponding riser.</p>
+    <p>The input geometry with additional physical surface
+coordinates and logical variable.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The nosing determines the physical extent of each tread. For a
-positive <code>nosing_direction</code>, treads extend beyond <code>x_going_end</code>.
-For a negative <code>nosing_direction</code>, treads extend before their
-theoretical starting position.</p>
-<p>The riser position is determined from the theoretical step origin
-and the nosing direction. For a positive <code>nosing_direction</code>, the
-riser is shifted by the nosing length toward positive x. For a
-negative <code>nosing_direction</code>, the riser remains at <code>x_step_start</code>.</p>
+    <p>The nosing determines the physical extent of each tread. When
+<code>positive_nosing_direction</code> is <code>TRUE</code>, treads are extended toward
+positive x, except for the last tread. When it is <code>FALSE</code>, all
+treads are extended toward negative x.</p>
+<p>The riser position is determined from the theoretical step origin.
+When <code>positive_nosing_direction</code> is <code>TRUE</code>, intermediate risers are
+shifted by the nosing length toward positive x, while the last riser
+remains at <code>x_step_start</code>. When it is <code>FALSE</code>, all risers remain at
+<code>x_step_start</code>.</p>
+<p>Tread and riser thicknesses define the physical geometry of the
+corresponding elements. The bottom of the tread and the top
+of the riser share the same vertical coordinate, <code>riser_top_y</code>.</p>
+<p>A concrete stair can be represented by setting <code>nosing</code>,
+<code>tread_thickness</code>, and <code>riser_thickness</code> to zero.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">geometry</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_geometry.html">build_geometry</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  n_risers <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  step_height <span class="op">=</span> <span class="fl">17.33</span>,</span></span>
-<span class="r-in"><span>  goings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">28.33</span>, <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">geometry</span> <span class="op">&lt;-</span> <span class="fu">add_stair_surface_geometry</span><span class="op">(</span><span class="fu"><a href="build_geometry.html">build_geometry</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">17.33</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">28.33</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">geometry</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   step x_step_start y_bottom y_top  rise going x_going_end has_tread</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1         0.00     0.00 17.33 17.33 28.33       28.33      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2        28.33    17.33 34.66 17.33 28.33       56.66      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3        56.66    34.66 51.99 17.33 28.33       84.99      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    4        84.99    51.99 69.32 17.33 28.33      113.32      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    5       113.32    69.32 86.65 17.33    NA          NA     FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x_tread_start x_tread_end has_nosing x_riser riser_top_y riser_bottom_y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          0.00       32.33       TRUE    4.00       17.33           0.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         28.33       60.66       TRUE   32.33       34.66          17.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         56.66       88.99       TRUE   60.66       51.99          34.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         84.99      113.32      FALSE   88.99       69.32          51.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        113.32          NA      FALSE  113.32       86.65          69.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x_riser_end</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        4.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       32.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       60.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       88.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      113.32</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">geometry</span> <span class="op">&lt;-</span> <span class="fu">add_stair_surface_geometry</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">geometry</span>,</span></span>
-<span class="r-in"><span>  nosing <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>  nosing_direction <span class="op">=</span> <span class="st">"positive"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">geometry</span> <span class="op">&lt;-</span> <span class="fu">add_stair_surface_geometry</span><span class="op">(</span><span class="fu"><a href="build_geometry.html">build_geometry</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">17.33</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">28.33</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, <span class="fl">4</span>, <span class="cn">FALSE</span>, <span class="fl">4</span>, <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">geometry</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x_tread_start"</span>, <span class="st">"x_tread_end"</span>, <span class="st">"riser_top_y"</span>, <span class="st">"riser_bottom_y"</span>, <span class="st">"x_riser_end"</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   x_tread_start x_tread_end riser_top_y riser_bottom_y x_riser_end</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         -4.00       28.33       13.33           0.00        3.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         24.33       56.66       30.66          13.33       31.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3         52.66       84.99       47.99          30.66       59.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         80.99      113.32       65.32          47.99       87.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        113.32          NA       82.65          65.32      116.32</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">geometry</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"step"</span>, <span class="st">"x_step_start"</span>, <span class="st">"x_tread_start"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"x_tread_end"</span>, <span class="st">"x_riser"</span></span></span>
-<span class="r-in"><span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   step x_step_start x_tread_start x_tread_end x_riser</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1         0.00          0.00       32.33    4.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2        28.33         28.33       60.66   32.33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3        56.66         56.66       88.99   60.66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    4        84.99         84.99      113.32   88.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    5       113.32        113.32          NA  117.32</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">geometry</span> <span class="op">&lt;-</span> <span class="fu">add_stair_surface_geometry</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="build_geometry.html">build_geometry</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    n_risers <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>    step_height <span class="op">=</span> <span class="fl">17.33</span>,</span></span>
-<span class="r-in"><span>    goings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">28.33</span>, <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  nosing <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>  nosing_direction <span class="op">=</span> <span class="st">"negative"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">geometry</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"step"</span>, <span class="st">"x_step_start"</span>, <span class="st">"x_tread_start"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"x_tread_end"</span>, <span class="st">"x_riser"</span></span></span>
-<span class="r-in"><span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   step x_step_start x_tread_start x_tread_end x_riser</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1         0.00         -4.00       28.33    0.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2        28.33         24.33       56.66   28.33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3        56.66         52.66       84.99   56.66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    4        84.99         80.99      113.32   84.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    5       113.32        113.32          NA  113.32</span>
+<span class="r-in"><span><span class="co"># A concrete stair: no nosing, zero tread and riser thickness.</span></span></span>
+<span class="r-in"><span><span class="va">geometry</span> <span class="op">&lt;-</span> <span class="fu">add_stair_surface_geometry</span><span class="op">(</span><span class="fu"><a href="build_geometry.html">build_geometry</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">17.33</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">28.33</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, <span class="fl">0</span>, <span class="cn">TRUE</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">geometry</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Classes ‘stair_geometry’ and 'data.frame':	5 obs. of  15 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ step          : int  1 2 3 4 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x_step_start  : num  0 28.3 56.7 85 113.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y_bottom      : num  0 17.3 34.7 52 69.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y_top         : num  17.3 34.7 52 69.3 86.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ rise          : num  17.3 17.3 17.3 17.3 17.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ going         : num  28.3 28.3 28.3 28.3 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x_going_end   : num  28.3 56.7 85 113.3 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ has_tread     : logi  TRUE TRUE TRUE TRUE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x_tread_start : num  0 28.3 56.7 85 113.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x_tread_end   : num  28.3 56.7 85 113.3 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ has_nosing    : logi  TRUE TRUE TRUE FALSE FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x_riser       : num  0 28.3 56.7 85 113.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ riser_top_y   : num  17.3 34.7 52 69.3 86.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ riser_bottom_y: num  0 17.3 34.7 52 69.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ x_riser_end   : num  0 28.3 56.7 85 113.3</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

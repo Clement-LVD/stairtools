@@ -8,8 +8,6 @@
   : Add stair comfort indicators
 - [`add_stair_surface_geometry()`](https://clement-lvd.github.io/stairtools/reference/add_stair_surface_geometry.md)
   : Add physical stair surface geometry
-- [`best_solution()`](https://clement-lvd.github.io/stairtools/reference/best_solution.md)
-  : Select the best stair solution
 - [`blondel_going()`](https://clement-lvd.github.io/stairtools/reference/blondel_going.md)
   : Compute the going from Blondel's formula
 - [`build_geometry()`](https://clement-lvd.github.io/stairtools/reference/build_geometry.md)
@@ -18,20 +16,13 @@
   : Build the complete table of stair solutions (embedded geometry)
 - [`check_stair_rules()`](https://clement-lvd.github.io/stairtools/reference/check_stair_rules.md)
   : Check stair solutions against dimensional rules
-- [`compute_geom_fine()`](https://clement-lvd.github.io/stairtools/reference/compute_geom_fine.md)
-  : Compute fine stair geometry
 - [`generate_going_scenarios()`](https://clement-lvd.github.io/stairtools/reference/generate_going_scenarios.md)
   : Generate possible going scenarios for a given number of steps
 - [`optimal_nrisers()`](https://clement-lvd.github.io/stairtools/reference/optimal_nrisers.md)
   : Determine feasible numbers of risers (vertical element between
   steps) for a given total height
-- [`plot(`*`<stair_geometry>`*`)`](https://clement-lvd.github.io/stairtools/reference/plot_stair.md)
-  [`plot_stair()`](https://clement-lvd.github.io/stairtools/reference/plot_stair.md)
-  : Plot a fine stair geometry
-- [`plot_stair_basic()`](https://clement-lvd.github.io/stairtools/reference/plot_stair_basic.md)
-  : Plot a stair profile
-- [`plot_stair_dimensions()`](https://clement-lvd.github.io/stairtools/reference/plot_stair_dimensions.md)
-  : Plot a stair profile with dimensions
+- [`plot_stair()`](https://clement-lvd.github.io/stairtools/reference/plot_stair.md)
+  : Plot a stair geometry
 - [`print(`*`<stair_solutions>`*`)`](https://clement-lvd.github.io/stairtools/reference/print.stair_solutions.md)
   : Print stair solutions without the geometry list-column
 - [`solve_stairs()`](https://clement-lvd.github.io/stairtools/reference/solve_stairs.md)
