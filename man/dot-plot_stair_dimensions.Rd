@@ -16,6 +16,6 @@ Adds cumulative horizontal and vertical dimensions to a stair profile.
 }
 \details{
 This is a helper function used by \code{\link{plot_stair}} when
-\code{show_dimensions = TRUE}.
+\code{show_coordinates = TRUE}.
 }
 \keyword{internal}

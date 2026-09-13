@@ -17,7 +17,7 @@
 #'   \code{"black"}.
 #' @param col_floor Colour used for finished floor reference lines.
 #'   Default is \code{"gray50"}.
-#' @param show_dimensions Logical. If \code{TRUE}, cumulative horizontal
+#' @param show_coordinates Logical. If \code{TRUE}, cumulative horizontal
 #'   and vertical dimensions are displayed. Default is \code{FALSE}.
 #' @param cex_dimensions Character expansion factor for dimension labels.
 #'   Default is \code{0.6}.
@@ -26,17 +26,17 @@
 #'
 #' @examples
 #' geometry <- build_geometry(5, 17.33, rep(28.33, 4))
-#' plot_stair(geometry)
+#' plot_stair_basic(geometry)
 #'
 #' plot(geometry)
 #'
-#' plot_stair(geometry, show_dimensions = TRUE)
+#' plot_stair_basic(geometry, show_coordinates = TRUE)
 #'
 #' @export
-plot_stair <- function(geometry,
+plot_stair_basic <- function(geometry,
                        col_step = "black",
                        col_floor = "gray50",
-                       show_dimensions = FALSE,
+                       show_coordinates = FALSE,
                        cex_dimensions = 0.8,
                        ...) {
 
@@ -47,14 +47,14 @@ plot_stair <- function(geometry,
 
   x_max <- max(
     geometry$x_going_end,
-    geometry$x_riser,
+    geometry$x_step_start[i],
     na.rm = TRUE
   )
 
   y_max <- max(geometry$y_top, na.rm = TRUE)
 
   # we need margin for plot the dimensions label under axes x
-dimension_margin <- if (show_dimensions) 0.15 * x_max else 0
+dimension_margin <- if (show_coordinates) 0.15 * x_max else 0
 
 graphics::plot(
   NA,
@@ -77,9 +77,9 @@ graphics::plot(
 
     # Vertical rise
     graphics::segments(
-      geometry$x_riser[i],
+      geometry$x_step_start[i],
       geometry$y_bottom[i],
-      geometry$x_riser[i],
+      geometry$x_step_start[i],
       geometry$y_top[i],
       lwd = 2
     )
@@ -88,7 +88,7 @@ graphics::plot(
     if (!is.na(geometry$going[i])) {
 
       graphics::segments(
-        geometry$x_riser[i],
+        geometry$x_step_start[i],
         geometry$y_top[i],
         geometry$x_going_end[i],
         geometry$y_top[i],
@@ -98,7 +98,7 @@ graphics::plot(
     }
   }
 
-  if (show_dimensions) {
+  if (show_coordinates) {
     .plot_stair_dimensions(
       geometry,
       cex_dimensions = cex_dimensions
@@ -114,7 +114,7 @@ graphics::plot(
 #' Adds cumulative horizontal and vertical dimensions to a stair profile.
 #'
 #' This is a helper function used by \code{\link{plot_stair}} when
-#' \code{show_dimensions = TRUE}.
+#' \code{show_coordinates = TRUE}.
 #'
 #' @param geometry A stair geometry data frame.
 #' @param cex_dimensions Character expansion factor for labels.
@@ -170,7 +170,7 @@ graphics::text(
 
 #' Plot a stair profile with dimensions
 #'
-#' Shortcut for \code{plot_stair(..., show_dimensions = TRUE)}.
+#' Shortcut for \code{plot_stair(..., show_coordinates = TRUE)}.
 #'
 #' @param geometry A stair geometry data frame returned by
 #'   \code{\link{build_geometry}}.
@@ -185,7 +185,7 @@ graphics::text(
 plot_stair_dimensions <- function(geometry, ...) {
   plot_stair(
     geometry,
-    show_dimensions = TRUE,
+    show_coordinates = TRUE,
     ...
   )
 }

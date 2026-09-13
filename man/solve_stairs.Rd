@@ -7,10 +7,12 @@
 solve_stairs(
   total_height,
   max_horizontal_run,
+  nosing = 0,
   rise_min = 16,
   rise_max = 20,
   rise_target = 16,
   blondel_target = 63,
+  nosing_direction = "positive",
   show_invalid_solutions = FALSE
 )
 }

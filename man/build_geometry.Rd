@@ -17,7 +17,7 @@ build_geometry(n_risers, step_height, goings)
 }
 \value{
 Return a \code{data.frame} with one row per riser and the following columns:
-\code{step}, \code{x_riser}, \code{y_bottom}, \code{y_top},
+\code{step}, \code{x_step_start}, \code{y_bottom}, \code{y_top},
 \code{going}, \code{x_going_end}, and \code{going_type}.
 }
 \description{
@@ -40,9 +40,9 @@ The returned geometry is intended to be plotted directly using
 \code{segments()} in base R:
 \itemize{
 \item Riser \emph{i} (vertical): from
-\code{(x_riser, y_bottom)} to \code{(x_riser, y_top)}.
+\code{(x_step_start, y_bottom)} to \code{(x_step_start, y_top)}.
 \item Going \emph{i} (horizontal), when present: from
-\code{(x_riser, y_top)} to \code{(x_going_end, y_top)}.
+\code{(x_step_start, y_top)} to \code{(x_going_end, y_top)}.
 }
 }
 \examples{

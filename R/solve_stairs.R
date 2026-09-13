@@ -17,7 +17,7 @@
 #' @param show_invalid_solutions `logical` - If `TRUE`, returns all generated
 #'   solutions, including solutions that do not satisfy the constraints.
 #'   Default: `FALSE`.
-#'
+#' @inheritParams add_stair_surface_geometry
 #' @return A `data.frame` containing one row per generated solution.
 #' Geometry is stored in the `geometry` list-column.
 #' @examples
@@ -38,10 +38,11 @@
 #' @export
 solve_stairs <- function(total_height,
                          max_horizontal_run,
+                         nosing = 0,
                          rise_min = 16,
                          rise_max = 20,
                          rise_target = 16,
-                         blondel_target = 63,
+                         blondel_target = 63, nosing_direction = "positive",
                          show_invalid_solutions = FALSE) {
 
   candidats <- optimal_nrisers(total_height, rise_min, rise_max, rise_target)
@@ -53,10 +54,13 @@ solve_stairs <- function(total_height,
   # in order to sort the table : all possible solution first, then sorted by blondel law and - for equally case - sorted as a diff to a theoritical value 
   solutions <- solutions[order(solutions$is_valid, solutions$blondel_target_deviation , solutions$rise_target_deviation , decreasing = c(TRUE, FALSE, FALSE)), ]
 
+  if(!show_invalid_solutions){solutions <- solutions[solutions$is_valid == TRUE, ]}
+
   # rank is raw number
   solutions$rank <- seq_len(nrow(solutions))
 
-  if(!show_invalid_solutions){solutions <- solutions[solutions$is_valid == TRUE, ]}
+
+  solutions$geometry <- lapply(solutions$geometry, add_stair_surface_geometry, nosing = nosing, nosing_direction = nosing_direction)
 
   attr(solutions, "scenarios_n_steps") <- candidats
 

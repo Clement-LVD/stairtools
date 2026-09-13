@@ -14,7 +14,7 @@ plot_stair_dimensions(geometry, ...)
 \code{\link{plot_stair}}.}
 }
 \description{
-Shortcut for \code{plot_stair(..., show_dimensions = TRUE)}.
+Shortcut for \code{plot_stair(..., show_coordinates = TRUE)}.
 }
 \examples{
 geometry <- build_geometry(5, 17.33, rep(28.33, 4))
