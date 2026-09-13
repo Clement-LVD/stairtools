@@ -1,6 +1,6 @@
 # Plot a stair profile with dimensions
 
-Shortcut for `plot_stair(..., show_dimensions = TRUE)`.
+Shortcut for `plot_stair(..., show_coordinates = TRUE)`.
 
 ## Usage
 
@@ -25,5 +25,5 @@ plot_stair_dimensions(geometry, ...)
 ``` r
 geometry <- build_geometry(5, 17.33, rep(28.33, 4))
 plot_stair_dimensions(geometry)
-
+#> Error: geometry is missing required columns: x_tread_start, x_tread_end, x_riser. Call add_stair_surface_geometry() first.
 ```

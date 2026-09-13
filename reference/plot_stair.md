@@ -1,77 +1,69 @@
-# Plot a stair profile
+# Plot a fine stair geometry
 
-Draws the profile of a staircase from a geometry data frame produced by
-[`build_geometry`](https://clement-lvd.github.io/stairtools/reference/build_geometry.md).
+Plots a stair geometry using physical tread and riser surfaces,
+including their thicknesses.
 
 ## Usage
 
 ``` r
-plot_stair(
-  geometry,
-  col_step = "black",
-  col_floor = "gray50",
-  show_dimensions = FALSE,
-  cex_dimensions = 0.8,
-  ...
-)
-
 # S3 method for class 'stair_geometry'
 plot(x, ...)
+
+plot_stair(
+  geometry,
+  tread_thickness = 0,
+  riser_thickness = 0,
+  riser = TRUE,
+  legend_columns = c(`Step begin` = "x_tread_start", `Step end` = "x_tread_end", Riser =
+    "x_riser"),
+  col = "white",
+  border = "black",
+  ...
+)
 ```
 
 ## Arguments
-
-- geometry:
-
-  A data frame of class `stair_geometry` returned by
-  [`build_geometry`](https://clement-lvd.github.io/stairtools/reference/build_geometry.md).
-
-- col_step:
-
-  Colour used to draw step segments. Default is `"black"`.
-
-- col_floor:
-
-  Colour used for finished floor reference lines. Default is `"gray50"`.
-
-- show_dimensions:
-
-  Logical. If `TRUE`, cumulative horizontal and vertical dimensions are
-  displayed. Default is `FALSE`.
-
-- cex_dimensions:
-
-  Character expansion factor for dimension labels. Default is `0.6`.
-
-- ...:
-
-  Additional graphical parameters passed to
-  [`plot`](https://rdrr.io/r/graphics/plot.default.html).
 
 - x:
 
   A `stair_geometry` object.
 
-## Details
+- ...:
 
-Each step is represented by a vertical rise and a horizontal going. The
-lower and upper finished floor levels are displayed as dashed reference
-lines.
+  Additional graphical parameters passed to
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html).
 
-Objects returned by
-[`build_geometry`](https://clement-lvd.github.io/stairtools/reference/build_geometry.md)
-inherit from the `stair_geometry` class, allowing direct use of
-[`plot()`](https://rdrr.io/r/graphics/plot.default.html).
+- geometry:
 
-## Examples
+  A stair geometry data frame containing physical surface coordinates.
 
-``` r
-geometry <- build_geometry(5, 17.33, rep(28.33, 4))
-plot_stair(geometry)
+- tread_thickness:
 
+  Thickness of the tread.
 
-plot(geometry)
+- riser_thickness:
 
-plot_stair(geometry, show_dimensions = TRUE)
+  Thickness of the riser.
 
-```
+- riser:
+
+  Logical; whether to draw risers.
+
+- legend_columns:
+
+  Character vector of geometry columns to display as horizontal axes.
+  Each column is displayed on a separate line. Unknown columns are
+  ignored. If `NULL` or if no valid column is supplied, no axes are
+  displayed.
+
+- col:
+
+  Fill colour of the stair surfaces.
+
+- border:
+
+  Border colour of the stair surfaces.
+
+## Value
+
+Invisibly returns the fine geometry used for plotting.

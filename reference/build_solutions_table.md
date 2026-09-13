@@ -99,5 +99,5 @@ head(tbl)
 #> 6                   FALSE              FALSE     TRUE
 #> ('geometry' list-col is hidden - access via $geometry[[i]])
 plot(tbl$geometry[[1]])
-
+#> Error: geometry is missing required columns: x_tread_start, x_tread_end, x_riser. Call add_stair_surface_geometry() first.
 ```

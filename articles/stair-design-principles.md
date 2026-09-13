@@ -166,6 +166,12 @@ constraints, perceived difficulty and fall risk.
 > Design. 2. print. *MIT Press*, 1992.
 > <https://doi.org/10.7551/mitpress/6434.001.0001>. p. 38
 
+Autre source : confort articulaire théorique : “102mm riser height and
+305 mm tread depth” - p. 163 (Mital, A., H. F. Fard, et H. Khaledi. « A
+biomechanical evaluation of staircase riser heights and tread depths
+during stair-climbing ». Clinical Biomechanics 2, nᵒ 3 (1987): 162‑64.
+<https://doi.org/10.1016/0268-0033(87)90008-8>).
+
 ### Ergonomic research
 
 Theoritical lab’ values : cm Rise Goings 18.3 27.9 17.8 27.9 16.5 27.9

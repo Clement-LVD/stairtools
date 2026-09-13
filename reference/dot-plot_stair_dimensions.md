@@ -22,4 +22,4 @@ Adds cumulative horizontal and vertical dimensions to a stair profile.
 
 This is a helper function used by
 [`plot_stair`](https://clement-lvd.github.io/stairtools/reference/plot_stair.md)
-when `show_dimensions = TRUE`.
+when `show_coordinates = TRUE`.
