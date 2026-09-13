@@ -93,6 +93,9 @@ install.packages("stairtools")
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
+<div class="section level3">
+<h3 id="basic-concrete-stairs">Basic concrete stairs<a class="anchor" aria-label="anchor" href="#basic-concrete-stairs"></a>
+</h3>
 <p>Compute stairs with <code><a href="reference/solve_stairs.html">solve_stairs()</a></code>, given a total_height and a maximum horizontal run available.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -114,40 +117,51 @@ install.packages("stairtools")
 <span><span class="co">#&gt; 5                   FALSE              FALSE     TRUE    2</span></span>
 <span><span class="co">#&gt; ('geometry' list-col is hidden - access via $geometry[[i]])</span></span>
 <span></span>
-<span><span class="co"># some computed solutions have a landing step</span></span>
-<span><span class="va">landing_step_solutions</span> <span class="op">&lt;-</span> <span class="va">sol</span><span class="op">[</span><span class="va">sol</span><span class="op">$</span><span class="va">has_landing</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">landing_step_solutions</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   1 valid solution(s)</span></span>
-<span><span class="co">#&gt;   n_risers step_rise rise_target_deviation    going        scenario</span></span>
-<span><span class="co">#&gt; 5        6  17.16667              1.166667 28.66667 landing_uniform</span></span>
-<span><span class="co">#&gt;   horizontal_run blondel blondel_target_deviation has_landing</span></span>
-<span><span class="co">#&gt; 5            133    56.5                      6.5        TRUE</span></span>
-<span><span class="co">#&gt;   horizontal_run_exceeded landing_impossible is_valid rank</span></span>
-<span><span class="co">#&gt; 5                   FALSE              FALSE     TRUE    2</span></span>
-<span><span class="co">#&gt; ('geometry' list-col is hidden - access via $geometry[[i]])</span></span></code></pre></div>
-<p>Compute a wood stair.</p>
+<span><span class="co"># plot the best solution</span></span>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-4-1.png"><!-- --></p>
+<p>Basic concrete stairs are computed with <code>tread_thickness = 0, riser_thickness = 0, nosing = 0</code>, the default. Riser - vertical limit - are ploted with <code>riser = TRUE</code>, the default.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2</span>, nosing <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol2</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-5-1.png"><!-- --></p>
-<p>Open-riser stairs are ploted with <code>plot_stair(riser = FALSE)</code>. plot_stair will plot the riser by default (<code>riser = TRUE</code>).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sol4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>,  nosing <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol4</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, riser <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-6-1.png"><!-- --></p>
-<p>Basic concrete stairs are computed with <code>tread_thickness = 0, riser_thickness = 0, nosing = 0</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">sol3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">0</span>, riser_thickness <span class="op">=</span> <span class="fl">0</span>, nosing <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#Riser - vertical limit - are ploted with riser = `TRUE`, the default.</span></span>
-<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol3</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol3</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, riser <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-5-1.png"><!-- --></p>
+</div>
+<div class="section level3">
+<h3 id="wood-stairs-and-advanced-parameters">Wood-stairs and advanced parameters<a class="anchor" aria-label="anchor" href="#wood-stairs-and-advanced-parameters"></a>
+</h3>
+<p>Compute wood stairs by indicating <code>tread_thickness</code> <code>riser_thickness</code> and or <code>nosing</code> parameters, expressed in centimeters.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2</span>, nosing <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># some computed solutions have a landing step</span></span>
+<span><span class="va">landing_step_solutions</span> <span class="op">&lt;-</span> <span class="va">sol2</span><span class="op">[</span><span class="va">sol2</span><span class="op">$</span><span class="va">has_landing</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">landing_step_solutions</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-6-1.png"><!-- --></p>
+<p>Add nosing in negative direction with <code>positive_nosing_direction = FALSE</code> parameter.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">sol_neg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2</span>, nosing <span class="op">=</span> <span class="fl">2.5</span>, positive_nosing_direction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sol_neg</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-7-1.png"><!-- --></p>
+<blockquote>
+<p>Note that the front edge of the top step of the staircase may protrude beyond the indicated available space if <code>positive_nosing_direction = FALSE</code>, even though all the steps are the same size (vs. by adding the nosing in the positive direction – the default – the last step is shorter so that it does not protrude beyond the landing).</p>
+</blockquote>
+</div>
+<div class="section level3">
+<h3 id="plot-open-riser-stairs">Plot open-riser stairs<a class="anchor" aria-label="anchor" href="#plot-open-riser-stairs"></a>
+</h3>
+<p>Open-riser stairs are ploted with <code>plot_stair(riser = FALSE)</code>. <code><a href="reference/plot_stair.html">plot_stair()</a></code> plot a riser by default (<code>riser = TRUE</code>).</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sol4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>,  nosing <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol4</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, riser <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-8-1.png"><!-- --></p>
+</div>
 </div>
 </div>
 
