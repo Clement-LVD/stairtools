@@ -7,27 +7,29 @@
 add_stair_surface_geometry(
   geometry,
   nosing,
-  nosing_direction = c("positive", "negative")
+  positive_nosing_direction = TRUE,
+  tread_thickness = 0,
+  riser_thickness = 0
 )
 }
 \arguments{
-\item{geometry}{A stair geometry data frame containing at least
-\code{x_step_start}, \code{x_going_end}, and \code{has_tread}.}
+\item{geometry}{\code{data.frame} - A stair geometry data frame containing at least
+\code{x_step_start}, \code{x_going_end}, \code{y_top}, \code{y_bottom}, and \code{has_tread}.}
 
-\item{nosing}{Numeric length of the nosing extension. Must be
+\item{nosing}{\code{numeric} - length of the nosing extension. Must be
 non-negative and use the same units as \code{geometry}.}
 
-\item{nosing_direction}{Direction of the physical tread extension.
-Either \code{"positive"} or \code{"negative"}.}
+\item{positive_nosing_direction}{\code{logical} - If \code{TRUE}, the nosing
+extends toward the positive x-axis. If \code{FALSE}, it extends toward
+the negative x-axis.}
+
+\item{tread_thickness}{\code{numeric} - Tread thickness (cm). Defaults to \code{0}.}
+
+\item{riser_thickness}{\code{numeric} - Riser thickness (cm). Defaults to \code{0}.}
 }
 \value{
-The input geometry with three additional columns:
-\code{x_tread_start}, the horizontal coordinate of the physical
-beginning of the tread surface;
-\code{x_tread_end}, the horizontal coordinate of the physical end
-of the tread surface, including the nosing extension; and
-\code{x_riser}, the horizontal coordinate of the front face of
-the corresponding riser.
+The input geometry with additional physical surface
+coordinates and logical variable.
 }
 \description{
 Adds physical tread and riser coordinates to a theoretical stair
@@ -35,46 +37,32 @@ geometry. Theoretical dimensions such as \code{rise} and \code{going} are not
 modified.
 }
 \details{
-The nosing determines the physical extent of each tread. For a
-positive \code{nosing_direction}, treads extend beyond \code{x_going_end}.
-For a negative \code{nosing_direction}, treads extend before their
-theoretical starting position.
+The nosing determines the physical extent of each tread. When
+\code{positive_nosing_direction} is \code{TRUE}, treads are extended toward
+positive x, except for the last tread. When it is \code{FALSE}, all
+treads are extended toward negative x.
 
-The riser position is determined from the theoretical step origin
-and the nosing direction. For a positive \code{nosing_direction}, the
-riser is shifted by the nosing length toward positive x. For a
-negative \code{nosing_direction}, the riser remains at \code{x_step_start}.
+The riser position is determined from the theoretical step origin.
+When \code{positive_nosing_direction} is \code{TRUE}, intermediate risers are
+shifted by the nosing length toward positive x, while the last riser
+remains at \code{x_step_start}. When it is \code{FALSE}, all risers remain at
+\code{x_step_start}.
+
+Tread and riser thicknesses define the physical geometry of the
+corresponding elements. The bottom of the tread and the top
+of the riser share the same vertical coordinate, \code{riser_top_y}.
+
+A concrete stair can be represented by setting \code{nosing},
+\code{tread_thickness}, and \code{riser_thickness} to zero.
 }
 \examples{
-geometry <- build_geometry(
-  n_risers = 5,
-  step_height = 17.33,
-  goings = rep(28.33, 4)
-)
+geometry <- add_stair_surface_geometry(build_geometry(5, 17.33, rep(28.33, 4)), 4)
+geometry
 
-geometry <- add_stair_surface_geometry(
-  geometry,
-  nosing = 4,
-  nosing_direction = "positive"
-)
+geometry <- add_stair_surface_geometry(build_geometry(5, 17.33, rep(28.33, 4)), 4, FALSE, 4, 3)
+geometry[, c("x_tread_start", "x_tread_end", "riser_top_y", "riser_bottom_y", "x_riser_end")]
 
-geometry[, c(
-  "step", "x_step_start", "x_tread_start",
-  "x_tread_end", "x_riser"
-)]
-
-geometry <- add_stair_surface_geometry(
-  build_geometry(
-    n_risers = 5,
-    step_height = 17.33,
-    goings = rep(28.33, 4)
-  ),
-  nosing = 4,
-  nosing_direction = "negative"
-)
-
-geometry[, c(
-  "step", "x_step_start", "x_tread_start",
-  "x_tread_end", "x_riser"
-)]
+# A concrete stair: no nosing, zero tread and riser thickness.
+geometry <- add_stair_surface_geometry(build_geometry(5, 17.33, rep(28.33, 4)), 0, TRUE, 0, 0)
+str(geometry)
 }

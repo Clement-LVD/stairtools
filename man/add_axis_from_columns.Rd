@@ -12,12 +12,12 @@ add_axis_from_columns(g, columns, ...)
 \item{columns}{Character vector of column names. Optional names are used
 as axis titles.}
 
-\item{...}{Graphical parameters passed to \code{axis()}.}
+\item{...}{Graphical parameters passed to \code{graphics::axis()}.}
 }
 \value{
 Invisibly returns \code{g}.
 }
 \description{
-Adds one axis for each valid data frame column. Each column is displayed
-on a separate axis line. Unknown columns are ignored.
+Adds one horizontal axis for each valid data frame column. Each column
+is displayed on a separate axis line. Unknown columns are ignored.
 }

@@ -12,7 +12,9 @@ solve_stairs(
   rise_max = 20,
   rise_target = 16,
   blondel_target = 63,
-  nosing_direction = "positive",
+  positive_nosing_direction = TRUE,
+  tread_thickness = 0,
+  riser_thickness = 0,
   show_invalid_solutions = FALSE
 )
 }
@@ -20,6 +22,9 @@ solve_stairs(
 \item{total_height}{\code{numeric} - Total vertical height to climb (cm).}
 
 \item{max_horizontal_run}{\code{numeric} - Maximum available horizontal length (cm).}
+
+\item{nosing}{\code{numeric} - length of the nosing extension. Must be
+non-negative and use the same units as \code{geometry}.}
 
 \item{rise_min}{\code{numeric} - Minimum acceptable step height (cm). Default: 16.}
 
@@ -29,6 +34,14 @@ solve_stairs(
 
 \item{blondel_target}{\code{numeric} - Target value for Blondel's formula \code{2h + g}.
 Default: 63 cm.}
+
+\item{positive_nosing_direction}{\code{logical} - If \code{TRUE}, the nosing
+extends toward the positive x-axis. If \code{FALSE}, it extends toward
+the negative x-axis.}
+
+\item{tread_thickness}{\code{numeric} - Tread thickness (cm). Defaults to \code{0}.}
+
+\item{riser_thickness}{\code{numeric} - Riser thickness (cm). Defaults to \code{0}.}
 
 \item{show_invalid_solutions}{\code{logical} - If \code{TRUE}, returns all generated
 solutions, including solutions that do not satisfy the constraints.
@@ -49,17 +62,20 @@ single data frame, with geometry stored as a list-column.
 }
 \examples{
 sol <- solve_stairs(total_height = 160, max_horizontal_run = 150)
-
+# default is a concrete floor with no nosing
 sol
 
 plot(sol$geometry[[1]])
 
-# Or get all the solutions, even impossibles
-sol2 <- solve_stairs(160, 150, show_invalid_solutions = TRUE)
-# plot the best solution :
+# wood stair
+sol2 <- solve_stairs(total_height = 160, max_horizontal_run = 150, tread_thickness = 4, nosing = 4)
+#' # Filter out solution with a landing
+sol2 <- subset(sol2, has_landing)
+plot_stair(sol2$geometry[[1]])
 
-meilleure <- best_solution(sol2)
+# Or get all the solutions, even impossibles
+ sol3 <- solve_stairs(160, 150, show_invalid_solutions = TRUE)
 
 # Filter out valid solution
-subset(sol, is_valid)
+subset(sol3, is_valid)
 }

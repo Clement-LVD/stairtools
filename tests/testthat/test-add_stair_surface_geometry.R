@@ -3,18 +3,21 @@ test_that("positive nosing extends intermediate treads beyond their going ends",
   geometry <- data.frame(
     x_step_start = c(0, 23, 46),
     x_going_end = c(23, 46, NA),
+    y_bottom = c(0, 20, 40),
+    y_top = c(20, 40, 60),
     has_tread = c(TRUE, TRUE, FALSE)
   )
 
   result <- add_stair_surface_geometry(
     geometry,
     nosing = 4,
-    nosing_direction = "positive"
+    positive_nosing_direction = TRUE
   )
 
   expect_equal(result$x_tread_start, c(0, 23, 46))
   expect_equal(result$x_tread_end, c(27, 46, NA))
-  expect_equal(result$x_riser, c(4, 27, 50))
+  expect_equal(result$has_nosing, c(TRUE, FALSE, FALSE))
+  expect_equal(result$x_riser, c(4, 27, 46))
 })
 
 
@@ -23,17 +26,20 @@ test_that("negative nosing extends treads before their step origins", {
   geometry <- data.frame(
     x_step_start = c(0, 23, 46),
     x_going_end = c(23, 46, NA),
+    y_bottom = c(0, 20, 40),
+    y_top = c(20, 40, 60),
     has_tread = c(TRUE, TRUE, FALSE)
   )
 
   result <- add_stair_surface_geometry(
     geometry,
     nosing = 4,
-    nosing_direction = "negative"
+    positive_nosing_direction = FALSE
   )
 
   expect_equal(result$x_tread_start, c(-4, 19, 46))
   expect_equal(result$x_tread_end, c(23, 46, NA))
+  expect_equal(result$has_nosing, c(TRUE, TRUE, FALSE))
   expect_equal(result$x_riser, c(0, 23, 46))
 })
 
@@ -43,6 +49,8 @@ test_that("surface geometry does not modify theoretical stair dimensions", {
   geometry <- data.frame(
     x_step_start = c(0, 23, 46),
     x_going_end = c(23, 46, NA),
+    y_bottom = c(0, 20, 40),
+    y_top = c(20, 40, 60),
     rise = c(20, 20, 20),
     going = c(23, 23, NA),
     has_tread = c(TRUE, TRUE, FALSE)
@@ -51,7 +59,7 @@ test_that("surface geometry does not modify theoretical stair dimensions", {
   result <- add_stair_surface_geometry(
     geometry,
     nosing = 4,
-    nosing_direction = "positive"
+    positive_nosing_direction = TRUE
   )
 
   expect_equal(result$x_step_start, geometry$x_step_start)
@@ -66,13 +74,15 @@ test_that("zero nosing preserves theoretical tread coordinates", {
   geometry <- data.frame(
     x_step_start = c(0, 23, 46),
     x_going_end = c(23, 46, NA),
+    y_bottom = c(0, 20, 40),
+    y_top = c(20, 40, 60),
     has_tread = c(TRUE, TRUE, FALSE)
   )
 
   result <- add_stair_surface_geometry(
     geometry,
     nosing = 0,
-    nosing_direction = "positive"
+    positive_nosing_direction = TRUE
   )
 
   expect_equal(result$x_tread_start, geometry$x_step_start)
@@ -81,21 +91,44 @@ test_that("zero nosing preserves theoretical tread coordinates", {
 })
 
 
-test_that("positive nosing also extends the last tread when present", {
+test_that("positive nosing does not extend the last tread", {
 
   geometry <- data.frame(
     x_step_start = c(0, 30, 60),
     x_going_end = c(30, 60, 90),
+    y_bottom = c(0, 20, 40),
+    y_top = c(20, 40, 60),
     has_tread = c(TRUE, TRUE, TRUE)
   )
 
   result <- add_stair_surface_geometry(
     geometry,
     nosing = 4,
-    nosing_direction = "positive"
+    positive_nosing_direction = TRUE
   )
 
   expect_equal(result$x_tread_start, c(0, 30, 60))
   expect_equal(result$x_tread_end, c(34, 64, 90))
+  expect_equal(result$has_nosing, c(TRUE, TRUE, FALSE))
   expect_equal(result$x_riser, c(4, 34, 64))
+})
+
+
+test_that("positive nosing keeps terminal riser at its step origin", {
+
+  geometry <- data.frame(
+    x_step_start = c(0, 30, 60),
+    x_going_end = c(30, 60, NA),
+    y_bottom = c(0, 20, 40),
+    y_top = c(20, 40, 60),
+    has_tread = c(TRUE, TRUE, FALSE)
+  )
+
+  result <- add_stair_surface_geometry(
+    geometry,
+    nosing = 4,
+    positive_nosing_direction = TRUE
+  )
+
+  expect_equal(result$x_riser, c(4, 34, 60))
 })

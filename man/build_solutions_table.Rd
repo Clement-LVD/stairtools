@@ -51,6 +51,6 @@ can be accessed directly with \code{solution$geometry[[1]]}.
 candidates <- optimal_nrisers(160)
 tbl <- build_solutions_table(candidates, max_horizontal_run = 1000)
 head(tbl)
-plot(tbl$geometry[[1]])
+str(tbl$geometry[[1]])
 
 }

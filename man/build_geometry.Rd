@@ -48,6 +48,5 @@ The returned geometry is intended to be plotted directly using
 \examples{
 geometry <- build_geometry(n_risers = 5, step_height = 17.33, goings = rep(28.33, 4) )
 geometry
-plot(geometry)
 
 }

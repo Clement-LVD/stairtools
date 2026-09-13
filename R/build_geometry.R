@@ -36,7 +36,6 @@
 #' @examples
 #' geometry <- build_geometry(n_risers = 5, step_height = 17.33, goings = rep(28.33, 4) )
 #' geometry
-#' plot(geometry)
 #'
 #' @export
 build_geometry <- function(n_risers, step_height, goings) {

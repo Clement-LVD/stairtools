@@ -38,7 +38,7 @@
 #' candidates <- optimal_nrisers(160)
 #' tbl <- build_solutions_table(candidates, max_horizontal_run = 1000)
 #' head(tbl)
-#' plot(tbl$geometry[[1]])
+#' str(tbl$geometry[[1]])
 #'
 #' @export
 build_solutions_table <- function(candidates, max_horizontal_run, blondel_target = 63) {

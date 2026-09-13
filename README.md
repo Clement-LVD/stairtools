@@ -44,8 +44,7 @@ configurations and return various solutions, i.e. varying numbers of
 steps and whether or not there is a landing step.
 
 > 𓊍 The possible solutions are scored according to Blondel’s rule (see
-> below) and the best solution is identified, but you can explore the
-> alternative solutions.
+> below).
 
 **Blondel’s value.** A stair geometry follows the Blondel - comfort -
 relationship.
@@ -59,9 +58,10 @@ Where $r$ is the rise (vertical riser height), $g$ is the going
 construction, the Blondel ideal value should be 63 cm. It is recommended
 to prioritise the staircase solution with the smallest deviation from
 this Blondel target value. From this French point of view, solutions
-with a Blondel value between 60 cm and 64 cm are acceptable. In the same
-vein, older French laws therefore stipulate that “the height and width
-must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m”
+with a Blondel value between 60 cm and 64 cm are acceptable.
+
+In the same vein, older French laws therefore stipulate that “the height
+and width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m”
 (<https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/>).
 Other standards and laws do not specify the permissible Blondel values,
 or even specify a range of values that differs from the range set out in
@@ -94,9 +94,7 @@ library(stairtools)
 
 sol <- solve_stairs(total_height = 103, max_horizontal_run =  133)
 
-possible_solutions <- sol[sol$is_valid == TRUE, ]
-
-print(possible_solutions) 
+print(sol)
 #> 
 #>   2 valid solution(s)
 #>   n_risers step_rise rise_target_deviation    going           scenario
@@ -109,39 +107,53 @@ print(possible_solutions)
 #> 2                   FALSE              FALSE     TRUE    1
 #> 5                   FALSE              FALSE     TRUE    2
 #> ('geometry' list-col is hidden - access via $geometry[[i]])
+
+# some computed solutions have a landing step
+landing_step_solutions <- sol[sol$has_landing == TRUE, ]
+
+print(landing_step_solutions) 
+#> 
+#>   1 valid solution(s)
+#>   n_risers step_rise rise_target_deviation    going        scenario
+#> 5        6  17.16667              1.166667 28.66667 landing_uniform
+#>   horizontal_run blondel blondel_target_deviation has_landing
+#> 5            133    56.5                      6.5        TRUE
+#>   horizontal_run_exceeded landing_impossible is_valid rank
+#> 5                   FALSE              FALSE     TRUE    2
+#> ('geometry' list-col is hidden - access via $geometry[[i]])
 ```
 
-Find the best solution with `best_solution()`.
+Compute a wood stair.
 
 ``` r
 
-sol2 <- solve_stairs(160, 150)
+sol2 <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing = 2.5)
 
-best <- best_solution(sol2)
-
-plot(best$geometry[[1]])
+plot_stair(sol2$geometry[[1]]) 
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-În order to plot a drawing with dimensional measurements, use the
-`show_dimensions = TRUE` parameter within `plot()`.
+Open-riser stairs are ploted with `plot_stair(riser = FALSE)`.
+plot_stair will plot the riser by default (`riser = TRUE`).
 
 ``` r
+sol4 <- solve_stairs(80, 150, tread_thickness = 4,  nosing = 4)
 
-sol3 <- solve_stairs(80, 150)
-
-plot(sol3$geometry[[1]], show_dimensions = TRUE) 
+plot_stair(sol4$geometry[[1]], riser = FALSE)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-Or use the shortcut function `plot_stair_dimensions()`.
+Basic concrete stairs are computed with
+`tread_thickness = 0, riser_thickness = 0, nosing = 0`.
 
 ``` r
-sol3 <- solve_stairs(80, 150)
 
-plot_stair_dimensions(sol3$geometry[[1]])
+sol3 <- solve_stairs(80, 150, tread_thickness = 0, riser_thickness = 0, nosing = 0)
+
+#Riser - vertical limit - are ploted with riser = `TRUE`, the default.
+plot(sol3$geometry[[1]] )
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
