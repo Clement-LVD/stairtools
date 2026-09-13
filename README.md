@@ -153,7 +153,7 @@ Basic concrete stairs are computed with
 sol3 <- solve_stairs(80, 150, tread_thickness = 0, riser_thickness = 0, nosing = 0)
 
 #Riser - vertical limit - are ploted with riser = `TRUE`, the default.
-plot(sol3$geometry[[1]] )
+plot_stair(sol3$geometry[[1]] )
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
