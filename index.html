@@ -139,14 +139,14 @@ install.packages("stairtools")
 <span><span class="co"># some computed solutions have a landing step</span></span>
 <span><span class="va">landing_step_solutions</span> <span class="op">&lt;-</span> <span class="va">sol2</span><span class="op">[</span><span class="va">sol2</span><span class="op">$</span><span class="va">has_landing</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="op">]</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">landing_step_solutions</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">landing_step_solutions</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-6-1.png"><!-- --></p>
 <p>Add nosing in negative direction with <code>positive_nosing_direction = FALSE</code> parameter.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">sol_neg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2</span>, nosing <span class="op">=</span> <span class="fl">2.5</span>, positive_nosing_direction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span> </span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sol_neg</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol_neg</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-7-1.png"><!-- --></p>
 <blockquote>
 <p>Note that the front edge of the top step of the staircase may protrude beyond the indicated available space if <code>positive_nosing_direction = FALSE</code>, even though all the steps are the same size (vs. by adding the nosing in the positive direction – the default – the last step is shorter so that it does not protrude beyond the landing).</p>
