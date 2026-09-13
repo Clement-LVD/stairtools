@@ -61,6 +61,57 @@ add_axis_from_columns <- function(g, columns, ...) {
   invisible(g)
 }
 
+add_axis_from_columns_vertical <- function(g, columns, ...) {
+
+  if (is.null(columns) || length(columns) == 0) {
+    return(invisible(g))
+  }
+
+  valid <- !is.na(columns) & columns %in% names(g)
+
+  if (!any(valid)) {
+    return(invisible(g))
+  }
+
+  columns <- columns[valid]
+  titles <- names(columns)
+
+  for (i in seq_along(columns)) {
+
+    y <- g[[columns[i]]]
+    y <- sort(unique(y[!is.na(y)]))
+
+    if (length(y) == 0) {
+      next
+    }
+
+    graphics::axis(
+      side = 2,
+      at = y,
+      labels = format(y, trim = TRUE),
+      line = 2 * (i - 1),
+      ...
+    )
+
+    if (!is.null(titles) &&
+        length(titles) >= i &&
+        !is.na(titles[i]) &&
+        nzchar(titles[i])) {
+
+      graphics::mtext(
+        text = titles[i],
+        side = 2,
+        line = 2 * (i - 1) - 0.1,
+        adj = 1,
+        cex = 0.7
+        ,   las = 1,
+      )
+    }
+  }
+
+  invisible(g)
+}
+
 #' Plot a stair geometry
 #'
 #' Plots a stair geometry using physical tread and riser surfaces.
@@ -86,7 +137,7 @@ add_axis_from_columns <- function(g, columns, ...) {
 #' 
 #' sol2 <- solve_stairs(total_height = 60, 150, tread_thickness = 4,nosing = 4)
 #' # no riser stair :
-#' plot_stair(sol2$geometry[sol$has_landing][[1]],  riser = FALSE)
+#' plot_stair(sol2$geometry[sol2$has_landing][[1]],  riser = FALSE)
 #' @export
 plot_stair <- function(
     geometry,
@@ -96,7 +147,8 @@ plot_stair <- function(
       "Step end" = "x_tread_end",
       "Riser" = "x_riser"
     ),
-    col = "white",
+    axis_y_columns = c( "Step height" = "y_top")
+    , col = "white",
     border = "black",
     ...) {
 
@@ -223,6 +275,11 @@ plot_stair <- function(
     geometry,
     legend_columns
   )
+
+  add_axis_from_columns_vertical(
+  geometry,
+  axis_y_columns
+)
 
   invisible(geometry)
 }
