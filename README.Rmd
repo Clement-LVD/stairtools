@@ -68,6 +68,8 @@ Some standards apply specifically to a particular type of staircase, e.g., accor
 
 ## Examples
 
+### Basic concrete stairs
+
 Compute stairs with `solve_stairs()`, given a total_height and a maximum horizontal run available.
 ```{r}
 
@@ -77,40 +79,56 @@ sol <- solve_stairs(total_height = 103, max_horizontal_run =  133)
 
 print(sol)
 
-# some computed solutions have a landing step
-landing_step_solutions <- sol[sol$has_landing == TRUE, ]
+# plot the best solution
+plot_stair(sol$geometry[[1]]) 
 
-print(landing_step_solutions) 
 
 ```
 
-Compute a wood stair.
+Basic concrete stairs are computed with `tread_thickness = 0, riser_thickness = 0, nosing = 0`, the default. Riser - vertical limit - are ploted with `riser = TRUE`, the default.
+
+```{r}
+
+sol3 <- solve_stairs(80, 150, tread_thickness = 0, riser_thickness = 0, nosing = 0)
+
+plot_stair(sol3$geometry[[1]], riser = TRUE)
+
+```
+
+### Wood-stairs and advanced parameters
+
+Compute wood stairs by indicating `tread_thickness` `riser_thickness` and or `nosing` parameters, expressed in centimeters.
 
 ```{r}
 
 sol2 <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing = 2.5)
 
-plot_stair(sol2$geometry[[1]]) 
+# some computed solutions have a landing step
+landing_step_solutions <- sol2[sol2$has_landing == TRUE, ]
+
+plot(landing_step_solutions$geometry[[1]])
 
 ```
 
-Open-riser stairs are ploted with `plot_stair(riser = FALSE)`. plot_stair will plot the riser by default (`riser = TRUE`).
+Add nosing in negative direction with `positive_nosing_direction = FALSE` parameter.
+```{r}
+
+sol_neg <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing = 2.5, positive_nosing_direction = FALSE)
+ 
+plot(sol_neg$geometry[[1]])
+
+```
+
+> Note that the front edge of the top step of the staircase may protrude beyond the indicated available space if `positive_nosing_direction = FALSE`, even though all the steps are the same size (vs. by adding the nosing in the positive direction – the default – the last step is shorter so that it does not protrude beyond the landing).
+
+
+### Plot open-riser stairs
+
+Open-riser stairs are ploted with `plot_stair(riser = FALSE)`. `plot_stair()` plot a riser by default (`riser = TRUE`).
 
 ```{r}
 sol4 <- solve_stairs(80, 150, tread_thickness = 4,  nosing = 4)
 
 plot_stair(sol4$geometry[[1]], riser = FALSE)
 ```
-
-Basic concrete stairs are computed with `tread_thickness = 0, riser_thickness = 0, nosing = 0`. 
-
-```{r}
-
-sol3 <- solve_stairs(80, 150, tread_thickness = 0, riser_thickness = 0, nosing = 0)
-
-#Riser - vertical limit - are ploted with riser = `TRUE`, the default.
-plot_stair(sol3$geometry[[1]] )
-
-```
-
 

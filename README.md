@@ -85,6 +85,8 @@ people, children and dogs.
 
 ## Examples
 
+### Basic concrete stairs
+
 Compute stairs with `solve_stairs()`, given a total_height and a maximum
 horizontal run available.
 
@@ -108,34 +110,65 @@ print(sol)
 #> 5                   FALSE              FALSE     TRUE    2
 #> ('geometry' list-col is hidden - access via $geometry[[i]])
 
-# some computed solutions have a landing step
-landing_step_solutions <- sol[sol$has_landing == TRUE, ]
-
-print(landing_step_solutions) 
-#> 
-#>   1 valid solution(s)
-#>   n_risers step_rise rise_target_deviation    going        scenario
-#> 5        6  17.16667              1.166667 28.66667 landing_uniform
-#>   horizontal_run blondel blondel_target_deviation has_landing
-#> 5            133    56.5                      6.5        TRUE
-#>   horizontal_run_exceeded landing_impossible is_valid rank
-#> 5                   FALSE              FALSE     TRUE    2
-#> ('geometry' list-col is hidden - access via $geometry[[i]])
+# plot the best solution
+plot_stair(sol$geometry[[1]]) 
 ```
 
-Compute a wood stair.
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+Basic concrete stairs are computed with
+`tread_thickness = 0, riser_thickness = 0, nosing = 0`, the default.
+Riser - vertical limit - are ploted with `riser = TRUE`, the default.
+
+``` r
+
+sol3 <- solve_stairs(80, 150, tread_thickness = 0, riser_thickness = 0, nosing = 0)
+
+plot_stair(sol3$geometry[[1]], riser = TRUE)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+### Wood-stairs and advanced parameters
+
+Compute wood stairs by indicating `tread_thickness` `riser_thickness`
+and or `nosing` parameters, expressed in centimeters.
 
 ``` r
 
 sol2 <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing = 2.5)
 
-plot_stair(sol2$geometry[[1]]) 
+# some computed solutions have a landing step
+landing_step_solutions <- sol2[sol2$has_landing == TRUE, ]
+
+plot(landing_step_solutions$geometry[[1]])
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+Add nosing in negative direction with
+`positive_nosing_direction = FALSE` parameter.
+
+``` r
+
+sol_neg <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing = 2.5, positive_nosing_direction = FALSE)
+ 
+plot(sol_neg$geometry[[1]])
+```
+
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+> Note that the front edge of the top step of the staircase may protrude
+> beyond the indicated available space if
+> `positive_nosing_direction = FALSE`, even though all the steps are the
+> same size (vs. by adding the nosing in the positive direction – the
+> default – the last step is shorter so that it does not protrude beyond
+> the landing).
+
+### Plot open-riser stairs
 
 Open-riser stairs are ploted with `plot_stair(riser = FALSE)`.
-plot_stair will plot the riser by default (`riser = TRUE`).
+`plot_stair()` plot a riser by default (`riser = TRUE`).
 
 ``` r
 sol4 <- solve_stairs(80, 150, tread_thickness = 4,  nosing = 4)
@@ -143,20 +176,7 @@ sol4 <- solve_stairs(80, 150, tread_thickness = 4,  nosing = 4)
 plot_stair(sol4$geometry[[1]], riser = FALSE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
-
-Basic concrete stairs are computed with
-`tread_thickness = 0, riser_thickness = 0, nosing = 0`.
-
-``` r
-
-sol3 <- solve_stairs(80, 150, tread_thickness = 0, riser_thickness = 0, nosing = 0)
-
-#Riser - vertical limit - are ploted with riser = `TRUE`, the default.
-plot_stair(sol3$geometry[[1]] )
-```
-
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 [^1]: International Organization for Standardization. (2016). Safety of
     machinery — Permanent means of access to machinery — Part 3: Stairs,
