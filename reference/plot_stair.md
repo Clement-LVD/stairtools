@@ -12,6 +12,7 @@ plot_stair(
   riser = TRUE,
   legend_columns = c(`Step begin` = "x_tread_start", `Step end` = "x_tread_end", Riser =
     "x_riser"),
+  axis_y_columns = c(`Step height` = "y_top"),
   col = "white",
   border = "black",
   ...
@@ -61,5 +62,5 @@ plot_stair(sol$geometry[[1]])
 
 sol2 <- solve_stairs(total_height = 60, 150, tread_thickness = 4,nosing = 4)
 # no riser stair :
-plot_stair(sol2$geometry[sol$has_landing][[1]],  riser = FALSE)
+plot_stair(sol2$geometry[sol2$has_landing][[1]],  riser = FALSE)
 ```
