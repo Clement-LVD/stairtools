@@ -16,8 +16,6 @@
 #'   \item{landing_max}{Standard goings + a landing step that absorbs all
 #'     remaining space (potentially very large going: filling an opening,
 #'     giant landing step in front of a door, etc.).}
-#'   \item{landing_uniform}{A uniform going = \code{max_horizontal_run / n_steps},
-#'     applied to all steps including the landing step.}
 #' }
 #'
 #' In every "with landing" scenario, the landing step is the last one,
@@ -87,10 +85,6 @@ generate_going_scenarios <- function(n_steps, max_horizontal_run, going) {
 
     landing_max = scenario(
       c(std_goings, landing_ext), c(std_types, "landing"), blondel_dist + max(landing_ext, 0),
-      landing_impossible = landing_ext <= 0, has_landing = TRUE),
-
-    landing_uniform = scenario(
-      rep(max_horizontal_run / n_steps, n_steps), c(std_types, "landing"), max_horizontal_run,
-      horizontal_run_exceeded = FALSE, has_landing = TRUE)
+      landing_impossible = landing_ext <= 0, has_landing = TRUE) 
   )
 }

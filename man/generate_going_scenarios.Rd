@@ -39,8 +39,6 @@ may remain.}
 \item{landing_max}{Standard goings + a landing step that absorbs all
 remaining space (potentially very large going: filling an opening,
 giant landing step in front of a door, etc.).}
-\item{landing_uniform}{A uniform going = \code{max_horizontal_run / n_steps},
-applied to all steps including the landing step.}
 }
 
 In every "with landing" scenario, the landing step is the last one,

@@ -15,7 +15,8 @@ solve_stairs(
   positive_nosing_direction = TRUE,
   tread_thickness = 0,
   riser_thickness = 0,
-  show_invalid_solutions = FALSE
+  show_invalid_solutions = FALSE,
+  check_stair_rules = FALSE
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ the negative x-axis.}
 \item{show_invalid_solutions}{\code{logical} - If \code{TRUE}, returns all generated
 solutions, including solutions that do not satisfy the constraints.
 Default: \code{FALSE}.}
+
+\item{check_stair_rules}{\code{logical} - If \code{TRUE}, returns additional columns relating to legal compliance and compliance with academic standards.}
 }
 \value{
 A \code{data.frame} containing one row per generated solution.
@@ -68,12 +71,12 @@ sol
 plot(sol$geometry[[1]])
 
 # wood stair
-sol2 <- solve_stairs(total_height = 160, max_horizontal_run = 150, tread_thickness = 4, nosing = 4)
-#' # Filter out solution with a landing
+sol2 <- solve_stairs(total_height = 160, max_horizontal_run = 230, tread_thickness = 4, nosing = 4)
+#' # Filter out solution with a landing 
 sol2 <- subset(sol2, has_landing)
 plot_stair(sol2$geometry[[1]])
 
-# Or get all the solutions, even impossibles
+# Or get all the solutions, even if state-of-the-art will not be respected
  sol3 <- solve_stairs(160, 150, show_invalid_solutions = TRUE)
 
 # Filter out valid solution
