@@ -221,7 +221,7 @@ also be used, including line types and hatching.
 plot_stair(
   wood_stairs$geometry[[1]],
   polygon_params = list(
-    col = "white",
+    col = "black",
     border = "black",
     density = 25,
     angle = 45
@@ -232,8 +232,8 @@ plot_stair(
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)
 
 Styles can be applied selectively to specific steps or surfaces. The
-surface selector accepts “tread” or “riser”, while steps can be a single
-step number or a vector of step numbers.
+`surface` selector accepts “tread” or “riser”, while steps can be a
+single step number or a vector of step numbers.
 
 For example, treads and risers can be displayed differently.
 
@@ -244,7 +244,9 @@ plot_stair(
   styles = list(
     list(
       surface = "tread",
-      col = "grey85"
+      col = "black",
+      density = 25,
+      angle = 45
     ),
     list(
       surface = "riser",

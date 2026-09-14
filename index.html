@@ -181,14 +181,14 @@ install.packages("stairtools")
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
 <span>  <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  polygon_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    col <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>    col <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>    border <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>    density <span class="op">=</span> <span class="fl">25</span>,</span>
 <span>    angle <span class="op">=</span> <span class="fl">45</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-11-1.png"><!-- --></p>
-<p>Styles can be applied selectively to specific steps or surfaces. The surface selector accepts “tread” or “riser”, while steps can be a single step number or a vector of step numbers.</p>
+<p>Styles can be applied selectively to specific steps or surfaces. The <code>surface</code> selector accepts “tread” or “riser”, while steps can be a single step number or a vector of step numbers.</p>
 <p>For example, treads and risers can be displayed differently.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
@@ -196,7 +196,9 @@ install.packages("stairtools")
 <span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      surface <span class="op">=</span> <span class="st">"tread"</span>,</span>
-<span>      col <span class="op">=</span> <span class="st">"grey85"</span></span>
+<span>      col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>      density <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>      angle <span class="op">=</span> <span class="fl">45</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      surface <span class="op">=</span> <span class="st">"riser"</span>,</span>
