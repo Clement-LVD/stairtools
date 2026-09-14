@@ -13,6 +13,9 @@
 <url><loc>https://clement-lvd.github.io/stairtools/reference/build_geometry.html</loc></url>
 <url><loc>https://clement-lvd.github.io/stairtools/reference/build_solutions_table.html</loc></url>
 <url><loc>https://clement-lvd.github.io/stairtools/reference/check_stair_rules.html</loc></url>
+<url><loc>https://clement-lvd.github.io/stairtools/reference/create_stair_polygons.html</loc></url>
+<url><loc>https://clement-lvd.github.io/stairtools/reference/dot-create_polygon.html</loc></url>
+<url><loc>https://clement-lvd.github.io/stairtools/reference/dot-draw_stair_polygon.html</loc></url>
 <url><loc>https://clement-lvd.github.io/stairtools/reference/generate_going_scenarios.html</loc></url>
 <url><loc>https://clement-lvd.github.io/stairtools/reference/index.html</loc></url>
 <url><loc>https://clement-lvd.github.io/stairtools/reference/optimal_nrisers.html</loc></url>
@@ -20,5 +23,6 @@
 <url><loc>https://clement-lvd.github.io/stairtools/reference/print.stair_solutions.html</loc></url>
 <url><loc>https://clement-lvd.github.io/stairtools/reference/solve_stairs.html</loc></url>
 <url><loc>https://clement-lvd.github.io/stairtools/reference/stair_terminology.html</loc></url>
+<url><loc>https://clement-lvd.github.io/stairtools/reference/style_stair_polygons.html</loc></url>
 </urlset>
 

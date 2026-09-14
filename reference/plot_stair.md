@@ -1,8 +1,8 @@
 # Plot a stair geometry
 
-Plots a stair geometry using physical tread and riser surfaces. Physical
-surface coordinates and thicknesses must already have been added with
-[`add_stair_surface_geometry()`](https://clement-lvd.github.io/stairtools/reference/add_stair_surface_geometry.md).
+Plots a stair geometry using its physical tread and riser surfaces.
+Graphical parameters are passed directly to
+[`graphics::polygon()`](https://rdrr.io/r/graphics/polygon.html).
 
 ## Usage
 
@@ -10,12 +10,14 @@ surface coordinates and thicknesses must already have been added with
 plot_stair(
   geometry,
   riser = TRUE,
+  polygon_params = list(col = "white", border = "black"),
+  styles = NULL,
   legend_columns = c(`Step begin` = "x_tread_start", `Step end` = "x_tread_end", Riser =
     "x_riser"),
   axis_y_columns = c(`Step height` = "y_top"),
-  col = "white",
-  border = "black",
-  ...
+  xlim = NULL,
+  ylim = NULL,
+  asp = 1
 )
 ```
 
@@ -23,44 +25,68 @@ plot_stair(
 
 - geometry:
 
-  A stair geometry data frame containing physical surface coordinates.
+  A `stair_geometry` data frame.
 
 - riser:
 
-  Logical; whether to draw risers.
+  Logical; whether to draw risers. Defaults to `TRUE`.
+
+- polygon_params:
+
+  Named list of graphical parameters passed to
+  [`graphics::polygon()`](https://rdrr.io/r/graphics/polygon.html).
+  Common parameters include `col`, `border`, `density`, `angle`, `lty`,
+  and `lwd`.
+
+- styles:
+
+  List of style rules applied after `polygon_params`. Each rule may
+  contain `steps` and `surface` selectors. Missing or `NULL` selectors
+  match all polygons. Rules are applied in order.
 
 - legend_columns:
 
-  Character vector of geometry columns to display as horizontal axes.
-  Each column is displayed on a separate line. Unknown columns are
-  ignored. If `NULL` or if no valid column is supplied, no axes are
-  displayed.
+  Named character vector of geometry columns to display as horizontal
+  axes.
 
-- col:
+- axis_y_columns:
 
-  Fill colour of the stair surfaces.
+  Named character vector of geometry columns to display as vertical
+  axes.
 
-- border:
+- xlim:
 
-  Border colour of the stair surfaces.
+  Optional x-axis limits.
 
-- ...:
+- ylim:
 
-  Additional graphical parameters passed to
-  [`graphics::plot()`](https://rdrr.io/r/graphics/plot.default.html).
+  Optional y-axis limits.
+
+- asp:
+
+  Plot aspect ratio.
 
 ## Value
 
-Invisibly returns `geometry`.
+Invisibly returns the polygon drawing instructions.
 
 ## Examples
 
 ``` r
-sol <- solve_stairs(total_height = 160, 150, tread_thickness = 4, riser_thickness = 2)
+sol <- solve_stairs(103, 133)
 plot_stair(sol$geometry[[1]])
 
 
-sol2 <- solve_stairs(total_height = 60, 150, tread_thickness = 4,nosing = 4)
-# no riser stair :
-plot_stair(sol2$geometry[sol2$has_landing][[1]],  riser = FALSE)
+plot_stair(
+  sol$geometry[[1]],
+  polygon_params = list(col = "white", border = "black"),
+  styles = list(
+    list(
+      steps = 3,
+      density = 20,
+      angle = 45
+    )
+  )
+)
+
 ```

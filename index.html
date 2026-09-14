@@ -91,10 +91,11 @@ install.packages("stairtools")
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
+<p>The examples cover the various stair calculations provided by <code><a href="reference/solve_stairs.html">solve_stairs()</a></code>, followed by the graphical parameters provided by <code><a href="reference/plot_stair.html">plot_stair()</a></code>.</p>
 <div class="section level3">
-<h3 id="basic-concrete-stairs">Basic concrete stairs<a class="anchor" aria-label="anchor" href="#basic-concrete-stairs"></a>
+<h3 id="stair-computations">Stair computations<a class="anchor" aria-label="anchor" href="#stair-computations"></a>
 </h3>
-<p>Compute stairs with <code><a href="reference/solve_stairs.html">solve_stairs()</a></code>, given a total_height and a maximum horizontal run available.</p>
+<p><strong>Basic concrete stairs.</strong> <code><a href="reference/solve_stairs.html">solve_stairs()</a></code> compute various basic stair solutions, given a total height and a maximum horizontal run available. The function returns a <code>data.frame</code> listing several solutions, the most relevant of which is the first entry. A <code>list</code> variable called <code>geometry</code> provides the coordinates for each solution, with one entry for each solution in the main data.frame, in the same order.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://clement-lvd.github.io/stairtools/">stairtools</a></span><span class="op">)</span></span>
@@ -118,47 +119,120 @@ install.packages("stairtools")
 <span><span class="co"># plot the best solution</span></span>
 <span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-4-1.png"><!-- --></p>
-<p>Basic concrete stairs are computed with <code>tread_thickness = 0, riser_thickness = 0, nosing = 0</code>, the default. Riser - vertical limit - are ploted with <code>riser = TRUE</code>, the default.</p>
+<p>Some staircase designs have a landing step at the top. For these solutions, thhe <code>has_landing</code> variable is set to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">sol3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">0</span>, riser_thickness <span class="op">=</span> <span class="fl">0</span>, nosing <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span>total_height <span class="op">=</span> <span class="fl">68</span>, max_horizontal_run <span class="op">=</span>  <span class="fl">133</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol3</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, riser <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">landing_step_solutions</span> <span class="op">&lt;-</span> <span class="va">sol2</span><span class="op">[</span><span class="va">sol2</span><span class="op">$</span><span class="va">has_landing</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="op">]</span></span>
+<span> </span>
+<span><span class="co"># plot the best solution within solutions providing a landing step</span></span>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">landing_step_solutions</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-5-1.png"><!-- --></p>
-</div>
-<div class="section level3">
-<h3 id="wood-stairs-and-advanced-parameters">Wood-stairs and advanced parameters<a class="anchor" aria-label="anchor" href="#wood-stairs-and-advanced-parameters"></a>
-</h3>
-<p>Compute wood stairs by indicating <code>tread_thickness</code> <code>riser_thickness</code> and or <code>nosing</code> parameters, expressed in centimeters.</p>
+<p>By default, <code><a href="reference/solve_stairs.html">solve_stairs()</a></code> return basic concrete stairs, computed with <code>tread_thickness = 0, riser_thickness = 0, nosing = 0</code> and riser - vertical limit - are ploted with <code>riser = TRUE</code>, the default - as shown above.</p>
+<p><strong>Tread thickness and nosing.</strong> The example below shows a 7 cm thick covering layer over a concrete staircase, extending outwards to leave a 4 cm stair nosing. The parameters are therefore <code>tread_thickness = 7, nosing = 4, riser_thickness = 0</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2</span>, nosing <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span>
+<span><span class="va">sol3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">7</span>, nosing <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># some computed solutions have a landing step</span></span>
-<span><span class="va">landing_step_solutions</span> <span class="op">&lt;-</span> <span class="va">sol2</span><span class="op">[</span><span class="va">sol2</span><span class="op">$</span><span class="va">has_landing</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">landing_step_solutions</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol3</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, riser <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-6-1.png"><!-- --></p>
-<p>Add nosing in negative direction with <code>positive_nosing_direction = FALSE</code> parameter.</p>
+<p>When a stair nosing is required, the final top step is shorter by default - in order to maintain a constant going and thus avoid a ‘top-of-the-flight’ effect.</p>
+<p><strong>Alternative nosing direction.</strong> Nosing can instead be added in the negative direction with <code>positive_nosing_direction = FALSE</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">sol_neg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2</span>, nosing <span class="op">=</span> <span class="fl">2.5</span>, positive_nosing_direction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">sol_neg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, nosing <span class="op">=</span> <span class="fl">2.5</span>, positive_nosing_direction <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span> </span>
 <span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol_neg</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-7-1.png"><!-- --></p>
-<blockquote>
-<p>Note that the front edge of the top step of the staircase may protrude beyond the indicated available space if <code>positive_nosing_direction = FALSE</code>, even though all the steps are the same size (vs. by adding the nosing in the positive direction – the default – the last step is shorter so that it does not protrude beyond the landing).</p>
-</blockquote>
-</div>
-<div class="section level3">
-<h3 id="plot-open-riser-stairs">Plot open-riser stairs<a class="anchor" aria-label="anchor" href="#plot-open-riser-stairs"></a>
-</h3>
-<p>Open-riser stairs are ploted with <code>plot_stair(riser = FALSE)</code>. <code><a href="reference/plot_stair.html">plot_stair()</a></code> plot a riser by default (<code>riser = TRUE</code>).</p>
+<p>With this setting, all steps keep the same theoretical going, but the first step may protrude beyond the indicated available space. With the default positive direction, the last step is shortened instead, so that the staircase does not extend beyond the available run.</p>
+<p><strong>Wood-stairs.</strong> Wood stairs can be computed by specifying <code>tread_thickness</code> <code>riser_thickness</code> and or <code>nosing</code> parameters, expressed in centimeters.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">wood_stairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2.6</span>, nosing <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-8-1.png"><!-- --></p>
+<p><strong>Open-riser stairs.</strong> Open-riser stairscan be plotted with <code>plot_stair(riser = FALSE)</code>. By default, <code><a href="reference/plot_stair.html">plot_stair()</a></code> displays the vertical risers.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sol4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>,  nosing <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol4</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, riser <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-8-1.png"><!-- --></p>
+<p><img src="README_files/figure-gfm/unnamed-chunk-9-1.png"><!-- --></p>
+</div>
+<div class="section level3">
+<h3 id="graphical-parameters">Graphical parameters<a class="anchor" aria-label="anchor" href="#graphical-parameters"></a>
+</h3>
+<p><code><a href="reference/plot_stair.html">plot_stair()</a></code> uses base R’s <code><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">graphics::polygon()</a></code> to draw each stair surface. Graphical parameters can therefore be passed through <code>polygon_params</code>.</p>
+<p>For example, the colour and border of all stair surfaces can be changed.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
+<span> <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  polygon_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    col <span class="op">=</span> <span class="st">"grey90"</span>,</span>
+<span>    border <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    lwd <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-10-1.png"><!-- --></p>
+<p>Other graphical parameters supported by <code><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">graphics::polygon()</a></code> can also be used, including line types and hatching.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
+<span>  <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  polygon_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    col <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>    border <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    density <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>    angle <span class="op">=</span> <span class="fl">45</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-11-1.png"><!-- --></p>
+<p>Styles can be applied selectively to specific steps or surfaces. The surface selector accepts “tread” or “riser”, while steps can be a single step number or a vector of step numbers.</p>
+<p>For example, treads and risers can be displayed differently.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
+<span>  <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      surface <span class="op">=</span> <span class="st">"tread"</span>,</span>
+<span>      col <span class="op">=</span> <span class="st">"grey85"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      surface <span class="op">=</span> <span class="st">"riser"</span>,</span>
+<span>      col <span class="op">=</span> <span class="st">"grey50"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-12-1.png"><!-- --></p>
+<p>Styles can also target individual step with <code>steps = c()</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
+<span>  <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      steps <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
+<span>      col <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>      border <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>      lwd <span class="op">=</span> <span class="fl">3</span></span>
+<span>    <span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      steps <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>      surface <span class="op">=</span> <span class="st">"riser"</span>, col <span class="op">=</span> <span class="st">"black"</span>, density <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>    angle <span class="op">=</span> <span class="fl">45</span> </span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      steps <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>      col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>      border <span class="op">=</span> <span class="st">"red"</span>,</span>
+<span>      density <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>    angle <span class="op">=</span> <span class="fl">45</span> </span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-13-1.png"><!-- --></p>
+<p>Styles are applied in order. When several styles apply to the same polygon, parameters defined by a later style replace parameters with the same name defined by earlier styles.</p>
+<p>The polygon_params argument therefore provides a global default style if no <code>steps</code> is specified, while styles can be used to override individual steps or surfaces.</p>
+<p>All graphical parameters accepted by graphics::polygon() can be passed in this way.</p>
 </div>
 </div>
 </div>
