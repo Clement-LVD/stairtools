@@ -66,7 +66,8 @@ the Blondel target value, default is 63 cm.
 **Edges cases.** When several solutions have a similar Blondel value,
 solutions are sorted by their deviation from the minimum rise, i.e. 16
 cm. This is to ensure that the staircase is comfortable for older
-people, children and dogs.
+people, those wearing high-heeled shoes, children, small dogs and old
+dogs, etc.
 
 ## Examples
 
