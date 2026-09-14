@@ -129,7 +129,7 @@ plot_stair(wood_stairs$geometry[[1]])
 
 ```
 
-**Open-riser stairs.** Open-riser stairscan be plotted with `plot_stair(riser = FALSE)`. By default, `plot_stair()` displays the vertical risers.
+**Open-riser stairs.** Open-riser stairs can be plotted with `plot_stair(riser = FALSE)`. By default, `plot_stair()` displays the vertical risers.
 
 ```{r}
 sol4 <- solve_stairs(80, 150, tread_thickness = 4,  nosing = 4)

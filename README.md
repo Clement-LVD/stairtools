@@ -177,7 +177,7 @@ plot_stair(wood_stairs$geometry[[1]])
 
 ![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-**Open-riser stairs.** Open-riser stairscan be plotted with
+**Open-riser stairs.** Open-riser stairs can be plotted with
 `plot_stair(riser = FALSE)`. By default, `plot_stair()` displays the
 vertical risers.
 
