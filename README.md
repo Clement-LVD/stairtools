@@ -60,21 +60,6 @@ to prioritise the staircase solution with the smallest deviation from
 this Blondel target value. From this French point of view, solutions
 with a Blondel value between 60 cm and 64 cm are acceptable.
 
-In the same vein, older French laws therefore stipulate that “the height
-and width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m”
-(<https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/>).
-Other standards and laws do not specify the permissible Blondel values,
-or even specify a range of values that differs from the range set out in
-French law, e.g., UK laws specify permissible Blondel values between 55
-cm and 70 cm
-(<https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf>).
-In other words, it is possible to build staircases that complying with
-British standards but do not comply with French standards.
-
-Some standards apply specifically to a particular type of staircase,
-e.g., according to the ISO standard, a stair that is a permanent mean of
-access to machinery require a Blondel value between 60 cm and 66 cm[^1].
-
 **Best solution.** Possible solutions are sorted by their deviation from
 the Blondel target value, default is 63 cm.
 
@@ -177,6 +162,23 @@ plot_stair(sol4$geometry[[1]], riser = FALSE)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+# Details
+
+In the same vein, older French laws therefore stipulate that “the height
+and width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m”
+(<https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/>).
+Other standards and laws do not specify the permissible Blondel values,
+or even specify a range of values that differs from the range set out in
+French law, e.g., UK laws specify permissible Blondel values between 55
+cm and 70 cm
+(<https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf>).
+In other words, it is possible to build staircases that complying with
+British standards but do not comply with French standards.
+
+Some standards apply specifically to a particular type of staircase,
+e.g., according to the ISO standard, a stair that is a permanent mean of
+access to machinery require a Blondel value between 60 cm and 66 cm[^1].
 
 [^1]: International Organization for Standardization. (2016). Safety of
     machinery — Permanent means of access to machinery — Part 3: Stairs,

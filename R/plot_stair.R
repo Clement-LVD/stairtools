@@ -101,10 +101,10 @@ add_axis_from_columns_vertical <- function(g, columns, ...) {
       graphics::mtext(
         text = titles[i],
         side = 2,
-        line = 2 * (i - 1) - 0.1,
+        line = 2 * (i - 1) - 1.1,
         adj = 1,
-        cex = 0.7
-        ,   las = 1,
+        cex = 0.9
+        #,   las = 1,
       )
     }
   }
