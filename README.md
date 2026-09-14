@@ -70,10 +70,18 @@ people, children and dogs.
 
 ## Examples
 
-### Basic concrete stairs
+The examples cover the various stair calculations provided by
+`solve_stairs()`, followed by the graphical parameters provided by
+`plot_stair()`.
 
-Compute stairs with `solve_stairs()`, given a total_height and a maximum
-horizontal run available.
+### Stair computations
+
+**Basic concrete stairs.** `solve_stairs()` compute various basic stair
+solutions, given a total height and a maximum horizontal run available.
+The function returns a `data.frame` listing several solutions, the most
+relevant of which is the first entry. A `list` variable called
+`geometry` provides the coordinates for each solution, with one entry
+for each solution in the main data.frame, in the same order.
 
 ``` r
 
@@ -101,59 +109,77 @@ plot_stair(sol$geometry[[1]])
 
 ![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-Basic concrete stairs are computed with
-`tread_thickness = 0, riser_thickness = 0, nosing = 0`, the default.
-Riser - vertical limit - are ploted with `riser = TRUE`, the default.
+Some staircase designs have a landing step at the top. For these
+solutions, thhe `has_landing` variable is set to `TRUE`.
 
 ``` r
 
-sol3 <- solve_stairs(80, 150, tread_thickness = 0, riser_thickness = 0, nosing = 0)
+sol2 <- solve_stairs(total_height = 68, max_horizontal_run =  133)
 
-plot_stair(sol3$geometry[[1]], riser = TRUE)
+landing_step_solutions <- sol2[sol2$has_landing == TRUE, ]
+ 
+# plot the best solution within solutions providing a landing step
+plot_stair(landing_step_solutions$geometry[[1]]) 
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-### Wood-stairs and advanced parameters
+By default, `solve_stairs()` return basic concrete stairs, computed with
+`tread_thickness = 0, riser_thickness = 0, nosing = 0` and riser -
+vertical limit - are ploted with `riser = TRUE`, the default - as shown
+above.
 
-Compute wood stairs by indicating `tread_thickness` `riser_thickness`
-and or `nosing` parameters, expressed in centimeters.
+**Tread thickness and nosing.** The example below shows a 7 cm thick
+covering layer over a concrete staircase, extending outwards to leave a
+4 cm stair nosing. The parameters are therefore
+`tread_thickness = 7, nosing = 4, riser_thickness = 0`.
 
 ``` r
 
-sol2 <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing = 2.5)
+sol3 <- solve_stairs(80, 150, tread_thickness = 7, nosing = 4, riser_thickness = 0)
 
-# some computed solutions have a landing step
-landing_step_solutions <- sol2[sol2$has_landing == TRUE, ]
-
-plot_stair(landing_step_solutions$geometry[[1]])
+plot_stair(sol3$geometry[[1]], riser = TRUE)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-Add nosing in negative direction with
-`positive_nosing_direction = FALSE` parameter.
+When a stair nosing is required, the final top step is shorter by
+default - in order to maintain a constant going and thus avoid a
+‘top-of-the-flight’ effect.
+
+**Alternative nosing direction.** Nosing can instead be added in the
+negative direction with `positive_nosing_direction = FALSE`.
 
 ``` r
 
-sol_neg <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2, nosing = 2.5, positive_nosing_direction = FALSE)
+sol_neg <- solve_stairs(80, 150, tread_thickness = 4, nosing = 2.5, positive_nosing_direction = FALSE)
  
 plot_stair(sol_neg$geometry[[1]])
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-> Note that the front edge of the top step of the staircase may protrude
-> beyond the indicated available space if
-> `positive_nosing_direction = FALSE`, even though all the steps are the
-> same size (vs. by adding the nosing in the positive direction – the
-> default – the last step is shorter so that it does not protrude beyond
-> the landing).
+With this setting, all steps keep the same theoretical going, but the
+first step may protrude beyond the indicated available space. With the
+default positive direction, the last step is shortened instead, so that
+the staircase does not extend beyond the available run.
 
-### Plot open-riser stairs
+**Wood-stairs.** Wood stairs can be computed by specifying
+`tread_thickness` `riser_thickness` and or `nosing` parameters,
+expressed in centimeters.
 
-Open-riser stairs are ploted with `plot_stair(riser = FALSE)`.
-`plot_stair()` plot a riser by default (`riser = TRUE`).
+``` r
+
+wood_stairs <- solve_stairs(80, 150, tread_thickness = 4, riser_thickness = 2.6, nosing = 2.5)
+
+plot_stair(wood_stairs$geometry[[1]])
+```
+
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+**Open-riser stairs.** Open-riser stairscan be plotted with
+`plot_stair(riser = FALSE)`. By default, `plot_stair()` displays the
+vertical risers.
 
 ``` r
 sol4 <- solve_stairs(80, 150, tread_thickness = 4,  nosing = 4)
@@ -161,7 +187,110 @@ sol4 <- solve_stairs(80, 150, tread_thickness = 4,  nosing = 4)
 plot_stair(sol4$geometry[[1]], riser = FALSE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+### Graphical parameters
+
+`plot_stair()` uses base R’s `graphics::polygon()` to draw each stair
+surface. Graphical parameters can therefore be passed through
+`polygon_params`.
+
+For example, the colour and border of all stair surfaces can be changed.
+
+``` r
+
+plot_stair(
+ wood_stairs$geometry[[1]],
+  polygon_params = list(
+    col = "grey90",
+    border = "black",
+    lwd = 2
+  )
+)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+Other graphical parameters supported by `graphics::polygon()` can also
+be used, including line types and hatching.
+
+``` r
+plot_stair(
+  wood_stairs$geometry[[1]],
+  polygon_params = list(
+    col = "white",
+    border = "black",
+    density = 25,
+    angle = 45
+  )
+)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+Styles can be applied selectively to specific steps or surfaces. The
+surface selector accepts “tread” or “riser”, while steps can be a single
+step number or a vector of step numbers.
+
+For example, treads and risers can be displayed differently.
+
+``` r
+plot_stair(
+  wood_stairs$geometry[[1]],
+  styles = list(
+    list(
+      surface = "tread",
+      col = "grey85"
+    ),
+    list(
+      surface = "riser",
+      col = "grey50"
+    )
+  )
+)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+Styles can also target individual step with `steps = c()`.
+
+``` r
+plot_stair(
+  wood_stairs$geometry[[1]],
+  styles = list( 
+    list(
+      steps = 1:4,
+      col = "white",
+      border = "black",
+      lwd = 3
+    ), list(
+      steps = 1,
+      surface = "riser", col = "black", density = 20,
+    angle = 45 
+    ),
+    list(
+      steps = 4,
+      col = "black",
+      border = "red",
+      density = 15,
+    angle = 45 
+    )
+  )
+)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+Styles are applied in order. When several styles apply to the same
+polygon, parameters defined by a later style replace parameters with the
+same name defined by earlier styles.
+
+The polygon_params argument therefore provides a global default style if
+no `steps` is specified, while styles can be used to override individual
+steps or surfaces.
+
+All graphical parameters accepted by graphics::polygon() can be passed
+in this way.
 
 # Details
 
