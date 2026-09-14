@@ -104,16 +104,13 @@ install.packages("stairtools")
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   2 valid solution(s)</span></span>
+<span><span class="co">#&gt;   1 valid solution(s)</span></span>
 <span><span class="co">#&gt;   n_risers step_rise rise_target_deviation    going           scenario</span></span>
 <span><span class="co">#&gt; 2        6  17.16667              1.166667 28.66667 no_landing_uniform</span></span>
-<span><span class="co">#&gt; 5        6  17.16667              1.166667 28.66667    landing_uniform</span></span>
 <span><span class="co">#&gt;   horizontal_run  blondel blondel_target_deviation has_landing</span></span>
 <span><span class="co">#&gt; 2            133 60.93333                 2.066667       FALSE</span></span>
-<span><span class="co">#&gt; 5            133 56.50000                 6.500000        TRUE</span></span>
 <span><span class="co">#&gt;   horizontal_run_exceeded landing_impossible is_valid rank</span></span>
 <span><span class="co">#&gt; 2                   FALSE              FALSE     TRUE    1</span></span>
-<span><span class="co">#&gt; 5                   FALSE              FALSE     TRUE    2</span></span>
 <span><span class="co">#&gt; ('geometry' list-col is hidden - access via $geometry[[i]])</span></span>
 <span></span>
 <span><span class="co"># plot the best solution</span></span>
@@ -153,6 +150,9 @@ install.packages("stairtools")
 <span></span>
 <span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-8-1.png"><!-- --></p>
+<p>By default, the risers are positioned behind the tread, they do not overlap the nosing.</p>
+<p><strong>Risers.</strong></p>
+<p>xxx todo : various risers computations xxx</p>
 <p><strong>Open-riser stairs.</strong> Open-riser stairs can be plotted with <code>plot_stair(riser = FALSE)</code>. By default, <code><a href="reference/plot_stair.html">plot_stair()</a></code> displays the vertical risers.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sol4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>,  nosing <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
@@ -160,12 +160,108 @@ install.packages("stairtools")
 <span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol4</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, riser <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-9-1.png"><!-- --></p>
 </div>
+</div>
+</div>
+<div class="section level1">
+<h1 id="legal-and-regulatory-aspects">Legal and regulatory aspects<a class="anchor" aria-label="anchor" href="#legal-and-regulatory-aspects"></a>
+</h1>
+<p>To qualify the solutions, the <code>check_stair_rules</code> parameters adds various logical columns relating to the legal or academic compliance of the proposed staircases.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">wood_stairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">180</span>, <span class="fl">200</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2.6</span>, nosing <span class="op">=</span> <span class="fl">2.5</span>, check_stair_rules <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># several logical columns and numeric (n_rules_ok &amp; rate_rules_ok) are added</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">wood_stairs</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   5 valid solution(s)</span></span>
+<span><span class="co">#&gt;    n_risers step_rise rise_target_deviation    going           scenario</span></span>
+<span><span class="co">#&gt; 9         9  20.00000             4.0000000 23.00000 no_landing_blondel</span></span>
+<span><span class="co">#&gt; 12        9  20.00000             4.0000000 23.00000        landing_max</span></span>
+<span><span class="co">#&gt; 10        9  20.00000             4.0000000 23.00000 no_landing_uniform</span></span>
+<span><span class="co">#&gt; 6        10  18.00000             2.0000000 27.00000 no_landing_uniform</span></span>
+<span><span class="co">#&gt; 2        11  16.36364             0.3636364 30.27273 no_landing_uniform</span></span>
+<span><span class="co">#&gt;    horizontal_run  blondel blondel_target_deviation has_landing</span></span>
+<span><span class="co">#&gt; 9             184 63.00000                 0.000000       FALSE</span></span>
+<span><span class="co">#&gt; 12            200 63.00000                 0.000000        TRUE</span></span>
+<span><span class="co">#&gt; 10            200 65.00000                 2.000000       FALSE</span></span>
+<span><span class="co">#&gt; 6             200 58.22222                 4.777778       FALSE</span></span>
+<span><span class="co">#&gt; 2             200 52.72727                10.272727       FALSE</span></span>
+<span><span class="co">#&gt;    horizontal_run_exceeded landing_impossible is_valid rank</span></span>
+<span><span class="co">#&gt; 9                    FALSE              FALSE     TRUE    1</span></span>
+<span><span class="co">#&gt; 12                   FALSE              FALSE     TRUE    2</span></span>
+<span><span class="co">#&gt; 10                   FALSE              FALSE     TRUE    3</span></span>
+<span><span class="co">#&gt; 6                    FALSE              FALSE     TRUE    4</span></span>
+<span><span class="co">#&gt; 2                    FALSE              FALSE     TRUE    5</span></span>
+<span><span class="co">#&gt;    US_ADA_public_stairs US_ADA_pool_stairs US_ADA_pool_transfer_steps</span></span>
+<span><span class="co">#&gt; 9                 FALSE              FALSE                      FALSE</span></span>
+<span><span class="co">#&gt; 12                FALSE              FALSE                      FALSE</span></span>
+<span><span class="co">#&gt; 10                FALSE              FALSE                      FALSE</span></span>
+<span><span class="co">#&gt; 6                 FALSE              FALSE                      FALSE</span></span>
+<span><span class="co">#&gt; 2                  TRUE               TRUE                      FALSE</span></span>
+<span><span class="co">#&gt;    US_IBC_means_of_egress US_IBC_dwelling_units</span></span>
+<span><span class="co">#&gt; 9                    TRUE                 FALSE</span></span>
+<span><span class="co">#&gt; 12                   TRUE                 FALSE</span></span>
+<span><span class="co">#&gt; 10                   TRUE                 FALSE</span></span>
+<span><span class="co">#&gt; 6                    TRUE                  TRUE</span></span>
+<span><span class="co">#&gt; 2                    TRUE                  TRUE</span></span>
+<span><span class="co">#&gt;    US_IBC_guard_towers_observation_stations_and_control_rooms</span></span>
+<span><span class="co">#&gt; 9                                                       FALSE</span></span>
+<span><span class="co">#&gt; 12                                                      FALSE</span></span>
+<span><span class="co">#&gt; 10                                                      FALSE</span></span>
+<span><span class="co">#&gt; 6                                                       FALSE</span></span>
+<span><span class="co">#&gt; 2                                                        TRUE</span></span>
+<span><span class="co">#&gt;    US_IRC_means_of_egress US_IRC_sleeping_loft</span></span>
+<span><span class="co">#&gt; 9                   FALSE                 TRUE</span></span>
+<span><span class="co">#&gt; 12                  FALSE                 TRUE</span></span>
+<span><span class="co">#&gt; 10                  FALSE                 TRUE</span></span>
+<span><span class="co">#&gt; 6                    TRUE                 TRUE</span></span>
+<span><span class="co">#&gt; 2                    TRUE                FALSE</span></span>
+<span><span class="co">#&gt;    FR_collective_housing_common_areas FR_private_dwelling_interior</span></span>
+<span><span class="co">#&gt; 9                               FALSE                        FALSE</span></span>
+<span><span class="co">#&gt; 12                              FALSE                        FALSE</span></span>
+<span><span class="co">#&gt; 10                              FALSE                        FALSE</span></span>
+<span><span class="co">#&gt; 6                               FALSE                         TRUE</span></span>
+<span><span class="co">#&gt; 2                                TRUE                         TRUE</span></span>
+<span><span class="co">#&gt;    FR_ERP_accessibility FR_workplace_accessibility FR_public_circulation_stairs</span></span>
+<span><span class="co">#&gt; 9                 FALSE                      FALSE                        FALSE</span></span>
+<span><span class="co">#&gt; 12                FALSE                      FALSE                        FALSE</span></span>
+<span><span class="co">#&gt; 10                FALSE                      FALSE                        FALSE</span></span>
+<span><span class="co">#&gt; 6                 FALSE                      FALSE                        FALSE</span></span>
+<span><span class="co">#&gt; 2                 FALSE                      FALSE                        FALSE</span></span>
+<span><span class="co">#&gt;    ISO_machinery_access UK_private UK_utility UK_general_access</span></span>
+<span><span class="co">#&gt; 9                  TRUE       TRUE      FALSE             FALSE</span></span>
+<span><span class="co">#&gt; 12                 TRUE       TRUE      FALSE             FALSE</span></span>
+<span><span class="co">#&gt; 10                 TRUE       TRUE      FALSE             FALSE</span></span>
+<span><span class="co">#&gt; 6                 FALSE       TRUE       TRUE             FALSE</span></span>
+<span><span class="co">#&gt; 2                 FALSE      FALSE      FALSE             FALSE</span></span>
+<span><span class="co">#&gt;    academic_compromise etiological_studies feet_accommodation n_rules_ok</span></span>
+<span><span class="co">#&gt; 9                FALSE               FALSE              FALSE          4</span></span>
+<span><span class="co">#&gt; 12               FALSE               FALSE              FALSE          4</span></span>
+<span><span class="co">#&gt; 10               FALSE               FALSE              FALSE          4</span></span>
+<span><span class="co">#&gt; 6                 TRUE                TRUE              FALSE          9</span></span>
+<span><span class="co">#&gt; 2                 TRUE                TRUE               TRUE         11</span></span>
+<span><span class="co">#&gt;    rate_rules_ok</span></span>
+<span><span class="co">#&gt; 9           0.20</span></span>
+<span><span class="co">#&gt; 12          0.20</span></span>
+<span><span class="co">#&gt; 10          0.20</span></span>
+<span><span class="co">#&gt; 6           0.45</span></span>
+<span><span class="co">#&gt; 2           0.55</span></span>
+<span><span class="co">#&gt; ('geometry' list-col is hidden - access via $geometry[[i]])</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="op">-</span><span class="va">wood_stairs</span><span class="op">$</span><span class="va">rate_rules_ok</span><span class="op">)</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">)</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-10-1.png"><!-- --></p>
+<blockquote>
+<p>The Blondel value used as a reference by <code>solve_stairs</code> (63 cm) reflect the traditional French stair geometry criteria and does not allow compliance with most of the proposed standards when risers heights &gt; 17 cm are adopted.</p>
+</blockquote>
+<blockquote>
+<p>Not all standards are necessarily relevant to your situation since some standards apply specifically to a country or a particular type of staircase, e.g., according to the ISO standard, a stair that is a permanent mean of access to machinery require a Blondel value between 60 cm and 66 cm<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;International Organization for Standardization. (2016). Safety of machinery — Permanent means of access to machinery — Part 3: Stairs, stepladders and guard-rail (ISO Standard No. 14122-3:2016). &lt;a href="https://www.iso.org/standard/61282.html" class="external-link uri"&gt;https://www.iso.org/standard/61282.html&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a>.</p>
+</blockquote>
 <div class="section level3">
 <h3 id="graphical-parameters">Graphical parameters<a class="anchor" aria-label="anchor" href="#graphical-parameters"></a>
 </h3>
 <p><code><a href="reference/plot_stair.html">plot_stair()</a></code> uses base R’s <code><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">graphics::polygon()</a></code> to draw each stair surface. Graphical parameters can therefore be passed through <code>polygon_params</code>.</p>
 <p>For example, the colour and border of all stair surfaces can be changed.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
 <span> <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
@@ -175,9 +271,9 @@ install.packages("stairtools")
 <span>    lwd <span class="op">=</span> <span class="fl">2</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-10-1.png"><!-- --></p>
+<p><img src="README_files/figure-gfm/unnamed-chunk-11-1.png"><!-- --></p>
 <p>Other graphical parameters supported by <code><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">graphics::polygon()</a></code> can also be used, including line types and hatching.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
 <span>  <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  polygon_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -187,10 +283,10 @@ install.packages("stairtools")
 <span>    angle <span class="op">=</span> <span class="fl">45</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-11-1.png"><!-- --></p>
+<p><img src="README_files/figure-gfm/unnamed-chunk-12-1.png"><!-- --></p>
 <p>Styles can be applied selectively to specific steps or surfaces. The <code>surface</code> selector accepts “tread” or “riser”, while steps can be a single step number or a vector of step numbers.</p>
 <p>For example, treads and risers can be displayed differently.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
 <span>  <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -206,9 +302,9 @@ install.packages("stairtools")
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-12-1.png"><!-- --></p>
+<p><img src="README_files/figure-gfm/unnamed-chunk-13-1.png"><!-- --></p>
 <p>Styles can also target individual step with <code>steps = c()</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span></span>
 <span>  <span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  styles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> </span>
@@ -231,18 +327,11 @@ install.packages("stairtools")
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-13-1.png"><!-- --></p>
+<p><img src="README_files/figure-gfm/unnamed-chunk-14-1.png"><!-- --></p>
 <p>Styles are applied in order. When several styles apply to the same polygon, parameters defined by a later style replace parameters with the same name defined by earlier styles.</p>
 <p>The polygon_params argument therefore provides a global default style if no <code>steps</code> is specified, while styles can be used to override individual steps or surfaces.</p>
 <p>All graphical parameters accepted by graphics::polygon() can be passed in this way.</p>
 </div>
-</div>
-</div>
-<div class="section level1">
-<h1 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
-</h1>
-<p>In the same vein, older French laws therefore stipulate that “the height and width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m” (<a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/" class="external-link uri">https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/</a>). Other standards and laws do not specify the permissible Blondel values, or even specify a range of values that differs from the range set out in French law, e.g., UK laws specify permissible Blondel values between 55 cm and 70 cm (<a href="https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf" class="external-link uri">https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf</a>). In other words, it is possible to build staircases that complying with British standards but do not comply with French standards.</p>
-<p>Some standards apply specifically to a particular type of staircase, e.g., according to the ISO standard, a stair that is a permanent mean of access to machinery require a Blondel value between 60 cm and 66 cm<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;International Organization for Standardization. (2016). Safety of machinery — Permanent means of access to machinery — Part 3: Stairs, stepladders and guard-rail (ISO Standard No. 14122-3:2016). &lt;a href="https://www.iso.org/standard/61282.html" class="external-link uri"&gt;https://www.iso.org/standard/61282.html&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a>.</p>
 </div>
 
 

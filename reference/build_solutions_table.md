@@ -81,15 +81,15 @@ head(tbl)
 #> 2       10  16.00000              0.000000 31.00000 no_landing_uniform
 #> 3       10  16.00000              0.000000 31.00000   landing_standard
 #> 4       10  16.00000              0.000000 31.00000        landing_max
-#> 5       10  16.00000              0.000000 31.00000    landing_uniform
-#> 6        9  17.77778              1.777778 27.44444 no_landing_blondel
+#> 5        9  17.77778              1.777778 27.44444 no_landing_blondel
+#> 6        9  17.77778              1.777778 27.44444 no_landing_uniform
 #>   horizontal_run  blondel blondel_target_deviation has_landing
 #> 1       279.0000  63.0000                  0.00000       FALSE
 #> 2      1000.0000 143.1111                 80.11111       FALSE
 #> 3       310.0000  63.0000                  0.00000        TRUE
 #> 4      1000.0000  63.0000                  0.00000        TRUE
-#> 5      1000.0000 132.0000                 69.00000        TRUE
-#> 6       219.5556  63.0000                  0.00000       FALSE
+#> 5       219.5556  63.0000                  0.00000       FALSE
+#> 6      1000.0000 160.5556                 97.55556       FALSE
 #>   horizontal_run_exceeded landing_impossible is_valid
 #> 1                   FALSE              FALSE     TRUE
 #> 2                   FALSE              FALSE     TRUE

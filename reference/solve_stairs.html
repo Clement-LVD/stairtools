@@ -57,7 +57,8 @@ matching the specified constraints without selecting a preferred solution.</p>
 <span>  positive_nosing_direction <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  tread_thickness <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  riser_thickness <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  show_invalid_solutions <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  show_invalid_solutions <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  check_stair_rules <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -114,6 +115,10 @@ the negative x-axis.</p></dd>
 solutions, including solutions that do not satisfy the constraints.
 Default: <code>FALSE</code>.</p></dd>
 
+
+<dt id="arg-check-stair-rules">check_stair_rules<a class="anchor" aria-label="anchor" href="#arg-check-stair-rules"></a></dt>
+<dd><p><code>logical</code> - If <code>TRUE</code>, returns additional columns relating to legal compliance and compliance with academic standards.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -133,68 +138,50 @@ single data frame, with geometry stored as a list-column.</p>
 <span class="r-in"><span><span class="co"># default is a concrete floor with no nosing</span></span></span>
 <span class="r-in"><span><span class="va">sol</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   6 valid solution(s)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3 valid solution(s)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    n_risers step_rise rise_target_deviation    going           scenario</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12        8  20.00000              4.000000 23.00000 no_landing_uniform</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15        8  20.00000              4.000000 23.00000    landing_uniform</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         9  17.77778              1.777778 27.44444 no_landing_uniform</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10        9  17.77778              1.777778 27.44444    landing_uniform</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10        8  20.00000              4.000000 23.00000 no_landing_uniform</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         9  17.77778              1.777778 27.44444 no_landing_uniform</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2        10  16.00000              0.000000 31.00000 no_landing_uniform</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        10  16.00000              0.000000 31.00000    landing_uniform</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    horizontal_run  blondel blondel_target_deviation has_landing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12            150 61.42857                 1.571429       FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15            150 58.75000                 4.250000        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7             150 54.30556                 8.694444       FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10            150 52.22222                10.777778        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10            150 61.42857                 1.571429       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             150 54.30556                 8.694444       FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2             150 48.66667                14.333333       FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5             150 47.00000                16.000000        TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    horizontal_run_exceeded landing_impossible is_valid rank</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12                   FALSE              FALSE     TRUE    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15                   FALSE              FALSE     TRUE    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                    FALSE              FALSE     TRUE    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                   FALSE              FALSE     TRUE    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    FALSE              FALSE     TRUE    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                    FALSE              FALSE     TRUE    6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                   FALSE              FALSE     TRUE    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                    FALSE              FALSE     TRUE    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    FALSE              FALSE     TRUE    3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ('geometry' list-col is hidden - access via $geometry[[i]])</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sol</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="solve_stairs-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># wood stair</span></span></span>
-<span class="r-in"><span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu">solve_stairs</span><span class="op">(</span>total_height <span class="op">=</span> <span class="fl">160</span>, max_horizontal_run <span class="op">=</span> <span class="fl">150</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, nosing <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">#' # Filter out solution with a landing</span></span></span>
+<span class="r-in"><span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu">solve_stairs</span><span class="op">(</span>total_height <span class="op">=</span> <span class="fl">160</span>, max_horizontal_run <span class="op">=</span> <span class="fl">230</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, nosing <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">#' # Filter out solution with a landing </span></span></span>
 <span class="r-in"><span><span class="va">sol2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">sol2</span>, <span class="va">has_landing</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol2</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="solve_stairs-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Or get all the solutions, even impossibles</span></span></span>
+<span class="r-in"><span><span class="co"># Or get all the solutions, even if state-of-the-art will not be respected</span></span></span>
 <span class="r-in"><span> <span class="va">sol3</span> <span class="op">&lt;-</span> <span class="fu">solve_stairs</span><span class="op">(</span><span class="fl">160</span>, <span class="fl">150</span>, show_invalid_solutions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Filter out valid solution</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">sol3</span>, <span class="va">is_valid</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   6 valid solution(s)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3 valid solution(s)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    n_risers step_rise rise_target_deviation    going           scenario</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12        8  20.00000              4.000000 23.00000 no_landing_uniform</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15        8  20.00000              4.000000 23.00000    landing_uniform</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         9  17.77778              1.777778 27.44444 no_landing_uniform</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10        9  17.77778              1.777778 27.44444    landing_uniform</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10        8  20.00000              4.000000 23.00000 no_landing_uniform</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         9  17.77778              1.777778 27.44444 no_landing_uniform</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2        10  16.00000              0.000000 31.00000 no_landing_uniform</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        10  16.00000              0.000000 31.00000    landing_uniform</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    horizontal_run  blondel blondel_target_deviation has_landing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12            150 61.42857                 1.571429       FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15            150 58.75000                 4.250000        TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7             150 54.30556                 8.694444       FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10            150 52.22222                10.777778        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10            150 61.42857                 1.571429       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             150 54.30556                 8.694444       FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2             150 48.66667                14.333333       FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5             150 47.00000                16.000000        TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    horizontal_run_exceeded landing_impossible is_valid rank</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12                   FALSE              FALSE     TRUE    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15                   FALSE              FALSE     TRUE    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                    FALSE              FALSE     TRUE    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                   FALSE              FALSE     TRUE    4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    FALSE              FALSE     TRUE    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                    FALSE              FALSE     TRUE    6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                   FALSE              FALSE     TRUE    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                    FALSE              FALSE     TRUE    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    FALSE              FALSE     TRUE    3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ('geometry' list-col is hidden - access via $geometry[[i]])</span>
 </code></pre></div>
     </div>

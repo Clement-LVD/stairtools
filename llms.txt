@@ -82,16 +82,13 @@ sol <- solve_stairs(total_height = 103, max_horizontal_run =  133)
 
 print(sol)
 #> 
-#>   2 valid solution(s)
+#>   1 valid solution(s)
 #>   n_risers step_rise rise_target_deviation    going           scenario
 #> 2        6  17.16667              1.166667 28.66667 no_landing_uniform
-#> 5        6  17.16667              1.166667 28.66667    landing_uniform
 #>   horizontal_run  blondel blondel_target_deviation has_landing
 #> 2            133 60.93333                 2.066667       FALSE
-#> 5            133 56.50000                 6.500000        TRUE
 #>   horizontal_run_exceeded landing_impossible is_valid rank
 #> 2                   FALSE              FALSE     TRUE    1
-#> 5                   FALSE              FALSE     TRUE    2
 #> ('geometry' list-col is hidden - access via $geometry[[i]])
 
 # plot the best solution
@@ -174,6 +171,13 @@ plot_stair(wood_stairs$geometry[[1]])
 
 ![](README_files/figure-gfm/unnamed-chunk-8-1.png)
 
+By default, the risers are positioned behind the tread, they do not
+overlap the nosing.
+
+**Risers.**
+
+xxx todo : various risers computations xxx
+
 **Open-riser stairs.** Open-riser stairs can be plotted with
 `plot_stair(riser = FALSE)`. By default,
 [`plot_stair()`](https://clement-lvd.github.io/stairtools/reference/plot_stair.md)
@@ -187,6 +191,111 @@ plot_stair(sol4$geometry[[1]], riser = FALSE)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-9-1.png)
+
+# Legal and regulatory aspects
+
+To qualify the solutions, the `check_stair_rules` parameters adds
+various logical columns relating to the legal or academic compliance of
+the proposed staircases.
+
+``` r
+
+
+wood_stairs <- solve_stairs(180, 200, tread_thickness = 4, riser_thickness = 2.6, nosing = 2.5, check_stair_rules = TRUE)
+
+# several logical columns and numeric (n_rules_ok & rate_rules_ok) are added
+print(wood_stairs) 
+#> 
+#>   5 valid solution(s)
+#>    n_risers step_rise rise_target_deviation    going           scenario
+#> 9         9  20.00000             4.0000000 23.00000 no_landing_blondel
+#> 12        9  20.00000             4.0000000 23.00000        landing_max
+#> 10        9  20.00000             4.0000000 23.00000 no_landing_uniform
+#> 6        10  18.00000             2.0000000 27.00000 no_landing_uniform
+#> 2        11  16.36364             0.3636364 30.27273 no_landing_uniform
+#>    horizontal_run  blondel blondel_target_deviation has_landing
+#> 9             184 63.00000                 0.000000       FALSE
+#> 12            200 63.00000                 0.000000        TRUE
+#> 10            200 65.00000                 2.000000       FALSE
+#> 6             200 58.22222                 4.777778       FALSE
+#> 2             200 52.72727                10.272727       FALSE
+#>    horizontal_run_exceeded landing_impossible is_valid rank
+#> 9                    FALSE              FALSE     TRUE    1
+#> 12                   FALSE              FALSE     TRUE    2
+#> 10                   FALSE              FALSE     TRUE    3
+#> 6                    FALSE              FALSE     TRUE    4
+#> 2                    FALSE              FALSE     TRUE    5
+#>    US_ADA_public_stairs US_ADA_pool_stairs US_ADA_pool_transfer_steps
+#> 9                 FALSE              FALSE                      FALSE
+#> 12                FALSE              FALSE                      FALSE
+#> 10                FALSE              FALSE                      FALSE
+#> 6                 FALSE              FALSE                      FALSE
+#> 2                  TRUE               TRUE                      FALSE
+#>    US_IBC_means_of_egress US_IBC_dwelling_units
+#> 9                    TRUE                 FALSE
+#> 12                   TRUE                 FALSE
+#> 10                   TRUE                 FALSE
+#> 6                    TRUE                  TRUE
+#> 2                    TRUE                  TRUE
+#>    US_IBC_guard_towers_observation_stations_and_control_rooms
+#> 9                                                       FALSE
+#> 12                                                      FALSE
+#> 10                                                      FALSE
+#> 6                                                       FALSE
+#> 2                                                        TRUE
+#>    US_IRC_means_of_egress US_IRC_sleeping_loft
+#> 9                   FALSE                 TRUE
+#> 12                  FALSE                 TRUE
+#> 10                  FALSE                 TRUE
+#> 6                    TRUE                 TRUE
+#> 2                    TRUE                FALSE
+#>    FR_collective_housing_common_areas FR_private_dwelling_interior
+#> 9                               FALSE                        FALSE
+#> 12                              FALSE                        FALSE
+#> 10                              FALSE                        FALSE
+#> 6                               FALSE                         TRUE
+#> 2                                TRUE                         TRUE
+#>    FR_ERP_accessibility FR_workplace_accessibility FR_public_circulation_stairs
+#> 9                 FALSE                      FALSE                        FALSE
+#> 12                FALSE                      FALSE                        FALSE
+#> 10                FALSE                      FALSE                        FALSE
+#> 6                 FALSE                      FALSE                        FALSE
+#> 2                 FALSE                      FALSE                        FALSE
+#>    ISO_machinery_access UK_private UK_utility UK_general_access
+#> 9                  TRUE       TRUE      FALSE             FALSE
+#> 12                 TRUE       TRUE      FALSE             FALSE
+#> 10                 TRUE       TRUE      FALSE             FALSE
+#> 6                 FALSE       TRUE       TRUE             FALSE
+#> 2                 FALSE      FALSE      FALSE             FALSE
+#>    academic_compromise etiological_studies feet_accommodation n_rules_ok
+#> 9                FALSE               FALSE              FALSE          4
+#> 12               FALSE               FALSE              FALSE          4
+#> 10               FALSE               FALSE              FALSE          4
+#> 6                 TRUE                TRUE              FALSE          9
+#> 2                 TRUE                TRUE               TRUE         11
+#>    rate_rules_ok
+#> 9           0.20
+#> 12          0.20
+#> 10          0.20
+#> 6           0.45
+#> 2           0.55
+#> ('geometry' list-col is hidden - access via $geometry[[i]])
+
+plot_stair(wood_stairs$geometry[order(-wood_stairs$rate_rules_ok)][[1]] )
+```
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)
+
+> The Blondel value used as a reference by `solve_stairs` (63 cm)
+> reflect the traditional French stair geometry criteria and does not
+> allow compliance with most of the proposed standards when risers
+> heights \> 17 cm are adopted.
+
+> Not all standards are necessarily relevant to your situation since
+> some standards apply specifically to a country or a particular type of
+> staircase, e.g., according to the ISO standard, a stair that is a
+> permanent mean of access to machinery require a Blondel value between
+> 60 cm and 66 cm[^1].
 
 ### Graphical parameters
 
@@ -211,7 +320,7 @@ plot_stair(
 )
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)
 
 Other graphical parameters supported by
 [`graphics::polygon()`](https://rdrr.io/r/graphics/polygon.html) can
@@ -230,7 +339,7 @@ plot_stair(
 )
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-11-1.png)
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)
 
 Styles can be applied selectively to specific steps or surfaces. The
 `surface` selector accepts “tread” or “riser”, while steps can be a
@@ -257,7 +366,7 @@ plot_stair(
 )
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)
 
 Styles can also target individual step with `steps = c()`.
 
@@ -287,7 +396,7 @@ plot_stair(
 )
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)
 
 Styles are applied in order. When several styles apply to the same
 polygon, parameters defined by a later style replace parameters with the
@@ -299,23 +408,6 @@ steps or surfaces.
 
 All graphical parameters accepted by graphics::polygon() can be passed
 in this way.
-
-# Details
-
-In the same vein, older French laws therefore stipulate that “the height
-and width must satisfy the relationship 0.60 m ≤ 2 H + G ≤ 0.64 m”
-(<https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000020272650/>).
-Other standards and laws do not specify the permissible Blondel values,
-or even specify a range of values that differs from the range set out in
-French law, e.g., UK laws specify permissible Blondel values between 55
-cm and 70 cm
-(<https://assets.publishing.service.gov.uk/media/60d5bdcde90e07716f516cfd/Approved_Document_K.pdf>).
-In other words, it is possible to build staircases that complying with
-British standards but do not comply with French standards.
-
-Some standards apply specifically to a particular type of staircase,
-e.g., according to the ISO standard, a stair that is a permanent mean of
-access to machinery require a Blondel value between 60 cm and 66 cm[^1].
 
 [^1]: International Organization for Standardization. (2016). Safety of
     machinery — Permanent means of access to machinery — Part 3: Stairs,

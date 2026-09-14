@@ -58,11 +58,6 @@ standard goings only), `has_landing`, and depending on the case
   (potentially very large going: filling an opening, giant landing step
   in front of a door, etc.).
 
-- landing_uniform:
-
-  A uniform going = `max_horizontal_run / n_steps`, applied to all steps
-  including the landing step.
-
 In every "with landing" scenario, the landing step is the last one,
 positioned after the last riser, at the same height as the finished
 floor on arrival — never followed by a riser.
@@ -85,7 +80,7 @@ scenarios <- generate_going_scenarios(n_steps = 16, max_horizontal_run = 450,
                                       going = going)
 names(scenarios)
 #> [1] "no_landing_blondel" "no_landing_uniform" "landing_standard"  
-#> [4] "landing_max"        "landing_uniform"   
+#> [4] "landing_max"       
 scenarios$landing_max$blondel_target_deviation  # 0: the giant landing step doesn't count
 #> [1] 0
 ```
