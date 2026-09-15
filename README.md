@@ -43,31 +43,8 @@ specify a very large value.
 configurations and return various solutions, i.e. varying numbers of
 steps and whether or not there is a landing step.
 
-> 𓊍 The possible solutions are scored according to Blondel’s rule (see
-> below).
-
-**Blondel’s value.** A stair geometry follows the Blondel - comfort -
-relationship.
-
-$$2r + g = B$$
-
-Where $r$ is the rise (vertical riser height), $g$ is the going
-(horizontal tread depth), and $B$ is the target Blondel value.
-
-𓊍 In French carpentry and masonry practices for domestic staircase
-construction, the Blondel ideal value should be 63 cm. It is recommended
-to prioritise the staircase solution with the smallest deviation from
-this Blondel target value. From this French point of view, solutions
-with a Blondel value between 60 cm and 64 cm are acceptable.
-
-**Best solution.** Possible solutions are sorted by their deviation from
-the Blondel target value, default is 63 cm.
-
-**Edges cases.** When several solutions have a similar Blondel value,
-solutions are sorted by their deviation from the minimum rise, i.e. 16
-cm. This is to ensure that the staircase is comfortable for older
-people, those wearing high-heeled shoes, children, small dogs and old
-dogs, etc.
+> 𓊍 The possible solutions are scored according to various rules and
+> guidances (see below).
 
 ## Examples
 
@@ -157,7 +134,7 @@ plot_stair(sol_neg$geometry[[1]])
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-With this setting, all steps keep the same theoretical going, but the
+With this setting, all the treads have the same dimensions, but the
 first step may protrude beyond the indicated available space. With the
 default positive direction, the last step is shortened instead, so that
 the staircase does not extend beyond the available run.
@@ -204,7 +181,7 @@ the proposed staircases.
 
 wood_stairs <- solve_stairs(180, 200, tread_thickness = 4, riser_thickness = 2.6, nosing = 2.5, check_stair_rules = TRUE)
 
-# several logical columns and numeric (n_rules_ok & rate_rules_ok) are added
+# several logical columns are added, and 2 numeric (n_rules_ok & rate_rules_ok)
 print(wood_stairs) 
 #> 
 #>   5 valid solution(s)
@@ -286,17 +263,6 @@ plot_stair(wood_stairs$geometry[order(-wood_stairs$rate_rules_ok)][[1]] )
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
-
-> The Blondel value used as a reference by `solve_stairs` (63 cm)
-> reflect the traditional French stair geometry criteria and does not
-> allow compliance with most of the proposed standards when risers
-> heights \> 17 cm are adopted.
-
-> Not all standards are necessarily relevant to your situation since
-> some standards apply specifically to a country or a particular type of
-> staircase, e.g., according to the ISO standard, a stair that is a
-> permanent mean of access to machinery require a Blondel value between
-> 60 cm and 66 cm[^1].
 
 ### Graphical parameters
 
@@ -403,7 +369,33 @@ steps or surfaces.
 All graphical parameters accepted by graphics::polygon() can be passed
 in this way.
 
-[^1]: International Organization for Standardization. (2016). Safety of
-    machinery — Permanent means of access to machinery — Part 3: Stairs,
-    stepladders and guard-rail (ISO Standard No. 14122-3:2016).
-    <https://www.iso.org/standard/61282.html>
+### Traditional stair computation
+
+If no satisfactory solution is found, traditional stairs are computed.
+
+**Blondel solution.** Possible solutions are sorted by their deviation
+from the Blondel target value, default is 63 cm. When several solutions
+have a similar Blondel value, solutions are sorted by their deviation
+from the minimum rise (default is 16 cm). This is to ensure that the
+staircase is comfortable.
+
+**Blondel’s value.** A stair geometry have a Blondel value.
+
+$$2r + g = B$$
+
+Where $r$ is the rise (vertical riser height), $g$ is the going
+(horizontal tread depth), and $B$ is the target Blondel value.
+
+𓊍 In French carpentry and masonry traditional practices for domestic
+staircase construction, it is recommended to prioritise the staircase
+solution with the smallest deviation from a Blondel target value of 63
+cm, and solutions with a Blondel value between 60 cm and 64 cm are
+acceptable. Therefore, it’s important to note that this indicator is
+highly open to criticism because “reasoning behind the formula is
+dubious, and its applicability is demonstrably limited to a small number
+of average sizes, yet its acceptance by professionals and policy makers
+remains remarkably and unshakenly universal” (Koutamanis, 2024, p. 696).
+The Blondel value used as a reference by `solve_stairs` (63 cm) reflect
+the traditional French stair geometry criteria and does not allow
+compliance with most of the standards when risers heights \> 17 cm are
+adopted.
