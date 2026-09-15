@@ -79,14 +79,8 @@ install.packages("stairtools")
 <p><strong>Input.</strong> The user must indicate a total rise to elevate and a total length available. If length is not a constraint on your project, you can specify a very large value.</p>
 <p><strong>Output.</strong> The package calculates all possible – reasonable – staircase configurations and return various solutions, i.e. varying numbers of steps and whether or not there is a landing step.</p>
 <blockquote>
-<p>𓊍 The possible solutions are scored according to Blondel’s rule (see below).</p>
+<p>𓊍 The possible solutions are scored according to various rules and guidances (see below).</p>
 </blockquote>
-<p><strong>Blondel’s value.</strong> A stair geometry follows the Blondel - comfort - relationship.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>r</mi><mo>+</mo><mi>g</mi><mo>=</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">2r + g = B</annotation></semantics></math></p>
-<p>Where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math> is the rise (vertical riser height), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math> is the going (horizontal tread depth), and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is the target Blondel value.</p>
-<p>𓊍 In French carpentry and masonry practices for domestic staircase construction, the Blondel ideal value should be 63 cm. It is recommended to prioritise the staircase solution with the smallest deviation from this Blondel target value. From this French point of view, solutions with a Blondel value between 60 cm and 64 cm are acceptable.</p>
-<p><strong>Best solution.</strong> Possible solutions are sorted by their deviation from the Blondel target value, default is 63 cm.</p>
-<p><strong>Edges cases.</strong> When several solutions have a similar Blondel value, solutions are sorted by their deviation from the minimum rise, i.e. 16 cm. This is to ensure that the staircase is comfortable for older people, those wearing high-heeled shoes, children, small dogs and old dogs, etc.</p>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -142,7 +136,7 @@ install.packages("stairtools")
 <span> </span>
 <span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">sol_neg</span><span class="op">$</span><span class="va">geometry</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-7-1.png"><!-- --></p>
-<p>With this setting, all steps keep the same theoretical going, but the first step may protrude beyond the indicated available space. With the default positive direction, the last step is shortened instead, so that the staircase does not extend beyond the available run.</p>
+<p>With this setting, all the treads have the same dimensions, but the first step may protrude beyond the indicated available space. With the default positive direction, the last step is shortened instead, so that the staircase does not extend beyond the available run.</p>
 <p><strong>Wood-stairs.</strong> Wood stairs can be computed by specifying <code>tread_thickness</code> <code>riser_thickness</code> and or <code>nosing</code> parameters, expressed in centimeters.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -170,7 +164,7 @@ install.packages("stairtools")
 <code class="sourceCode R"><span></span>
 <span><span class="va">wood_stairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/solve_stairs.html">solve_stairs</a></span><span class="op">(</span><span class="fl">180</span>, <span class="fl">200</span>, tread_thickness <span class="op">=</span> <span class="fl">4</span>, riser_thickness <span class="op">=</span> <span class="fl">2.6</span>, nosing <span class="op">=</span> <span class="fl">2.5</span>, check_stair_rules <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># several logical columns and numeric (n_rules_ok &amp; rate_rules_ok) are added</span></span>
+<span><span class="co"># several logical columns are added, and 2 numeric (n_rules_ok &amp; rate_rules_ok)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">wood_stairs</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   5 valid solution(s)</span></span>
@@ -250,12 +244,6 @@ install.packages("stairtools")
 <span></span>
 <span><span class="fu"><a href="reference/plot_stair.html">plot_stair</a></span><span class="op">(</span><span class="va">wood_stairs</span><span class="op">$</span><span class="va">geometry</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="op">-</span><span class="va">wood_stairs</span><span class="op">$</span><span class="va">rate_rules_ok</span><span class="op">)</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">)</span></span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-10-1.png"><!-- --></p>
-<blockquote>
-<p>The Blondel value used as a reference by <code>solve_stairs</code> (63 cm) reflect the traditional French stair geometry criteria and does not allow compliance with most of the proposed standards when risers heights &gt; 17 cm are adopted.</p>
-</blockquote>
-<blockquote>
-<p>Not all standards are necessarily relevant to your situation since some standards apply specifically to a country or a particular type of staircase, e.g., according to the ISO standard, a stair that is a permanent mean of access to machinery require a Blondel value between 60 cm and 66 cm<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;International Organization for Standardization. (2016). Safety of machinery — Permanent means of access to machinery — Part 3: Stairs, stepladders and guard-rail (ISO Standard No. 14122-3:2016). &lt;a href="https://www.iso.org/standard/61282.html" class="external-link uri"&gt;https://www.iso.org/standard/61282.html&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a>.</p>
-</blockquote>
 <div class="section level3">
 <h3 id="graphical-parameters">Graphical parameters<a class="anchor" aria-label="anchor" href="#graphical-parameters"></a>
 </h3>
@@ -332,8 +320,17 @@ install.packages("stairtools")
 <p>The polygon_params argument therefore provides a global default style if no <code>steps</code> is specified, while styles can be used to override individual steps or surfaces.</p>
 <p>All graphical parameters accepted by graphics::polygon() can be passed in this way.</p>
 </div>
+<div class="section level3">
+<h3 id="traditional-stair-computation">Traditional stair computation<a class="anchor" aria-label="anchor" href="#traditional-stair-computation"></a>
+</h3>
+<p>If no satisfactory solution is found, traditional stairs are computed.</p>
+<p><strong>Blondel solution.</strong> Possible solutions are sorted by their deviation from the Blondel target value, default is 63 cm. When several solutions have a similar Blondel value, solutions are sorted by their deviation from the minimum rise (default is 16 cm). This is to ensure that the staircase is comfortable.</p>
+<p><strong>Blondel’s value.</strong> A stair geometry have a Blondel value.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>r</mi><mo>+</mo><mi>g</mi><mo>=</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">2r + g = B</annotation></semantics></math></p>
+<p>Where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math> is the rise (vertical riser height), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math> is the going (horizontal tread depth), and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is the target Blondel value.</p>
+<p>𓊍 In French carpentry and masonry traditional practices for domestic staircase construction, it is recommended to prioritise the staircase solution with the smallest deviation from a Blondel target value of 63 cm, and solutions with a Blondel value between 60 cm and 64 cm are acceptable. Therefore, it’s important to note that this indicator is highly open to criticism because “reasoning behind the formula is dubious, and its applicability is demonstrably limited to a small number of average sizes, yet its acceptance by professionals and policy makers remains remarkably and unshakenly universal” (Koutamanis, 2024, p. 696). The Blondel value used as a reference by <code>solve_stairs</code> (63 cm) reflect the traditional French stair geometry criteria and does not allow compliance with most of the standards when risers heights &gt; 17 cm are adopted.</p>
 </div>
-
+</div>
 
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>

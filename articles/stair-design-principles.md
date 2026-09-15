@@ -145,6 +145,22 @@ stair_rules[, 1:4]
 #> 6          21        19 ISO 14122-3:2016 & NF EN ISO 14122-3:2017
 ```
 
+> It is ultimately shocking that Blondel’s less-than-useful formula (…)
+> is complacently retained in most building codes in the world and
+> remains the basis for calculating stair geometry, while related key
+> issues, such as going depth in relation to foot size, are ignored and
+> others, such as adequate lighting and the presence and form of
+> handrails, are downplayed. Apparently, a pseudoscientific
+> justification counts for more than personal observation and experience
+> with stair hazards, the differences between ascent and descent, and
+> the variability of users. (Koutamanis[^4], 2024. p. 695)
+
+> Not all standards are necessarily relevant to your situation since
+> some standards apply specifically to a country or a particular type of
+> staircase, e.g., according to the ISO standard, a stair that is a
+> permanent mean of access to machinery require a Blondel value between
+> 60 cm and 66 cm[^5].
+
 **Stair comfort.** Pour le DTU français, il y a 3 classes de confort
 d’escaliers:
 
@@ -202,6 +218,15 @@ p. 39
     14122-3:2017.
 
 [^3]: International Organization for Standardization. (2016). Safety of
+    machinery — Permanent means of access to machinery — Part 3: Stairs,
+    stepladders and guard-rail (ISO Standard No. 14122-3:2016).
+    <https://www.iso.org/standard/61282.html>
+
+[^4]: Koutamanis, Alexander. « Stair Design and User Interaction ».
+    Architecture 4, nᵒ 3 (2024): 692‑716.
+    <https://doi.org/10.3390/architecture4030036>.
+
+[^5]: International Organization for Standardization. (2016). Safety of
     machinery — Permanent means of access to machinery — Part 3: Stairs,
     stepladders and guard-rail (ISO Standard No. 14122-3:2016).
     <https://www.iso.org/standard/61282.html>
